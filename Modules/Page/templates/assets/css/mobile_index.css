@@ -1,0 +1,26 @@
+body{
+    margin:0px;
+    padding: 0px;
+}
+.page-1 {
+    /* width: 7.5rem; */
+    height: auto;
+    margin: 0px;
+}
+.page-1 img{
+    width:100%;
+}
+.toolbar .toolbar-inner{height:auto;}
+.toolbar .title{top:10px;right:10px;font-weight:400;font-size:.875em;}
+.weui-popup-modal .toolbar .title{top:0;right:0;background:#04BE02;color:#fff;font-size:.85rem;}
+.title a,.toolbar .picker-button{color:#fff;}
+.title a{position:relative;display:inline-block;padding:5px 10px;border-radius:1000px;background:rgba(0,0,0,.5);text-decoration:none;line-height:1em;-webkit-tap-highlight-color:transparent;-webkit-tap-highlight-color:transparent;}
+.title a::after{position:relative;display:inline-block;margin-left:5px;width:16px;height:10px;background:url(../images/w-icon-dropdown.png) center center no-repeat;background-size:16px;content:"";}
+.collect{padding:20px;}
+.collect aside{float:left;margin-bottom:20px;margin-left:10px;padding:4px;border:1px solid #ff7101;border-radius:5px;background:#fff;line-height:0;}
+.collect aside img{width:80px;height:80px;border:0;}
+.collect .p1{margin-left:115px;padding-top:9px;font-size:14px;line-height:25px;}
+#toast{position:fixed;z-index:8000;display:none;padding:9px 15px;border-radius:5px;background-color:#333;color:#fff;text-align:center;font-size:15px;line-height:25px;}
+.dropdown-menu::after{-webkit-animation:twinkling 1s infinite ease-in-out;}
+.toolbar{z-index:1000;background:0 0;}
+.toolbar:before{display:none;}

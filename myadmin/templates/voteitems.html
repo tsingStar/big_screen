@@ -1,0 +1,226 @@
+{include file="templates/html_header.html"}
+
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+			{literal}
+				try{ace.settings.loadState('main-container')}catch(e){}
+			{/literal}
+			</script>
+			<!-- #section:basics/sidebar -->
+			{include file="templates/html_sidebar.html"}
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="main-content-inner">
+					<!-- #section:basics/content.breadcrumbs -->
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="index.php">首页</a>
+							</li>
+							<li ><a href="voteconfig.php">投票设置</a></li>
+							<li class="active">{$title}</li>
+						</ul><!-- /.breadcrumb -->
+						<!-- /section:basics/content.searchbox -->
+					</div>
+
+					<!-- /section:basics/content.breadcrumbs -->
+					<div class="page-content">
+					<h3 class="header smaller lighter blue">
+						{$title}
+						<small>设置投票选项</small>
+					</h3>
+						<div class="row">
+							<div class="col-xs-12">
+								
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="widget-box widget-color-blue" id="widget-box-2">
+								<div class="widget-header">
+									<h5 class="widget-title bigger lighter">
+										<i class="ace-icon fa fa-users"></i>
+										{$vote_config['votetitle']}
+									</h5>
+									<div class="widget-toolbar no-border">
+										<label>
+										<button class="btn btn-xs btn-warning btn_add" onclick="openvoteitemform(0)">添加</button>
+										</label>
+										
+									</div>
+								</div>
+							<div class="widget-body">
+								<div class="widget-main no-padding">
+									<!-- PAGE CONTENT BEGINS -->
+									<table class="table table-striped table-bordered table-hover">
+										<thead class="thin-border-bottom">
+											<tr>
+												<th>序号</th>
+												<th>选项名称</th>
+												<th>选项图片</th>
+												<th >操作</th>
+											</tr>
+										</thead>
+										<tbody>
+										{foreach $vote_items as $item}
+											<tr >
+												<td >{$item['id']}</td>
+												<td >{$item['voteitem']}</td>
+												<td ><img src="{$item['imagepath']}" style="width:80px;height:80px;"/></td>
+												
+												<td >
+													<a href="###" onclick="openvoteitemform({$item['id']})"><span class="label label-primary">修改</span></a>
+													<a href="###" onclick="del({$item['id']})"><span class="label label-danger">删除</span></a>
+												</td>
+											</tr>
+										{/foreach}
+										</tbody>
+									</table>
+									{$pagehtml}
+									</div>
+									</div>
+								</div>
+								<div id="voteitemform" class="modal" tabindex="-1">
+									<div class="modal-dialog">
+										<div class="modal-content">
+										<form id="saveform" action="dovoteconfig.php?action=savevoteitem" method="post" enctype="multipart/form-data">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+												<h4 class="blue bigger">选项</h4>
+											</div>
+
+											<div class="modal-body">
+											<div class="row">
+											
+											<!-- #section:elements.tab -->
+											<div class="form-group">
+												<label for="text3d" class="col-md-3">选项名称：</label>
+												<div class="col-md-9">
+													<input type="text" id="voteitem" name="voteitem" placeholder="请输入选项名称" value="" style="width:80%;"/>
+												</div>
+											</div>
+											<div class="form-group">
+											<label for="awardimage" class="col-md-3">选项图片：</label>
+											<div class="col-md-9">
+											<input type="file" class="imageuploader" name="imagepath"/>
+											</div>
+											</div>
+											<div class="form-group">
+												<label for="text3d" class="col-md-3">票数：</label>
+												<div class="col-md-9">
+													<input type="text" id="votecount" name="votecount"  value="" style="width:80%;"/>
+												</div>
+											</div>
+											</div>
+											</div>
+
+											<div class="modal-footer">
+												<input type="hidden" name="id" value="0" />
+												<input type="hidden" name="voteconfigid" value="{$vote_config['id']}"/>
+												<button class="btn btn-sm" data-dismiss="modal">
+													<i class="ace-icon fa fa-times"></i>
+													取消
+												</button>
+												<button class="btn btn-sm btn-primary btn-save-item">
+													<i class="ace-icon fa fa-check"></i>
+													保存
+												</button>
+											</div>
+											</form>
+										</div>
+									</div>
+								</div>	
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+		
+{include file="templates/html_footercontent.html"}
+<!-- 写每个页面自定的js -->
+<script src="assets/ace_v1.4/components/jqGrid/js/jquery.jqGrid.js"></script>
+<script src="assets/ace_v1.4/components/jqGrid/js/i18n/grid.locale-cn.js"></script>
+<script type="text/javascript" src="assets/js/jquery.form.js"></script>
+<script type="text/javascript">
+{literal}
+function openvoteitemform(id){
+	$('input[name=id]').val(id);
+	if(id>0){
+		$.ajax({
+			"url":"dovoteconfig.php?action=getvoteitem",
+			'type':'post',
+			'data':{"id":id},
+			"dataType":"json",
+			"success":function(json){
+				if(json.code>0){
+					$('input[name=voteitem]').val(json.data.voteitem);
+					$('input[name=votecount]').val(json.data.votecount);
+					
+					if(json.data.imagepath!=null){
+						$('input[name=imagepath]')
+						.ace_file_input('show_file_list', [
+							{type: 'image', name: '背景图', path:json.data.imagepath },
+						]);
+					}
+				}else{
+					alert(json.message);
+				}
+			}
+		})
+	}else{
+
+	}
+	$('#voteitemform').modal('show');
+}
+
+function del(id){
+	if(!confirm("确定要删除这个选项及相关的数据吗？"))return false;
+	$.ajax({
+		"url":"dovoteconfig.php?action=delvoteitem",
+		'type':'post',
+		'data':{"id":id},
+		"dataType":"json",
+		"success":function(json){
+			if(json.code>0){
+				window.location.reload();
+			}else{
+				alert(json.message);
+			}
+		}
+	})
+}
+$(function(){
+	$('.imageuploader').ace_file_input({
+		style: 'well',
+		btn_choose: '点击此处选择图片',
+		btn_change: null,
+		no_icon: 'ace-icon fa fa-cloud-upload',
+		droppable: true,
+		maxSize: 550000,
+		allowExt: ["jpeg", "jpg", "png", "gif"],
+		allowMime: ["image/jpg", "image/jpeg", "image/png", "image/gif"],
+		thumbnail: 'large',//large | fit
+		previewHeight:200,
+		preview_error : function(filename, error_code) {
+		}
+	}).on('change', function(){
+		
+	});
+	
+	$('.btn-save-item').bind('click',function(){
+		$('#saveform').ajaxSubmit({
+			dataType: 'json',
+			success:function(json){
+				if(json.code>0){
+					window.location.reload();
+				}else{
+					alert(json.message);
+				}
+			}
+		});
+		return false;
+	});
+})
+{/literal}
+</script>
+{include file="templates/html_footer.html"}

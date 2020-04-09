@@ -1,0 +1,171 @@
+{include file="templates/html_header.html"}
+<!-- /section:basics/navbar.layout -->
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        {literal}
+				try{ace.settings.loadState('main-container')}catch(e){}
+			{/literal}
+    </script>
+    <!-- #section:basics/sidebar -->
+    {include file="templates/html_sidebar.html"}
+    <!-- /section:basics/sidebar -->
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!-- #section:basics/content.breadcrumbs -->
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon">
+                        </i>
+                        <a href="index.php">
+                            首页
+                        </a>
+                    </li>
+                    <li class="active">
+                        {$title}
+                    </li>
+                </ul>
+                <!-- /.breadcrumb -->
+                <!-- /section:basics/content.searchbox -->
+            </div>
+            <!-- /section:basics/content.breadcrumbs -->
+            <div class="page-content">
+                <h3 class="header smaller lighter blue">
+                    {$title}
+                    <small>
+                        设置各个功能的背景图，如果没有设置会显示默认背景图。 <span class="alert-info">大屏幕长宽比一致即可，不要超过500kb&nbsp;<a href="https://pan.baidu.com/s/1N7PuQjr-g2iND-SEzDeseg" target="_blank">点此下载推荐素材</a></span>
+                    </small>
+                </h3>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        {$diyad}
+                        <div class="row">
+                            {foreach $plugs $plug}
+                            {foreach $images as $item}
+                            {if $plug['name']==$item['plugname'] && $plug['switch']==1}
+                            <div class="col-xs-6">
+                                <div class="widget-box">
+                                    <div class="widget-header">
+                                        <h4 class="smaller">
+                                            {$item['name']}
+                                        </h4>
+                                    </div>
+                                    <div class="widget-body">
+                                        <div class="widget-main" style="height: 300px;">
+                                            <div  class="bg-uploader">
+                                                <!--用来存放文件信息-->
+                                                <div  class="uploader-list">
+                                                        <div  class="item">
+                                                        {if $item['bgtype']==1}
+                                                        <img src="{$item['attachmentpath']}" style="max-width: 200px;max-height:150px;"/>
+                                                        {else}
+                                                        <video src="{$item['attachmentpath']}" style="object-fit:fill;max-width:200px;height:auto;max-height:150px;" autoplay="autoplay" autobuffer autoloop loop controls="controls"  ></video>
+                                                        {/if}
+                                                        <h4 class="info"></h4>
+                                                        <p class="state"></p></div>
+                                                </div>
+                                                <div class="btns">
+                                                    <div id="{$item['plugname']}_bg" class="selectfile">选择文件</div>
+                                                    <input type="hidden" name="plugname" value="{$item['plugname']}"/>
+                                                    <button  class="btn btn-primary upload-btn">开始上传</button>
+                                                    <button  class="btn btn-default reset-btn">重置</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {/if}
+                            {/foreach}
+                            {/foreach}
+                        </div>
+                        <!-- PAGE CONTENT ENDS -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.page-content -->
+        </div>
+    </div>
+    <!-- /.main-content -->
+    {include file="templates/html_footercontent.html"}
+    <!-- 写每个页面自定的js -->
+    <script src="assets/ace_v1.4/assets/js/src/elements.aside.js"></script>
+    <!--引入CSS-->
+    <link rel="stylesheet" type="text/css" href="/assets/plugs/webuploader-0.1.5/webuploader.css">
+    <!--引入JS-->
+    <script type="text/javascript" src="/assets/plugs/webuploader-0.1.5/webuploader.min.js"></script>
+     
+    <script type="text/javascript">
+        {literal}
+        $(function(){
+            var uploader=[];
+            var thumbnailWidth=100;
+            var thumbnailHeight=100;
+            $('.bg-uploader').each(function(i){
+                var self=$(this);
+                uploader[i]=WebUploader.create({
+                    swf:'/assets/plugs/webuploader-0.1.5/Uploader.swf',
+                    server:'dobackground.php?action=bg',
+                    pick:'#'+self.find('.selectfile').attr('id'),
+                    resize: false,
+                    fileNumLimit:1,
+                    formData:{"plugname":self.find('input[name=plugname]').val()},
+                    duplicate:true,
+                    accept:{
+                        mimeTypes:'image/jpg,image/jpeg,image/png,video/mp4,video/ogg',
+                    }
+                });
+                uploader[i].on( 'fileQueued', function( file ) {
+                    var li=$('<div id="' + file.id + '" class="item">' +
+                        '<img/>'+
+                        '<h4 class="info">' + file.name + '</h4>' +
+                        '<p class="state">等待上传...</p>' +'</div>');
+                    var img=li.find('img');
+                    self.find('.uploader-list').append(li);
+                    this.makeThumb(file,function(error,src){
+                        if ( error ) {
+                            img.replaceWith('<span>不能预览</span>');
+                            return;
+                        }
+                        img.attr( 'src', src );
+                    },thumbnailWidth, thumbnailHeight);
+                });
+                //加入队列前 先清空队列中的内容
+                uploader[i].on('beforeFileQueued',function(file){
+                    this.reset();
+                    self.find('.uploader-list').html('');
+                });
+                uploader[i].on('uploadProgress',function(){
+                    self.find('.state').html('上传中，请耐心等待...');
+                })
+                uploader[i].on('uploadSuccess',function(file){
+                    self.find('.state').html('上传完成，如果是视频文件，手动刷新页面后可查看');
+                    alert('上传完成');
+                });
+                
+                self.find('.upload-btn').on('click',function(){
+                    uploader[i].upload();
+                });
+                
+                self.find('.reset-btn').on('click',function(){
+                    $.ajax({
+                        "url":"dobackground.php?action=resetbg",
+                        "type":"post",
+                        "data":{"plugname":self.find('input[name=plugname]').val()},
+                        "dataType":'json',
+                        "success":function(json){
+                            alert(json.message);
+                            self.find('.item').children(':first').remove();
+                            $('<img src="/wall/themes/meepo/assets/images/defaultbg.jpg" style="max-width: 200px;max-height:150px;"/>').prependTo(self.find('.item'));
+                        }
+                    })
+                });
+            });
+        })
+        {/literal}
+    </script>
+    {include file="templates/html_footer.html"}
+</div>

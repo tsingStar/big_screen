@@ -1,0 +1,53 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/Modules/Page/templates/front/sign/assets/css/reset.css"> 
+<link rel="stylesheet" href="/Modules/Page/templates/front/sign/assets/css/style.css"> 
+<script src="/assets/js/modernizr.min.js"></script> 
+<title>{$currentdata['title']}</title>
+</head>
+<body>
+<div class="cd-tabs">
+<nav>
+<ul class="cd-tabs-navigation">
+{foreach from=$currentdata['pagedata']['signs'] item=$val name=config}
+<li><a data-content="sign_{$smarty.foreach.config.iteration}" {if $smarty.foreach.config.iteration==1}class="selected"{/if} href="#0">第{$smarty.foreach.config.iteration}个签字</a></li>
+{/foreach}
+</ul> 
+</nav>
+<ul class="cd-tabs-content">
+{foreach from=$currentdata['pagedata']['signs'] item=$val name=config}
+<li data-content="sign_{$smarty.foreach.config.iteration}" {if $smarty.foreach.config.iteration==1}class="selected"{/if}>
+    <div class="main">
+    <div class="main-xz">
+    <canvas id="signarea_{$smarty.foreach.config.iteration}"></canvas>
+    </div>
+    <div class="main-bt">
+        <div class="bt-1">
+            <div class="btn-default btn-confirm" data='{$smarty.foreach.config.iteration}'>
+                确定
+            </div>
+        </div>
+        <div class="bt-1 bt-1-s">
+            <div class="btn-default btn-reset" data='{$smarty.foreach.config.iteration}'>
+                重置
+            </div>
+        </div>
+    </div>
+</div>
+</li>
+{/foreach}
+</ul> 
+</div>
+<canvas id='cutoutcanvas' style="display: none;" ></canvas>
+<script type="text/javascript">
+var pageinfo={$currentdata|json_encode};
+</script>
+<script src="/assets/js/jquery-3.3.1.min.js"></script>
+<script src="/assets/plugs/sketchpad-master/scripts/sketchpad.js"></script>
+<script src="/Modules/Page/templates/front/sign/assets/js/front_ipad.js"></script> 
+</body>
+</html>

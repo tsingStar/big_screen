@@ -1,0 +1,305 @@
+::-webkit-scrollbar-thumb {
+    background-color:#FF0000 !important;
+   }
+   ::-webkit-scrollbar-thumb:hover {
+   background-color: #FFD714 !important;
+   }
+   .Panel.Lottery { position: absolute; top: 17%; height: 72%;  width: 90%;padding: 0 30% 0 275px;box-sizing:border-box;left:50%;transform:translateX(-50%);}
+   .lottery-left { width: 100%; height: 100%; position: relative; float: left; margin-right: 2%; background-color: transparent !important; border: 0 !important;padding-bottom: 100px; 
+   box-sizing: border-box;
+    }
+   .lottery-right { width: 30%; height: 98%; position: absolute; float: right; padding: 3px;right:10px; overflow: auto; background-color: transparent !important; border: 0 !important; }
+   .lottery-title { width: 100%; height: 60px; position: relative; color: #fff; font-size: 35px; line-height: 60px; font-family: Arial, Helvetica, sans-serif; background: url(../images/lot-title.png) 10px center no-repeat }
+   .lottery-title .title-label { margin-left: 50px }
+   .lottery-title .usercount-label { position: absolute; right: 10px; text-align: right }
+   .lottery-bottom { position: absolute; bottom: 0; width: 100%; height: 60px; z-index: 2; }
+   .lottery-bottom .round-num { font-size: 15px; font-family: Arial, Helvetica, sans-serif; color: #fff; margin-left: 10px; line-height: 60px }
+   .select-panel div { display: inline-block; text-align: center }
+   .select-button { width: 28px; height: 28px; border: 1px solid #fff; line-height: 28px; font-size: 22px; cursor: pointer }
+   .select-value { width: 40px; height: 28px }
+   .lottery-bottom .button-happy {display: inline-block; margin: 0 10px; height: 40px; line-height: 40px; padding-left: 40px; width: 80px; font-size: 20px; color: #fff; border: 1px solid #fff; background: url(lot-happy.png) 15px center no-repeat; cursor: pointer; border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px }
+   .lottery-bottom .button-showresult {display: inline-block; margin: 0 10px; height: 40px; line-height: 40px; width: 80px; font-size: 20px; padding: 0 10px; color: #fff; border: 1px solid #fff; cursor: pointer; border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px }
+   .lottery-bottom .button-reload {display: inline-block; margin: 0 10px; height: 40px; line-height: 40px; width: 80px; font-size: 20px; padding: 0 10px; color: #fff; border: 1px solid #fff; cursor: pointer; border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px }
+   .lottery-run { position: absolute; top: 0; left: 0; right: 0; bottom: 100px; z-index: 1; }
+   .user { background: url(../images/lot_nouser.jpg) center center no-repeat; background-size: contain; background-color: rgba(0, 0, 0, 0.85); }
+   .user .nick-name { display: none }
+   .lottery-run .user .nick-name { width: 200%;
+       height: 30px;
+       line-height: 20px;
+       left: -50%;
+       bottom: -60px;
+       font-size: 18px;
+       color: #fff;
+       text-align: center;
+       display: block;
+       text-shadow: 0 1px 3px rgba(0,0,0,0.45);}
+   .lottery-left .mobile{ display:none}
+       
+   .result-line { position: relative; width: 100%; height: 70px; margin: 3px auto; overflow: hidden; display: none; background: rgba(237, 15, 5, 0.38); border-radius: 100px; }
+   .result-line:first-child { margin-top: 0 }
+   .result-line:last-child { margin-bottom: 0 }
+   .result-line .result-num, .result-line .user, .result-line .user .nick-name { display: inline-block }
+   .result-line .result-num { width: 30px; height: 30px; color: #E62841; position: relative; top: 20px; text-align: center; margin-left: 10px; font-size: 16px; line-height: 30px; background-color: #FFF; border-radius: 100%; }
+   .result-line .user { position: absolute; display: inline-block; width: 60px; height: 60px; background: url(lot_nouser.jpg) center center no-repeat #fff; background-size: contain; top: 5px; left: 50px; border-radius: 100%; }
+   .result-line .user .nick-name { position: absolute;
+       height: 36px;
+       margin: 0;
+       top: 0;
+       left: 70px;
+       overflow: visible;
+       font-size: 20px;
+       line-height: 36px;
+       text-align: left;
+       display: block;
+       color: #fff;
+       text-shadow: 0 1px 3px rgba(0,0,0,0.45);}
+       .result-line .user .mobile { position: absolute;
+       height: 36px;
+       margin: 0;
+       top: 25px;
+       left: 70px;
+       overflow: visible;
+       font-size: 20px;
+       line-height: 36px;
+       text-align: left;
+       display: block;
+       color: #fff;
+       text-shadow: 0 1px 3px rgba(0,0,0,0.45);}
+   .lottery-bottom .control { display: none;
+       width: 82px;
+       line-height: 26px;
+       padding: 5px 10px 11px 10px;
+       border-radius: 8px;
+       font-weight: bolder;
+       color: #E74145;
+       background-color: #ffde12;
+       box-shadow: 0 2px 0px 0px rgba(0, 0, 0, 0.15), 0 -6px 0px 0px rgba(255, 158, 37, 1) inset;
+       text-align: center;
+       font-size: 18px;
+       border: none;
+       cursor: pointer;margin:0 10px}
+   .lottery-bottom .control:active { padding: 7px 10px 9px 10px; box-shadow: 0 2px 0px 0px rgba(0, 0, 0, 0.15), 0 -4px 0px 0px rgba(255, 158, 37, 1) inset;}
+   
+   .lottery-run .user { position: absolute; background: url(../images/lot_nouser.jpg) center center no-repeat; background-size: contain; margin: 15px auto; overflow: visible; border: 3px solid #fff; border-radius: 8px; box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.3); background-color: rgba(0, 0, 0, 0.85); width: 90px; height: 90px; margin-left: -165px; top: 15px; left: 160px; }
+   .box-bg { position: fixed; z-index: -1; width: 100%; height: 100%;  background-size: 100% 100%; background-repeat: no-repeat; top: 0; left: 0; }
+   .box { width: 100%; }
+   .box img { position: absolute; bottom: -30px; pointer-events: none; width: 760px; left: 50%; margin-left: -360px; }
+   .boxImg { z-index: 1000; }
+   .boxLeft, .boxRight { opacity: 0; }
+   .boxFront { z-index: 2000; }
+   .hand { display: none; }
+   .hand1, .hand2 { width: 257px; height: 174px; background-size: 100% 100%; background-repeat: no-repeat; position: absolute; left: 50%; margin-left: -110px; bottom: 0; }
+   .hand1 { background-image: url(../images/hand.png); }
+   .hand2 { background-image: url(../images/handFront.png); z-index: 2000; }
+   .hand { width: 257px; height: 104px; position: absolute; margin: 0 auto; z-index: 1500; left: 50%; margin-left: -20px;     bottom: 460px;}
+   .nick-name { position: absolute; font-size: 24px; color: #fff; font-family: "微软雅黑"; bottom: 6px; left: 114px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; width: 140px; text-align: center; }
+   .user img { box-shadow: 0 0 43px rgb(255, 255, 255); border-radius: 10px; border: 3px solid #fff; }
+   .box-moving .boxImg, .box-moving .boxFront { opacity: 0; }
+    @keyframes img1 { 0% {
+   }
+    100% {
+   opacity: 1;
+   }
+   }
+   .box-moving .boxLeft { -webkit-animation: img2 0.5s linear infinite; animation: img2 0.5s linear infinite; -webkit-transition-property: all; transition-property: all; opacity: 0; }
+   @-webkit-keyframes img2 { 0% {
+   }
+    50% {
+   opacity: 1;
+   }
+    100% {
+   }
+   }
+   @keyframes img2 { 0% {
+   }
+    50% {
+   opacity: 1;
+   }
+    100% {
+   }
+   }
+   .box-moving .boxRight { -webkit-animation: img3 0.5s linear infinite 0.25s; animation: img3 0.5s linear infinite 0.25s; -webkit-transition-property: all; transition-property: all; opacity: 0; }
+   @-webkit-keyframes img3 { 0% {
+   }
+    50% {
+   opacity: 1;
+   }
+    100% {
+   }
+   }
+   @keyframes img3 { 0% {
+   }
+    50% {
+   opacity: 1;
+   }
+    100% {
+   }
+   }
+   .moving .hand { -webkit-animation: hand-moving 3s ease-in-out forwards; animation: hand-moving 3s ease-in-out forwards; -webkit-transition-property: all; transition-property: all; display: block; opacity: 0; }
+    @-webkit-keyframes hand-moving {
+        
+   0%{opacity: 0;-webkit-transform:translateY(px) translateX(px) rotate(deg);}
+   10% {opacity: 1;}
+   40%{opacity: 1;-webkit-transform:translateY(200px) translateX(-85px) rotate(-60deg);}
+   60%{opacity: 1;-webkit-transform:translateY(250px) translateX(-75px) rotate(-65deg);}
+   100%{opacity: 1;-webkit-transform:translateY(0px) translateX(0px) rotate(0deg);}	 	 
+   }
+   .moving2 .hand { display: block; opacity: 1; }
+   .moving2 .user { opacity: 0 }
+   .moving .user { -webkit-animation: head-box .1s ease-in-out forwards 0.8s; animation: head-box .1s ease-in-out forwards 0.8s; -webkit-transition-property: all; transition-property: all; z-index: 1500; opacity: 0; }
+   @-webkit-keyframes head-box { 0% {
+   }
+    100% {
+   opacity:1;
+   z-index: 1500;
+   }
+   }
+   @keyframes head-box { 0% {
+   }
+    100% {
+   opacity:1;
+   z-index: 1500;
+   }
+   }
+   
+   /*1900*/
+   @media (min-width: 1900px) {
+   .lottery-run .user {position: absolute;
+       width: 160px;
+       height: 160px;
+       background: url(lot_nouser.jpg) center center no-repeat;
+       background-size: contain;
+       margin: 15px auto;
+       overflow: visible;
+       border: 5px solid #fff;
+       border-radius: 18px;
+       box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.3);
+       background-color: rgba(0, 0, 0, 0.85);top: -35px;
+       left: -39px;}
+   .box img {     position: absolute;
+       bottom: -30px;
+       pointer-events: none;
+       width: 1000px;
+       left: 50%;
+       margin-left: -460px;}
+   .hand1, .hand2 {
+       width: 400px;
+       height: 270px;
+       background-size: 100% 100%;
+       background-repeat: no-repeat;
+       position: absolute;
+       left: 50%;
+       margin-left: -110px;
+       bottom: 0;
+   }
+   .hand { bottom: 600px;margin-left: 20px;}
+    @-webkit-keyframes hand-moving {
+        
+   0%{opacity: 0;-webkit-transform:translateY(px) translateX(px) rotate(deg);}
+   10% {opacity: 1;}
+   40%{opacity: 1;-webkit-transform:translateY(300px) translateX(-85px) rotate(-60deg);}
+   60%{opacity: 1;-webkit-transform:translateY(350px) translateX(-75px) rotate(-65deg);}
+   100%{opacity: 1;-webkit-transform:translateY(0px) translateX(0px) rotate(0deg);}	 
+   }
+   }
+   .lottery-side{
+       width: 230px;
+       box-sizing: border-box;
+       position: absolute;
+       left: 0;
+       top: 50%;
+       transform:translateY(-50%);
+       
+   }
+   .setting-border{
+       padding-bottom: 15px;
+   }
+   .setting-border,.lottery-control{
+       background-color: rgba(0,0,0,.5);
+       border-radius: 5px;
+   }
+   .lottery-control{
+       margin-top: 20px;
+   }
+   .prizename{
+       display: block;
+       width: 100%;
+       font-weight: bold;
+       color: #fff;
+       text-align: center;
+       line-height: 1.5;
+       background: url('../images/line.png') no-repeat 50% 100%;
+       padding: 10px 0;
+       font-size: 1.5em;
+   }
+   .prizename_txt{
+       display: inline-block;
+       padding: 0 15px;
+   }
+   .icon{
+       cursor: pointer;
+   }
+   .lottery-img{
+       width:80%;
+       height:0px;
+       padding-bottom:80%;
+       margin-left:10%;
+       margin-top:5%;
+       position:relative;
+       /* padding:0px 10px; */
+   }
+   
+   .lottery-img img{
+       position:absolute;
+       display: inline-block;
+       
+       width: 100%;
+       height: 100%;
+       overflow: hidden;
+       border-radius: 5px;
+   }
+   
+   
+   .control-item{
+       height: 50px;
+       line-height: 50px;
+       width: 100%;
+       position: relative;
+       font-size: 16px;
+       color: #fff;
+       box-sizing: border-box;
+   }
+   .control-item em{
+       font-size: 20px;
+       font-weight: bold;
+       color: #ffde00;
+       vertical-align: middle;
+       font-style: normal;
+   }
+   @font-face {font-family: "iconfont";
+     src: url('iconfont.eot?t=1543812495239'); /* IE9*/
+     src: url('iconfont.eot?t=1543812495239#iefix') format('embedded-opentype'), /* IE6-IE8 */
+     url('data:application/x-font-woff;charset=utf-8;base64,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') format('woff'),
+     url('iconfont.ttf?t=1543812495239') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+     url('iconfont.svg?t=1543812495239#iconfont') format('svg'); /* iOS 4.1- */
+   }
+   
+   .iconfont {
+     font-family:"iconfont" !important;
+     font-size:16px;
+     font-style:normal;
+     -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+   }
+   
+   .icon-9:before { content: "\e608"; }
+   
+   .icon-10:before { content: "\e609"; }
+   
+   .icon-aui-icon-question:before { content: "\e625"; }
+   
+   .icon-zhongxinkaishi:before { content: "\e648"; }
+   
+   .icon-tingzhi-yuanshijituantubiao:before { content: "\e62a"; }
+   
+   .icon-kaishi:before { content: "\e650"; }

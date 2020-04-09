@@ -1,0 +1,82 @@
+{$html_header}
+<!--轮次设置-->
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+			{literal}
+				try{ace.settings.loadState('main-container')}catch(e){}
+			{/literal}
+			</script>
+			<!-- #section:basics/sidebar -->
+            {$html_sidebar}
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="main-content-inner">
+					<!-- #section:basics/content.breadcrumbs -->
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="/myadmin/index.php">首页</a>
+							</li>
+							<li class="active">{$title}</li>
+						</ul><!-- /.breadcrumb -->
+						<!-- /section:basics/content.searchbox -->
+					</div>
+
+					<!-- /section:basics/content.breadcrumbs -->
+					<div class="page-content">
+					<h3 class="header smaller lighter blue">
+						{$title}
+						<small>{$description}</small>
+					</h3>
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="row">
+									<div class="col-xs-12">
+										<form method="post" id="themenameform" action="/modules/module.php?m=ydj&c=admin&a=savethemedetail&id={if $theme['id']}{$theme['id']}{else}0{/if}" role="form" id="themename">
+											<div class="form-group" >
+												<div class="input-group col-sm-6" >
+													<label class="input-group-addon">主题名称</label>
+													<input name="themename" class="form-control" type="text" value="{if $theme['id']}{$theme['themename']}{/if}"/>
+													<span class="input-group-btn">
+													<button type="button" class="btn btn-sm btn-primary btn-save-themename">保存</button>
+													</span>
+												</div>
+												<div class="hr hr-12 dotted"></div>
+											</div>
+										</form>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-12">
+										<h1>手机端摇晃图片</h1>
+										<div class="hr hr-12 dotted"></div>
+									</div>
+									<div class="col-xs-6 col-lg-4">
+										<form method="post" id="mobileshakeimageform" action="/modules/module.php?m=ydj&c=admin&a=savethemedetail&id={if $theme['id']}{$theme['id']}{else}0{/if}" role="form" enctype="multipart/form-data">
+											<div class="form-group" >
+												<div class="col-sm-12">
+													<input multiple="" type="file"  class="imageuploader" name="mobileshakeimage"/>
+													<div class="hr hr-12 dotted"></div>
+													<button type="button" class="btn btn-sm btn-primary btn-save-mobileshakeimage" >保存</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+{$html_footercontent}
+<!-- 写每个页面自定的js -->
+<script type="text/javascript" src="{$assets}/js/jquery.form.js"></script>
+<script type="text/javascript">
+var THEMEDATA={$themejson};
+</script>
+<script type="text/javascript" src="{$module_assets}/js/admin_themedetail.js"></script>
+{$html_footer}

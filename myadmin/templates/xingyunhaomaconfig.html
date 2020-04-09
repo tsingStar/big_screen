@@ -1,0 +1,98 @@
+{include file="templates/html_header.html"}
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+			{literal}
+				try{ace.settings.loadState('main-container')}catch(e){}
+			{/literal}
+			</script>
+			<!-- #section:basics/sidebar -->
+			{include file="templates/html_sidebar.html"}
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="main-content-inner">
+					<!-- #section:basics/content.breadcrumbs -->
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="index.php">首页</a>
+							</li>
+
+							<li>
+								<a href="#">幸运号码</a>
+							</li>
+							<li class="active">{$title}</li>
+						</ul><!-- /.breadcrumb -->
+						<!-- /section:basics/content.searchbox -->
+					</div>
+
+					<!-- /section:basics/content.breadcrumbs -->
+					<div class="page-content">
+					<h3 class="header smaller lighter blue">
+						{$title}
+						<small>幸运号码设置信息</small>
+					</h3>
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+									<form class="form-horizontal" role="form">
+									<!-- #section:elements.form -->
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" >幸运号码最小值</label>
+										<div class="col-sm-9">
+											<input name="minnum" class="form-control " value="{$xingyunhaomaconfig['minnum']}" placeholder="幸运号码最小值，默认为0" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" >幸运号码最大值</label>
+										<div class="col-sm-9">
+											<input name="maxnum" class="form-control " value="{$xingyunhaomaconfig['maxnum']}" placeholder="幸运号码最大值，默认为2000" />
+										</div>
+									</div>
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-info btn-save" type="button">
+												<i class="ace-icon fa fa-check bigger-110"></i>
+												保存
+											</button>
+											&nbsp; &nbsp; &nbsp;
+											<button class="btn" type="reset">
+												<i class="ace-icon fa fa-undo bigger-110"></i>
+												重置
+											</button>
+										</div>
+									</div>
+									
+
+								
+
+								</form>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+{include file="templates/html_footercontent.html"}
+<!-- 写每个页面自定的js -->
+<script type="text/javascript">
+{literal}
+jQuery(function($){
+	$('.btn-save').bind('click',function(){
+		$.ajax({
+			'url':'doxingyunhaoma.php?action=setxingyunhaomaconfig',
+			'data':{'minnum':$('input[name=minnum]').val(),'maxnum':$('input[name=maxnum]').val()},
+			'type':'post',
+			'dataType':'json',
+			'success':function(json){
+				alert(json.message);
+				return false;
+			}
+		});
+	});
+})
+{/literal}
+</script>
+{include file="templates/html_footer.html"}

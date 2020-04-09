@@ -1,0 +1,40 @@
+
+<!DOCTYPE html></body>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>单页</title>
+    <style>
+        {literal}
+            .tp {
+                background: url({/literal}{$currentdata['pagedata']['img_path']}{literal});
+                -moz-background-size: 100% 100%;
+                background-size: 100% 100%;
+                width: 100%;
+                height: 100%;
+            }
+        
+            .container {
+                width: 85%;
+                height: 85%;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            {/literal}
+        </style>
+</head>
+<body>
+        {if $currentdata['pagedata']['img']>0}
+<div class="container">
+    <div class="tp"></div>
+</div>
+{/if}
+<script type="text/javascript">
+var pageinfo={$currentdata|json_encode};
+var pages={$configs};
+</script>
+<script type="text/javascript" src="/assets/js/require.min.js" data-main="/Modules/Page/templates/front/pc/assets/js/front_index.js"></script>
+</body>
+</html>

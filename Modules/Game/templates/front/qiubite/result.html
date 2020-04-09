@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>摇一摇记录</title>
+<link rel="stylesheet" type="text/css" href="/Modules/Game/templates/front/qiubite/assets/css/winner_list.css?t=2">
+<script src="/assets/js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+<style>
+</style>
+</head>
+<body style="background-color:#fff;">
+    <div class="phbbiaoge" style="position: absolute;top: 0px;
+width: 100%;overflow:auto;overflow-x: hidden;">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="phbbiaogek" >
+        <thead>
+      <tr>
+        <th width="220" align="center">排名</th>
+         <th width="220" align="center">头像</th>
+        <th width="250" align="center">昵称</th>
+        <!--th width="200" align="center">手机号码</th-->
+      </tr>
+      </thead>
+      <tbody >
+      {foreach from=$users  item=user name=user}
+      <tr>
+        <td align="center"><span class="paimin">{$smarty.foreach.user.iteration}</span></td>
+        <td align="center"><img class="touxiang" src="{$user['avatar']}"></td>
+        <td align="center"><span class="nicheng">{$user['nickname']}</span></td>
+      </tr>
+      {/foreach} 
+      </tbody>
+      </table>
+    
+</div>
+<script type="text/javascript">
+$(function(){
+	$('.phbbiaoge').height($(document).height()-40);
+});
+$(window).resize(function() {
+	$('.phbbiaoge').height($(window.parent.document).find('.phbbiaok').find('iframe').height()-40);
+});
+</script>
+</body>
+</html>

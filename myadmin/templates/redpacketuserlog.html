@@ -1,0 +1,184 @@
+{include file="templates/html_header.html"}
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+			{literal}
+				try{ace.settings.loadState('main-container')}catch(e){}
+			{/literal}
+			</script>
+			<!-- #section:basics/sidebar -->
+			{include file="templates/html_sidebar.html"}
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="main-content-inner">
+					<!-- #section:basics/content.breadcrumbs -->
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="index.php">首页</a>
+							</li>
+							<li class="active"><a href="redpacket.php">红包轮次设置</a></li>
+							<li class="active">{$title}</li>
+						</ul><!-- /.breadcrumb -->
+						<!-- /section:basics/content.searchbox -->
+					</div>
+
+					<!-- /section:basics/content.breadcrumbs -->
+					<div class="page-content">
+					<h3 class="header smaller lighter blue">
+						{$title}
+						<small>用户获取红包信息</small>
+					</h3>
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="row">
+									<div class="col-xs-6">
+										<div class="widget-box widget-color-blue" id="widget-box-2">
+										<div class="widget-header">
+											<h5 class="widget-title bigger lighter">
+												<i class="ace-icon fa fa-users"></i>
+												合计
+											</h5>
+										</div>
+										<div class="widget-body">
+											<div class="widget-main no-padding">
+												<table class="table table-striped table-bordered table-hover">
+													<tbody>
+														<tr>
+															<td>红包数</td>
+															<td>{$redpacket_count}个</td>
+														</tr>
+														<tr>
+															<td>总金额</td>
+															<td>{$total_amount}元</td>
+														</tr>
+														{if $wall_config['rentweixin']!= 2}
+														<tr>
+															<td>实际收到</td>
+															<td>{$total_sendedamount}元</td>
+														</tr>
+														{/if}
+														<!-- <tr>
+															<td>操作</td>
+															<td><a href="">补发</a></td>
+														</tr> -->
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								
+								</div>
+								{if $wall_config['rentweixin']!= 2}
+								<div class="col-xs-6">
+									<div class="widget-box widget-color-blue" id="widget-box-2">
+										<div class="widget-header">
+											<h5 class="widget-title bigger lighter">
+												<i class="ace-icon fa fa-users"></i>
+												红包发送记录
+											</h5>
+										</div>
+										<div class="widget-body">
+											<div class="widget-main no-padding">
+												<table class="table table-striped table-bordered table-hover">
+													<thead class="thin-border-bottom">
+														<tr>
+															<th>订单标号</th>
+															<th>金额</th>
+															<th>发放结果</th>
+														</tr>
+													</thead>
+													<tbody>
+													{foreach $redpacketsendlog as $item}
+														<tr >
+															<td >{$item['mch_billno']}</td>
+															<td >{$item['amount']}</td>
+															<td >{$item['err_code_des']}</td>
+														</tr>
+													{/foreach}
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+								{/if}
+							</div>
+									
+									<div class="widget-box widget-color-blue" id="widget-box-2">
+										<div class="widget-header">
+											<h5 class="widget-title bigger lighter">
+												<i class="ace-icon fa fa-users"></i>
+												红包列表
+											</h5>
+										</div>
+										<div class="widget-body">
+													<div class="widget-main no-padding">
+														<table class="table table-striped table-bordered table-hover">
+															<thead class="thin-border-bottom">
+																<tr>
+																	<th>轮次编号</th>
+																	<th>金额</th>
+																	<th>状态</th>
+																	<th>发放时间</th>
+																	<th>操作</th>
+																</tr>
+															</thead>
+															<tbody>
+															{foreach $redpacketusers as $item}
+																<tr >
+																	<td >{$item['roundid']}</td>
+																	<td >{$item['amount']}元</td>
+																	<td >{$item['statustext']}</td>
+																	<td >{$item['updated_at']}</td>
+																	<td >
+																		{if $item['status']==5}<a href="javascript:checkredpacket('{$item['roundid']}','{$item['userid']}')">查询状态</a>{/if}
+																		{if $item['status']==4}<a href="javascript:sendredpacket('{$item['roundid']}','{$item['userid']}')">重发</a>{/if}
+																	</td>
+																</tr>
+															{/foreach}
+															</tbody>
+														</table>
+													</div>
+												</div>
+									</div>
+
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+{include file="templates/html_footercontent.html"}
+<script type="text/javascript">
+{literal}
+function sendredpacket(roundid,userid){
+	$.ajax({
+		"url":"doredpacket.php?action=sendredpackets",
+		"type":"post",
+		"dataType":"json",
+		"data":{"roundid":roundid,"userid":userid},
+		"success":function(json){
+			
+			console.log(json);
+		}
+	})
+}
+function checkredpacket(roundid,userid){
+	$.ajax({
+		"url":"doredpacket.php?action=checkredpackets",
+		"type":"post",
+		"dataType":"json",
+		"data":{"roundid":roundid,"userid":userid},
+		"success":function(json){
+			alert(json.message);
+			window.location.reload();
+		}
+	})
+}
+{/literal}
+</script>
+<!-- 写每个页面自定的js -->
+{include file="templates/html_footer.html"}

@@ -1,0 +1,164 @@
+{include file="templates/html_header.html"}
+<link rel="stylesheet" href="/assets/plugs/emoji/emoji.css" />
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+			{literal}
+				try{ace.settings.loadState('main-container')}catch(e){}
+			{/literal}
+			</script>
+			<!-- #section:basics/sidebar -->
+			{include file="templates/html_sidebar.html"}
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="main-content-inner">
+					<!-- #section:basics/content.breadcrumbs -->
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="index.php">首页</a>
+							</li>
+							<li class="active">{$title}</li>
+						</ul><!-- /.breadcrumb -->
+						<!-- /section:basics/content.searchbox -->
+						
+					</div>
+
+					<!-- /section:basics/content.breadcrumbs -->
+					<div class="page-content">
+					<h3 class="header smaller lighter blue">
+						签到用户列表
+						<div class="nav-search pull-right" id="nav-search" style="position:relative;">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" name="search" placeholder="昵称、姓名、手机号" value="{$searchtext}" class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="ace-icon fa fa-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div>
+					</h3>
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+									<div class="widget-box widget-color-blue" id="widget-box-2">
+										<div class="widget-header">
+											<h5 class="widget-title bigger lighter">
+												<i class="ace-icon fa fa-users"></i>
+												签到用户列表
+											</h5>
+											<div class="widget-toolbar no-border">
+												<!-- <label>
+													<button class="btn btn-xs btn-warning" onclick="window.location.href='neiding.php';">去内定列表</button>
+												</label> -->
+												<label>
+												<button class="btn btn-xs btn-warning btn_export">导出excel</button>
+												</label>
+											</div>
+										</div>
+										<div class="widget-body">
+													<div class="widget-main no-padding">
+														<table class="table table-striped table-bordered table-hover">
+															<thead class="thin-border-bottom">
+																<tr>
+																	<th>
+																		头像
+																	</th>
+																	<th>
+																		
+																		昵称
+																	</th>
+																	<th>
+																		
+																		姓名
+																	</th>
+																	<th>
+																		手机号
+																	</th>
+																	<th>自定义信息</th>
+																	<th>状态</th>
+																	<th >操作</th>
+																</tr>
+															</thead>
+
+															<tbody>
+															{foreach $flaglist $item}
+																<tr id="item_{$item['openid']}">
+																	<td class=""><img src="{$item['avatar']}" style="width:40px;height:40px;"/></td>
+																	<td class="">{$item['nickname']}</td>
+																	<td class="">{$item['signname']}</td>
+																	<td>
+																		{$item['phone']}
+																	</td>
+																	<td>
+																		{if $item['extentions'] neq ''}
+																		{foreach $item['extentions'] $ext}
+																		{$ext['title']}:{$ext['val']}<br>
+																		{/foreach}
+																		{/if}
+																		
+																	</td>
+																	<td>
+																		{if $item['status']==1}<span class="green" >审核通过</span>{/if}{if $item['status']==2}<span class="red" >待审核</span>{/if}
+																	</td>
+																	<td >
+																		{if $item['status']==1}
+																		<a href="###" onclick="submitbandform('{$item['openid']}',2)"><span class="label label-info">取消审核</span></a>
+																		{/if}
+																		{if $item['status']==2}
+																		<a href="###" onclick="submitbandform('{$item['openid']}',1)"><span class="label label-info">通过审核</span></a>
+																		{/if}
+																		<a href="###" onclick="submitbandform('{$item['openid']}',3)"><span class="label label-danger">删除</span></a>
+																	</td>
+																</tr>
+															{/foreach}
+															</tbody>
+														</table>
+													</div>
+											{$pagehtml}
+												</div>
+									</div>
+								<input type="hidden" name="openid" value=""/>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+{include file="templates/html_footercontent.html"}
+<!-- 写每个页面自定的js -->
+<script type="text/javascript">
+
+{literal}
+jQuery(function($){
+	$('.btn_export').bind('click',function(){
+		window.open('exportqd.php');
+	});
+});
+
+function submitbandform(openid,status){
+	if(status==3){
+		if(!confirm('确认要删除这个用户的信息吗？')){
+			return false;
+		}
+	}
+	$.ajax({
+		"url":"doqiandao.php?action=setband",
+		"type":"post",
+		"dataType":"json",
+		"data":{"openid":openid,"status":status},
+		"success":function(json){
+			if(json.code==1){
+				alert(json.message);
+				window.location.reload();
+			}
+			if(json.code==2){
+				$('#item_'+openid).remove();
+			}
+		}
+	});
+}
+
+{/literal}
+</script>
+{include file="templates/html_footer.html"}

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="screen-orientation" content="portrait"/>
+<meta name="full-screen" content="true"/>
+<title>摇一摇赛龙舟</title>
+<link rel="stylesheet" href="/mobile/template/app/css/weui.min.css">
+<link rel="stylesheet" href="/mobile/template/app/css/jquery-weui.min.css">
+<link rel="stylesheet" type="text/css" href="/Modules/Game/templates/mobile/dragonboat/assets/css/mobile_index.css">
+</head>
+<body class="shakeing1">
+<audio id="ShakeAudio" src="/Modules/Game/templates/mobile/dragonboat/assets/music/v4.mp3" preload="preload"></audio>
+<!-- <div class="memo" style="color:#761d1d;">听从现场指挥摇动手机</div> -->
+<div class="shake-icon"></div>
+    <div class="toolbar" style="position:absolute;top:0;left:0;">
+      <div class="toolbar-inner">
+        <h1 class="title">
+            <a href="javascript:void(0);" class="dropdown-menu has-msg" style="float: right;">更多</a></h1>
+      </div>
+    </div>
+    <div id="pop_nav" class="weui-popup-container popup-bottom" style="display: none;">
+      <div class="weui-popup-overlay"></div>
+      <div class="weui-popup-modal">
+            <div class="toolbar">
+              <div class="toolbar-inner">
+                <a href="javascript:;" class="picker-button close-popup">关闭</a>
+                <h1 class="title">功能列表</h1>
+              </div>
+            </div>
+            <div class="modal-content">
+              <div class="weui_grids">
+          <a href="/mobile/qiandao.php?rentopenid={$openid}" class="weui_grid js_grid">
+                 <div class="weui_grid_icon">
+                   <img src="/mobile/template/app/images/icon/ico005.png" alt="" style="background-color: #3399cc;">
+                 </div>
+                 <p class="weui_grid_label">
+                   签到
+                 </p>
+               </a>
+          {foreach $plugs $item}
+                {if $item['name']=='wall'}
+                <a href="/mobile/index.php?rentopenid={$openid}" class="weui_grid js_grid">
+                  <div class="weui_grid_icon">
+                    <img src="/mobile/template/app/images/icon/ico009.png" alt="" style="    background-color: #72C700;">
+                  </div>
+                  <p class="weui_grid_label">
+                    上墙
+                  </p>
+                </a>
+                {/if}
+
+                {if $item['name']=='vote'}
+                <a href="/mobile/vote.php?rentopenid={$openid}" class="weui_grid js_grid">
+                  <div class="weui_grid_icon">
+                    <img src="/mobile/template/app/images/icon/ico004.png" alt="" style="      background-color: #ff9900;  ">
+                  </div>
+                  <p class="weui_grid_label">
+                    投票
+                  </p>
+                </a>
+                {/if}
+                {if $item['name']=='redpacket'}
+                <a href="/mobile/redpacket.php?rentopenid={$openid}" class="weui_grid js_grid">
+                  <div class="weui_grid_icon">
+                    <img src="/mobile/template/app/images/icon/redpack3.png" alt="" style=" background-color:red;">
+                  </div>
+                  <p class="weui_grid_label">
+                    红包雨
+                  </p>
+                </a>
+                {/if}
+                {if $item['name']=='ydj'}
+                <a href="{$item['mobile']['menu']['link']}&rentopenid={$openid}&vcode={$wall_config['verifycode']}" class="weui_grid js_grid">
+                  <div class="weui_grid_icon">
+                    <img src="/mobile/template/app/images/icon/redpack3.png" alt="" style="background-color: #761d1d;  ">
+                  </div>
+                  <p class="weui_grid_label">
+                    摇大奖
+                  </p>
+                </a>
+                {/if}
+                {if $item['name']=='game'}
+                <a href="{$item['mobile']['menu']['link']}&rentopenid={$openid}&vcode={$wall_config['verifycode']}" class="weui_grid js_grid">
+                  <div class="weui_grid_icon">
+                    <img src="/wall/themes/meepo/assets/images/icon/game.png" alt="">
+                  </div>
+                  <p class="weui_grid_label">
+                    游戏
+                  </p>
+                </a>
+                {/if}
+               {/foreach}
+               {foreach $plugs $item}
+               {if $item['choujiang']==1}
+               <a href="/mobile/cjresult.php?rentopenid={$openid}" class="weui_grid js_grid">
+                  <div class="weui_grid_icon">
+                    <img src="/mobile/template/app/images/icon/ico001.png" alt="" style=" background-color:red;">
+                  </div>
+                  <p class="weui_grid_label">
+                   中奖信息
+                  </p>
+                </a>
+              
+              {break}
+              {/if}
+              {/foreach}
+              {foreach $custommenu $item}
+              <a href="{$item['url']}" class="weui_grid js_grid">
+                <div class="weui_grid_icon">
+                  <img src="{$item['iconpath']}" alt="">
+                </div>
+                <p class="weui_grid_label">
+                  {$item['title']}
+                </p>
+              </a>
+              {/foreach}
+              </div>
+              <div class="collect">
+                    <aside>
+                        <img src="{if $erweima==''}/wall/defaultqrcode.php{else}{$erweima}{/if}" alt="请检查二维码是否上传成功">
+                    </aside>
+                    <p class="p1">
+                        为便于您退出后二次进入强烈建议您长按左侧二维码进行保存
+                    </p>
+                </div>
+            </div>
+      </div>
+    </div>
+    <div id="toast"></div>
+    
+    <script type="text/javascript">
+        var GAMECONFIG={$config|json_encode};
+        var USERINFO={$userinfo};
+        var JOINSTATUS={$joinstatus};
+     </script>
+     <script type="text/javascript" src="/assets/js/require.min.js" data-main="/Modules/Game/templates/mobile/dragonboat/assets/js/mobile_index.js"></script>
+    </body>
+</html>

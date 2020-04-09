@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="screen-orientation" content="portrait"/>
+<meta name="full-screen" content="true"/>
+<title>数钱游戏</title>
+<link rel="stylesheet" href="/Modules/Game/templates/mobile/money/assets/css/weui.min.css">
+<link rel="stylesheet" href="/Modules/Game/templates/mobile/money/assets/css/jquery-weui.min.css">
+<style>
+* { touch-action: pan-y; }
+@-webkit-keyframes twinkling{ /*透明度由0到1*/
+	0%{
+		opacity:0; /*透明度为0*/
+	}
+	100%{
+		opacity:1; /*透明度为1*/
+	}
+}
+</style>
+
+<link rel="stylesheet" href="/mobile/template/app/css/animate.min.css?v=1.1.0">
+<style>
+{literal}
+.money_count .reg_bag{
+    width: 86%;
+    height: 100%;
+    position: absolute;
+    bottom: -20px;
+    background: url("/Modules/Game/templates/mobile/money/assets/images/red_bag.png") no-repeat center bottom;
+    background-size: 100% auto;
+    left: 7%;
+}
+.money_count .mask{
+    width: 86%;
+    height: 135px;
+    position: absolute;
+    bottom: -20px;
+    left: 7%;
+    background: url("/Modules/Game/templates/mobile/money/assets/images/mask.png") no-repeat center 0;
+    background-size: 100% auto;
+}
+.money_count .gold{
+    width: 100%;
+    height: 60px;
+    position: absolute;
+    bottom: 0;
+    background: url("/Modules/Game/templates/mobile/money/assets/images/gold.png") no-repeat center 0;
+    background-size: 100% auto;
+}
+.money_count .money{
+    background-color: #73dcff;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    background: url("/Modules/Game/templates/mobile/money/assets/images/money.png") no-repeat center bottom;
+    background-size: 100% auto;
+}
+.play_tips .arrow{
+    width: 40%;
+    height: 100%;
+    background: url("/Modules/Game/templates/mobile/money/assets/images/arrow.png") no-repeat center;
+    background-size: contain;
+    margin: 0 auto;
+}
+.play_tips .hand{
+    width: 120px;
+    height: 120px;
+    background: url("/Modules/Game/templates/mobile/money/assets/images/hand.png") no-repeat center;
+    background-size: contain;
+    position: absolute;
+    top: 350px;
+    left: 180px;
+    -webkit-animation: handSwipe 1.8s ease infinite;
+    -moz-animation: handSwipe 1.8s ease infinite;
+    animation: handSwipe 1.8s ease infinite;
+}
+/* .wechat_time{position:absolute;top:20px;right:10px;color:#fff;height:42px;line-height:42px;text-align:Center;min-width:50px;max-width:100px} */
+.had_shumoney{position:absolute;top:20px;left:0px;color:#fff;height:42px;line-height:42px;text-align:Center;min-width:120px;max-width:300px;margin:0 auto}
+.shumoney_box{font-size:30px;font-weight:bold}
+
+
+
+{/literal}
+</style>
+<link href="/Modules/Game/templates/mobile/money/assets/css/mobile_index.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<audio id="Audio_GoPlayer" src="/Modules/Game/templates/mobile/money/assets/music/go.wav" controls="controls"  style="display:none"></audio>
+<audio id="Audio_PiuPlayer" src="/Modules/Game/templates/mobile/money/assets/music/piu.mp3" controls="controls"  style="display:none"></audio>
+<div class="money_count">
+    <div class="reg_bag"></div>
+    <div class="money_box"></div>
+    <div class="wait_tips" style="display: none;" id="wait_tips"></div>
+    <div class="mask"></div>
+    <div class="gold"></div>
+    <div id="touchBox"></div>
+</div>
+<!-- <div class="opt">
+    <div class="rank_ico" id="rankBtn" style="display: none"></div>
+</div>
+<div class="rank_mask" style="display: none;" id="rank_list">
+    <div style="height: 2em;"></div>
+    <div class="rank_dec"></div>
+    <div class="close" id="closeBtn"></div>
+    <div class="rank_box"></div>
+    <div class="rank_list_box">
+        <div class="head_img"><img id="head_img"></div>
+        <div class="my_rank">第<span id="myTop">0</span>名 <span id="scoreTxt">0</span>元</div>
+        <div class="rank" id="rankBox"></div>
+        <div class="logo"></div>
+    </div>
+</div> -->
+<div class="play_tips" id="play_tips">
+    <div class="arrow"></div>
+    <div class="hand"></div>
+</div>
+</script>
+<style>
+    {literal}
+    /*header*/
+    .toolbar .toolbar-inner{height: auto;}
+    .toolbar .title{top: 10px;right: 10px;font-size: .875em;font-weight: normal;}
+    .weui-popup-modal .toolbar .title{top: 0; right: 0;background: #04BE02;color: #fff;font-size: .85rem}
+    .title a,.toolbar .picker-button{
+    color:#fff;
+    }
+    .title a {
+        position: relative;
+        display: inline-block;
+        padding: 5px 10px;
+        line-height: 1em;background: rgba(0,0,0,.5);
+        border-radius: 1000px;
+        text-decoration: none;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-tap-highlight-color:transparent; 
+    }
+    .title a::after {
+        position: relative;
+        display: inline-block;
+        width: 16px;
+        height: 10px;
+        margin-left: 5px;
+        background: url(/Modules/Game/templates/mobile/money/assets/images/w-icon-dropdown.png) center center no-repeat;
+        background-size: 16px;
+        content: "";
+    }
+    .collect{
+        padding:20px;
+    }
+    .collect aside {
+        float: left;
+        border: 1px solid #ff7101;
+        background: #fff;
+        padding: 4px;
+        line-height: 0;
+        margin-left: 10px;
+        border-radius: 5px;
+        margin-bottom:20px;
+    }
+    .collect aside img {
+        width: 80px;
+        height: 80px;
+        border: 0;
+    }
+    .collect .p1 {
+        padding-top: 9px;
+        line-height: 25px;
+        font-size: 14px;
+        margin-left: 115px;
+    }
+    
+    #toast {
+        display: none;
+        position: fixed;
+        padding: 9px 15px;
+        background-color: #333;
+        z-index: 8000;
+        border-radius: 5px;
+        font-size: 15px;
+        color: #ffffff;
+        line-height: 25px;
+        text-align: center;
+        
+    }
+    .dropdown-menu::after{
+              -webkit-animation: twinkling 1s infinite ease-in-out; 
+         }
+    .toolbar{background: none;z-index: 1000;}
+    .toolbar:before{display: none;}
+    {/literal}
+    </style>
+
+<div class="toolbar" style="position:absolute;top:0;left:0;">
+        <div class="toolbar-inner">
+          <h1 class="title">
+              <a href="javascript:void(0);" class="dropdown-menu has-msg" style="float: right;">更多</a></h1>
+        </div>
+</div>
+<div id="pop_nav" class="weui-popup-container popup-bottom" style="display: none;">
+<div class="weui-popup-overlay"></div>
+<div class="weui-popup-modal">
+      <div class="toolbar">
+        <div class="toolbar-inner">
+          <a href="javascript:;" class="picker-button close-popup">关闭</a>
+          <h1 class="title">功能列表</h1>
+        </div>
+      </div>
+      <div class="modal-content">
+        <div class="weui_grids">
+    <a href="/mobile/qiandao.php?rentopenid={$openid}" class="weui_grid js_grid">
+            <div class="weui_grid_icon">
+              <img src="/mobile/template/app/images/icon/ico005.png" alt="" style="background-color: #3399cc;">
+            </div>
+            <p class="weui_grid_label">
+              签到
+            </p>
+          </a>
+    {foreach $plugs $item}
+          {if $item['name']=='wall'}
+          <a href="/mobile/index.php?rentopenid={$openid}" class="weui_grid js_grid">
+            <div class="weui_grid_icon">
+              <img src="/mobile/template/app/images/icon/ico009.png" alt="" style="    background-color: #72C700;">
+            </div>
+            <p class="weui_grid_label">
+              上墙
+            </p>
+          </a>
+          {/if}
+          {if $item['name']=='vote'}
+          <a href="/mobile/vote.php?rentopenid={$openid}" class="weui_grid js_grid">
+            <div class="weui_grid_icon">
+              <img src="/mobile/template/app/images/icon/ico004.png" alt="" style="      background-color: #ff9900;  ">
+            </div>
+            <p class="weui_grid_label">
+              投票
+            </p>
+          </a>
+          {/if}
+          {if $item['name']=='redpacket'}
+          <a href="/mobile/redpacket.php?rentopenid={$openid}" class="weui_grid js_grid">
+            <div class="weui_grid_icon">
+              <img src="/mobile/template/app/images/icon/redpack3.png" alt="" style=" background-color:red;">
+            </div>
+            <p class="weui_grid_label">
+              红包雨
+            </p>
+          </a>
+          {/if}
+          {if $item['name']=='ydj'}
+          <a href="{$item['mobile']['menu']['link']}&rentopenid={$openid}&vcode={$wall_config['verifycode']}" class="weui_grid js_grid">
+            <div class="weui_grid_icon">
+              <img src="/mobile/template/app/images/icon/redpack3.png" alt="" style="background-color: #761d1d;  ">
+            </div>
+            <p class="weui_grid_label">
+              摇大奖
+            </p>
+          </a>
+          {/if}
+          {if $item['name']=='game'}
+          <a href="{$item['mobile']['menu']['link']}&rentopenid={$openid}&vcode={$wall_config['verifycode']}" class="weui_grid js_grid">
+            <div class="weui_grid_icon">
+              <img src="/wall/themes/meepo/assets/images/icon/game.png" alt="" >
+            </div>
+            <p class="weui_grid_label">
+              游戏
+            </p>
+          </a>
+          {/if}
+          {/foreach}
+          {foreach $plugs $item}
+          {if $item['choujiang']==1}
+          <a href="/mobile/cjresult.php?rentopenid={$openid}" class="weui_grid js_grid">
+            <div class="weui_grid_icon">
+              <img src="/mobile/template/app/images/icon/ico001.png" alt="" style=" background-color:red;">
+            </div>
+            <p class="weui_grid_label">
+              中奖信息
+            </p>
+          </a>
+        {break}
+        {/if}
+        {/foreach}
+        {foreach $custommenu $item}
+        <a href="{$item['url']}" class="weui_grid js_grid">
+          <div class="weui_grid_icon">
+            <img src="{$item['iconpath']}" alt="">
+          </div>
+          <p class="weui_grid_label">
+            {$item['title']}
+          </p>
+        </a>
+        {/foreach}
+        </div>
+        <div class="collect">
+              <aside>
+                  <img src="{if $erweima==''}/wall/defaultqrcode.php{else}{$erweima}{/if}" alt="请检查二维码是否上传成功">
+              </aside>
+              <p class="p1">
+                  为便于您退出后二次进入强烈建议您长按左侧二维码进行保存
+              </p>
+          </div>
+      </div>
+</div>
+</div>
+    <div id="toast"></div>
+    <script type="text/javascript">
+        var GAMECONFIG={$config|json_encode};
+        var USERINFO={$userinfo};
+        var JOINSTATUS={$joinstatus};
+     </script>
+     <script type="text/javascript" src="/assets/js/require.min.js" data-main="/Modules/Game/templates/mobile/money/assets/js/mobile_index.js"></script>
+    </body>
+    </html>

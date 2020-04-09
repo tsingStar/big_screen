@@ -1,0 +1,276 @@
+{$html_header}
+<style>
+.pointer{
+	cursor: pointer;
+}
+.float-right{
+	float: right;
+}
+.prize-img img{
+	width: 70px;
+	height:70px;
+}
+</style>
+<!--轮次设置-->
+<!-- /section:basics/navbar.layout -->
+<div class="main-container ace-save-state" id="main-container">
+	<script type="text/javascript">
+		{literal}
+		try {
+			ace.settings.loadState('main-container')
+		} catch (e) {} 
+		{/literal}
+	</script>
+	<!-- #section:basics/sidebar -->
+	{$html_sidebar}
+	<!-- /section:basics/sidebar -->
+	<div class="main-content">
+		<div class="main-content-inner">
+			<!-- #section:basics/content.breadcrumbs -->
+			<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+				<ul class="breadcrumb">
+					<li>
+						<i class="ace-icon fa fa-home home-icon"></i>
+						<a href="/myadmin/index.php">首页</a>
+					</li>
+					<li class="active">{$title}</li>
+				</ul><!-- /.breadcrumb -->
+				<!-- /section:basics/content.searchbox -->
+			</div>
+
+			<!-- /section:basics/content.breadcrumbs -->
+			<div class="page-content">
+				<h3 class="header smaller lighter blue">
+					{$title}
+					<small>{$description}</small>
+				</h3>
+				<div class="row">
+					<div class="col-xs-12">
+						<!-- PAGE CONTENT BEGINS -->
+                        <div class="row">
+							<div class="col-xs-2 roundlist">
+								{foreach from=$data item=$val name=config}
+								<div class="well {if $currentid eq $val['id']}green{/if}">
+									<span class="pointer btn-lotteryconfig" data-id="{$val['id']}">第{$smarty.foreach.config.iteration}轮抽奖</span><span  class="pointer float-right btn-dellotteryconfig" data-id="{$val['id']}"><i class="fa fa-times"></i></span>
+								</div>
+								<hr/>
+								{/foreach}
+								<button class="btn btn-info" style="width:100%" id="btn-openmodaladdlotteryconfig">添加</button>
+							</div>
+							{if $lotteryconfig != null}
+							<div class="col-xs-10">
+								<div class="tabbable">
+									<ul class="nav nav-tabs" id="myTab">
+										<li class="active">
+											<a data-toggle="tab" href="#lotteryconfig">
+												<i class="green ace-icon fa fa-gear bigger-120"></i>
+												配置
+											</a>
+										</li>
+										{if $lotteryconfig['themeconfig'] neq ''}
+										<li>
+											<a data-toggle="tab" href="#lotterytheme"  id="btn-themesettings" data-id="{$currentid}">
+												<i class="red ace-icon fa fa-tachometer bigger-120"></i>	
+												主题设置
+											</a>
+										</li>
+										{/if}
+										<li>
+											<a data-toggle="tab" href="#prizes" id="btn-showprizes" data-id="{$currentid}">
+												<i class="red ace-icon fa fa-gift bigger-120"></i>	
+												奖品设置
+											</a>
+										</li>
+
+										<li >
+											<a data-toggle="tab" href="#winners" id="btn-showwinners" data-id="{$currentid}">
+												<i class="red ace-icon fa fa-list bigger-120"></i>	
+												中奖名单
+											</a>
+										</li>
+										<li >
+											<a data-toggle="tab" href="#designated" id="btn-showdesignated" data-id="{$currentid}">
+													<i class="red ace-icon fa fa-male bigger-120"></i>
+												内定设置
+											</a>
+										</li>
+									</ul>
+
+									<div class="tab-content">
+										<div id="lotteryconfig" class="tab-pane fade in active">
+											<div class="row">
+												<div class="col-sm-12">
+													<form class="form-horizontal" role="form">
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">游戏名：</label>
+															<div class="col-sm-9">
+																<div style="padding-top:8px;">
+																	<input type="text" name="title" value="{$lotteryconfig['title']}">
+																</div>
+															</div>
+														</div>
+														<div class="form-group">
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-1">选择主题：</label>
+																<div class="col-sm-9">
+																		<select name="themeid" class="col-xs-10 col-sm-5">
+																			{foreach $themes $item}
+																			<option value='{$item['id']}' {if $lotteryconfig['themeid']==$item['id']}selected{/if}>{$item['themename']}</option>
+																			{/foreach}
+																		</select>
+																</div>
+														</div>
+							
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">可重复参与：</label>
+															<div class="col-sm-9">
+																<div style="padding-top:8px;">
+																	<label>
+																		<input name="winagain" class="ace ace-switch" type="checkbox" value="2" {if $lotteryconfig['winagain']==2}checked{/if}/>
+																		<span class="lbl"></span>
+																	</label>
+																</div>
+															</div>
+														</div>
+														<!-- /section:elements.form -->
+														<div class="space-4"></div>
+							
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right" for="form-field-2">中奖结果：</label>
+															<div class="col-sm-9">
+																	<div class="radio">
+																		<label>
+																			<input name="showtype" type="radio" class="ace" {if $lotteryconfig['showtype']=='nickname'}checked{/if} value="nickname"/>
+																			<span class="lbl">昵称</span>
+																		</label>
+																		<label>
+																			<input name="showtype" type="radio" class="ace"  {if $lotteryconfig['showtype']=='signname'}checked{/if} value="signname"/>
+																			<span class="lbl">姓名</span>
+																		</label>
+																		<label>
+																			<input name="showtype" type="radio" class="ace"  {if $lotteryconfig['showtype']=='phone'}checked{/if} value="phone"/>
+																			<span class="lbl">手机号</span>
+																		</label>
+																	</div>
+															</div>
+														</div>
+														<div class="clearfix form-actions">
+															<div class="col-md-offset-3 col-md-9">
+																<input type="hidden" name="id" value="{$lotteryconfig['id']}"/>
+																<button class="btn btn-info btn-savelotteryconfig" type="button">
+																	<i class="ace-icon fa fa-check bigger-110"></i>
+																	保存
+																</button>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+										{if $lotteryconfig['themeconfig'] neq ''}
+										<div id="lotterytheme" class="tab-pane fade">
+											<p>网速不是很好，没有加载成功哦，请刷新页面后再试试</p>
+										</div>
+										{/if}
+										<div id="prizes" class="tab-pane fade">
+											<p>网速不是很好，没有加载成功哦，请刷新页面后再试试</p>
+										</div>
+										<div id="winners" class="tab-pane fade">
+											<p>网速不是很好，没有加载成功哦，请刷新页面后再试试</p>
+										</div>
+										<div id="designated" class="tab-pane fade">
+											<p>网速不是很好，没有加载成功哦，请刷新页面后再试试</p>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							{/if}
+						</div>
+						<div class="modal fade" id="addlotteryconfigmodal" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+											<h4 class="blue bigger">添加抽奖</h4>
+										</div>
+										<div class="modal-body">
+											<div class="row">
+												<div class="col-sm-12">
+													<form class="form-horizontal" id="addlotteryconfig" role="form" >
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right">游戏名:</label>
+															<div class="col-sm-9">
+																<input type="text" name="title" value=""/>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right">选择主题:</label>
+															<div class="col-sm-9">
+																<select name="themeid">
+																	{foreach $themes $item}
+																	<option value='{$item['id']}'>{$item['themename']}</option>
+																	{/foreach}
+																</select>
+															</div>
+														</div>
+														
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right">可重复参与:</label>
+															<div class="col-sm-9">
+																<div style="padding-top:8px;">
+																<label>
+																	<input name="winagain" class="ace ace-switch" type="checkbox" value="2"/>
+																	<span class="lbl"></span>
+																</label>
+																</div>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right">中奖结果:</label>
+															<div class="col-sm-9">
+																	<div class="radio">
+																		<label>
+																			<input name="showtype" type="radio" class="ace" checked value="nickname"/>
+																			<span class="lbl">昵称</span>
+																		</label>
+																		<label>
+																			<input name="showtype" type="radio" class="ace" value="signname"/>
+																			<span class="lbl">姓名</span>
+																		</label>
+																		<label>
+																			<input name="showtype" type="radio" class="ace" value="phone"/>
+																			<span class="lbl">手机号</span>
+																		</label>
+																	</div>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button class="btn btn-sm btn-primary btn-addlotteryconfig">
+												<i class="ace-icon fa fa-check"></i>
+												保存
+											</button>
+											<button class="btn btn-sm " data-dismiss="modal" type="button">关闭</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						<!-- PAGE CONTENT ENDS -->
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.page-content -->
+		</div>
+	</div><!-- /.main-content -->
+	{$html_footercontent}
+	<!-- 写每个页面自定的js -->
+	<script type="text/javascript" src="/myadmin/assets/js/jquery.form.js"></script>
+	<!--引入CSS-->
+	<link rel="stylesheet" type="text/css" href="/assets/plugs/webuploader-0.1.5/webuploader.css">
+	<!--引入JS-->
+	<script type="text/javascript" src="/assets/plugs/webuploader-0.1.5/webuploader.min.js"></script>
+	<script type="text/javascript" src="{$module_assets}/js/admin_index.js"></script>
+	
+	{$html_footer}

@@ -1,0 +1,316 @@
+<!--
+    设置背景图
+    设置背景音乐
+
+    系统文字颜色
+-->
+<style>
+        {literal}
+        .uploader-list .item{
+            height: 167px;
+            width: 300px;
+            border: 1px dotted;
+        }
+        .btn-selectfile{
+            margin-top: 60px;
+            margin-left: 60px;
+        }
+        {/literal}
+        </style>
+        <div class="row">
+            <div class="col-sm-12">
+                <form method="post" action="module.php?m=page&c=admin&a=ajaxSavePagedata" role="form" enctype="multipart/form-data">
+                    <div class="form-group" >
+                        <label style="font-weight: 700;">内容图：</label>
+                        <div class="col-sm-12">
+                            <input multiple="" type="file"  class="imageuploader img" name="file"/>
+                            <input type="hidden" name="key" value="img"/>
+                            <input type="hidden" name="imgid" value="0" />
+                            <div class="hr hr-12 dotted"></div>
+                            <button type="button" class="btn btn-sm btn-primary btn-saveimage">保存</button>
+                        </div>
+                    </div>
+                </form>
+                <form class="form-horizontal" role="form">
+                        
+                    <div class="space-4"></div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" >背景音乐：</label>
+                        <div class="col-sm-9">
+                            <label style="margin-top:9px;">
+                                <input name="bgmusic_switch" class="ace ace-switch" type="checkbox" value="1" {if $currentdata['pagedata']['bgmusic_switch']==1 }checked{/if}/>
+                                <span class="lbl"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="clearfix form-actions">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button class="btn btn-info btn-savethemesettings" type="button">
+                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                保存
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <div class="col-xs-12">
+                            <label class="control-label no-padding-right" >背景图：</label>
+                        </div>
+                        <div class="col-xs-12">
+                            <div  class="bguploader">
+                                <!--用来存放文件信息-->
+                                <div  class="uploader-list">
+                                    <div class="item">
+                                        <div class="btn-selectfile"><i class="fa fa-folder-open-o"></i>点击此处选择文件</div>
+                                    </div>
+                                </div>
+                                <div class="btns">
+                                    <input type="hidden" name="key" value="bg"/>
+                                    <input type="hidden" name="val" value=""/>
+                                    <button  class="btn btn-primary btn-upload">保存</button>
+                                    <button  class="btn btn-default btn-reset">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12  col-md-6">
+                        <div class="col-xs-12 ">
+                            <label class="control-label no-padding-right" >背景音乐：</label>
+                        </div>
+                        <div class="col-xs-12">
+                            <div  class="bgmusicuploader">
+                                <div  class="uploader-list">
+                                    <div  class="item">
+                                        <div class="btn-selectfile"><i class="fa fa-folder-open-o"></i>点击此处选择背景音乐</div>
+                                    </div>
+                                </div>
+                                <div class="btns">
+                                    <input type="hidden" name="key" value="bgmusic"/>
+                                    <input type="hidden" name="val" value=""/>
+                                    <button  class="btn btn-primary btn-upload">保存</button>
+                                    <button  class="btn btn-default btn-reset">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+        var settings={$currentdata['pagedata']|json_encode};
+        var isinited=false;
+        {literal}
+        var admin_snippets_themesettings=function(id){
+            var btn_savethemesettings=$('.btn-savethemesettings');
+            var bguploader=$('.bguploader');
+            var bgmusicuploader=$('.bgmusicuploader');
+            var btns_saveimage=$('.btn-saveimage');
+            var configid=id;
+            function bindBtns(){
+                btn_savethemesettings.on('click',function(){
+                    ajaxSaveThemeSettings().done(function(json){
+                        if(json.code>0){
+                            window.location.reload();
+                        }else{
+                            alert(json.message);
+                        }
+                    })
+                });
+                btns_saveimage.on('click',function(){
+                    var form=$(this).parents('form');
+                    form.ajaxSubmit({
+                        "data":{"configid":configid},
+                        "dataType":"json",
+                        "success":function(json){
+                            if(json.code>0){
+                                window.location.reload();
+                            }
+                        }
+                    })
+                });
+            }
+    
+            function ajaxSaveThemeSettings(){
+                var bgmusic_switch=$('input[name=bgmusic_switch]:checked').val()==1?1:2;
+                return $.ajax({
+                    "url":"/Modules/module.php?m=page&c=admin&a=ajaxSavePagedata",
+                    "data":{'configid':configid,'key':'bgmusic_switch','val':bgmusic_switch},
+                    "type":"post",
+                    "dataType":'json'
+                })
+            }
+        
+            var ctrl_uploader=null;
+            function createImageUploader(){
+                var ratio = window.devicePixelRatio || 1;
+                var thumbnailWidth = 300 * ratio;
+                var thumbnailHeight = 167 * ratio;
+                // bguploader
+                var uploadbtn=bguploader.find('.uploader-list .btn-selectfile');
+                ctrl_uploader=WebUploader.create({
+                    swf:'/myadmin/assets/webuploader-0.1.5/Uploader.swf',
+                    server:'module.php?m=page&c=admin&a=ajaxSavePagedata',
+                    pick:{'id':bguploader.find('.uploader-list .btn-selectfile'),multiple:false},
+                    resize: false,
+                    fileNumLimit:1,
+                    formData:{"val":bguploader.find('input[name=val]').val(),'key':bguploader.find('input[name=key]').val(),"configid":configid},//self.find('input[name=val]').val()
+                    duplicate:true,
+                    accept:{
+                        mimeTypes:'image/jpg,image/jpeg,image/png,video/mp4',
+                    }
+                });
+                // bguploader.find('.uploader-list .item').html('<div class="btn-selectfile"><i class="fa fa-folder-open-o"></i>点击此处选择文件</div>');
+                // ctrl_uploader.addButton({
+                //     'id':bguploader.find('.uploader-list .btn-selectfile'),
+                // });
+                ctrl_uploader.on( 'fileQueued', function( file ) {
+                    if('image/jpg,image/jpeg,image/png'.indexOf(file.type)===-1){
+                        var img=$("<img src='/assets/images/icons/video_file.png' style='width:300px;height:167px;'/>");
+                        bguploader.find('.uploader-list .item').append(img);
+                    }else{
+                        var img=$("<img/>");
+                        bguploader.find('.uploader-list .item').append(img);
+                        this.makeThumb(file,function(error,src){
+                            if ( error ) {
+                                img.replaceWith('<span>不能预览</span>');
+                                return;
+                            }
+                            img.attr( 'src', src );
+                            img.css({'max-width':'300px','width':'300px' ,'max-height':'167px'});
+                        },thumbnailWidth, thumbnailHeight);
+                    }
+                });
+                //加入队列前 先清空队列中的内容
+                ctrl_uploader.on('beforeFileQueued',function(file){
+                    this.reset();
+                    bguploader.find('.uploader-list .item').html('');
+                });
+                ctrl_uploader.on('uploadSuccess',function(file,response){
+                    alert(response.message);
+                    window.location.reload();
+                });
+                bguploader.find('.btn-upload').on('click',function(){
+                    ctrl_uploader.upload();
+                });
+                bguploader.find('.btn-reset').on('click',function(){
+                    bguploader.find('input[name=val]').val('0');
+                    bguploader.find('.uploader-list .item').html('<div class="btn-selectfile"><i class="fa fa-folder-open-o"></i>点击此处选择文件</div>');
+                    ctrl_uploader.addButton({
+                        'id':bguploader.find('.uploader-list .btn-selectfile'),
+                    });
+                    $.ajax({
+                        'url':'module.php?m=page&c=admin&a=ajaxSavePagedata',
+                        "data":{"val":bguploader.find('input[name=val]').val(),'key':bguploader.find('input[name=key]').val(),"configid":configid},
+                        "type":"post",
+                        "dataType":'json'
+                    });
+                });
+                if(parseInt(settings.bg)>0){
+                    if(settings.bg_path.indexOf('.mp4')===-1){
+                        bguploader.find('.uploader-list .item').html("<img src='"+settings.bg_path+"' style='width:300px;height:167px;'/>");
+                    }else{
+                        bguploader.find('.uploader-list .item').html('<video src="'+settings.bg_path+'" style="object-fit:fill;max-width:300px;height:auto;max-height:167px;" autoplay="autoplay" autobuffer autoloop loop controls="controls"  ></video>');
+                    }
+                    bguploader.find('input[name=val]').val(settings.bg);
+                }
+                
+            }
+            function createMusicUploader(){
+                var ctrl_uploader=WebUploader.create({
+                    swf:'/myadmin/assets/webuploader-0.1.5/Uploader.swf',
+                    server:'module.php?m=page&c=admin&a=ajaxSavePagedata',
+                    pick:{'id':bgmusicuploader.find('.btn-selectfile'),multiple:false},
+                    resize: false,
+                    fileNumLimit:1,
+                    formData:{"val":bgmusicuploader.find('input[name=val]').val(),'key':bgmusicuploader.find('input[name=key]').val(),"configid":configid},//self.find('input[name=val]').val()
+                    duplicate:true,
+                    accept:{
+                        mimeTypes:'audio/mp3,audio/mpeg3',
+                    }
+                });
+                ctrl_uploader.on( 'fileQueued', function( file ) {
+                    var audio=$('<img src="/assets/images/icons/music_file.png" style="width:300px;height:167px;"/>');
+                    bgmusicuploader.find('.uploader-list .item').append(audio);
+                });
+                //加入队列前 先清空队列中的内容
+                ctrl_uploader.on('beforeFileQueued',function(file){
+                    this.reset();
+                    bgmusicuploader.find('.uploader-list .item').html('');
+                });
+                ctrl_uploader.on('uploadSuccess',function(file,response){
+                    alert(response.message);
+                    window.location.reload();
+                });
+                bgmusicuploader.find('.btn-upload').on('click',function(){
+                    ctrl_uploader.upload();
+                });
+                bgmusicuploader.find('.btn-reset').on('click',function(){
+                    bgmusicuploader.find('input[name=val]').val('');
+                    bgmusicuploader.find('.uploader-list .item').html('<div class="btn-selectfile"><i class="fa fa-folder-open-o"></i>点击此处选择文件</div>');
+                    ctrl_uploader.addButton({
+                        'id':bgmusicuploader.find('.uploader-list .btn-selectfile'),
+                    })
+                    $.ajax({
+                        'url':'module.php?m=page&c=admin&a=ajaxSavePagedata',
+                        "data":{"val":bgmusicuploader.find('input[name=val]').val(),'key':bgmusicuploader.find('input[name=key]').val(),"configid":configid},
+                        "type":"post",
+                        "dataType":'json'
+                    });
+                });
+                if(parseInt(settings.bgmusic)>0){
+                    bgmusicuploader.find('.uploader-list .item').html('<audio controls="controls"    style="margin-top: 60px;"><source src="'+settings.bgmusic_path+'" type="audio/mpeg"> </source>您的浏览器不支持音乐播放，您可以下载这个谷歌浏览器， https://pan.baidu.com/s/1bp0MHFx，效果和性能会好一点哦</audio>');
+                    bgmusicuploader.find('input[name=val]').val(settings.bgmusic);
+                }
+                // console.log(ctrl_uploader);
+                // bgmusicuploader.find('.uploader-list .item')
+            }
+            function bindCtrls() {
+                createImageUploader();
+                createMusicUploader();
+                $('.imageuploader').ace_file_input({
+                    style: 'well',
+                    btn_choose: '点击此处选择图片',
+                    btn_change: null,
+                    no_icon: 'ace-icon fa fa-cloud-upload',
+                    droppable: true,
+                    maxSize: 550000,
+                    allowExt: ["jpeg", "jpg", "png", "gif"],
+                    allowMime: ["image/jpg", "image/jpeg", "image/png", "image/gif"],
+                    thumbnail: 'large',//large | fit
+                    previewHeight: 123,
+                    preview_error: function (filename, error_code) {
+                    }
+
+                }).on('change', function () {
+                });
+                var path=settings['img']>0?'/imageproxy.php?id='+settings['img']:settings['img_path'];
+                if(settings['img']>0){
+                    $('.img').ace_file_input('show_file_list', [
+                        {type: 'image', name: '', path:path},
+                    ]);
+                }
+            }
+            
+            return {
+                'init':function(){
+                    if(isinited==false){
+                        bindCtrls();
+                        bindBtns();
+                        isinited=true;
+                    }
+                    setTimeout(function(){
+                        var bgimg= bguploader.find('input[name=val]').val();
+                        if(!bgimg){
+                            bguploader.find('.btn-reset').trigger('click');
+                        }
+                        var music=bgmusicuploader.find('input[name=val]').val();
+                        if(!music){
+                            bgmusicuploader.find('.btn-reset').trigger('click');
+                        }
+                    },1000);
+                }
+            }
+        }
+        {/literal}
+        </script>

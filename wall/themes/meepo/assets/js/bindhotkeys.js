@@ -1,0 +1,1 @@
+hotkeys("*",function(o){(hotkeys.ctrl||hotkeys.control)&&$(window.top).focus()});

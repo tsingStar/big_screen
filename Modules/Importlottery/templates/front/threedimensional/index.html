@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>签到 - {$title}</title>
+    <link rel="stylesheet" type="text/css" href="{$assets}/css/basic.css">
+    <link rel="stylesheet" href="{$assets}/fonts/font_864467_uc9k8ie5j6/iconfont.css">
+        <style>
+    {literal}
+    #show_hide_nav{width: 100%;position: fixed;bottom: -10px;text-align: center;z-index:9998}	
+    .Panel.Top{z-index:1}
+    {/literal}
+    </style>
+    <script src="{$assets}/js/tool.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{$assets}/js/jquery-2.0.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="{$assets}/js/jquery.hotkeys.min.js"></script>
+  </head>
+  <body>
+        <link rel="stylesheet" href="{$module_assets}/css/choujiang.css">
+        <link rel="stylesheet" type="text/css" href="{$assets}/fonts/font_864467_uc9k8ie5j6/iconfont.css">
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            
+            .btn-left,
+            .btn-right {
+                font-size: 1em;
+                cursor: pointer;
+            }
+            
+            .element {
+                width: 150px;
+                height: 150px;
+                overflow: hidden;
+                box-shadow: 0px 0px 12px rgba(243, 241, 137, 0.5);
+                border: 1px solid rgba(240, 11, 11, 0.25);
+                text-align: center;
+                cursor: default;
+                position: relative;
+                background-color: rgba(240, 11, 11, 0.6);
+            }
+            
+            .element .lottery-item {
+                position: absolute;
+                top: 50%;
+                left: 0;
+                width: 100%;
+                transform: translateY(-50%);
+                color:rgb(243, 241, 137);
+                font-weight: bolder;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            
+            .element img {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                width: 100%;
+                height: 100%;
+            }
+            
+            .lottery-scroll li {
+                box-shadow: 0px 0px 12px rgba(243, 241, 137, 0.5);
+                border: 1px solid rgba(240, 11, 11, 0.25);
+                background-color: rgba(240, 11, 11, 0.6);
+            }
+            .lottery-scroll .lottery-item{
+                color:rgb(243, 241, 137);
+            }
+            .lottery-scroll{
+                z-index:999;
+            }
+        </style>
+        <div id="container">
+            <div id='lottery_main'></div>
+            <div id="lottery-panel">
+                <div class="lottery-side lottery-left">
+                    <span class="prizename"><i class="icon iconfont icon-9 btn-left"></i><span id="prizedata" class="prizename_txt" data='0'>幸运大奖</span><i class="icon iconfont icon-10 btn-right"></i></span>
+                    <div class="lottery-img">
+                        <img src="/wall/themes/meepo/assets/images/defaultaward.jpg" alt="">
+                    </div>
+                    <div class="lottery-control">
+                        <div class="control-item">
+                            <span class="icon-lb">抽取人数：</span><span class="icon-ctrol icon-minus">&nbsp;</span><em class="lottery-num">1</em><span class="icon-ctrol icon-plus">&nbsp;</span>
+                        </div>
+                        <div class="control-item-btn">
+                            <div class="lottery-btn btn-start">&nbsp;</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lottery-side lottery-middle">
+                    <ul class="lottery-scroll">
+        
+                    </ul>
+                </div>
+                <div class="lottery-side lottery-right">
+                    <span class="winnernum">已有<span class="winnernum_txt">0</span>个中奖</span>
+                    <div class="lottery-win-list">
+                        <div class="lottery-winner" id="lottery-winner">
+                            <ul class="lottery-win-scroll">
+        
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="/assets/js/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="/assets/js/three.min.js"></script>
+        <script type="text/javascript" src="/assets/js/CSS3DRenderer.min.js"></script>
+        <script type="text/javascript" src="/wall/themes/meepo/assets/js/jquery.nicescroll.min.js"></script>
+        <script src="/assets/plugs/hotkeys-master/dist/hotkeys.min.js"></script>
+        <script src="/wall/themes/meepo/assets/js/bindhotkeys.js"></script>
+        <script type="text/javascript">
+            var prizesdata = {$prizesjson};
+            var lotteryconfigs={$configs};
+            var lotteryconfig={$config|json_encode};
+            var configid={$config['id']};
+        </script>
+        <script type="text/javascript" src="/Modules/Importlottery/templates/front/threedimensional/assets/js/front_index.js"></script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+function Path_url(n){return"./index.php?i="+querystring("i")+"&j="+querystring("j")+"&c=entry&do="+n+"&m=meepo_xianchang"}function querystring(n){var r=location.search.match(new RegExp("[?&]"+n+"=([^&]+)","i"));return null==r||r.length<1?"":r[1]}

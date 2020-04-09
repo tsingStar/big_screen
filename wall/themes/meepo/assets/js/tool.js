@@ -1,0 +1,1 @@
+function querystring(n){var r=location.search.match(new RegExp("[?&]"+n+"=([^&]+)","i"));return null==r||r.length<1?"":r[1]}function paserurl(n){var r=window.location.pathname.split("/");return r[2]=n,r.join("/")}function Path_url(n){return paserurl(n)}

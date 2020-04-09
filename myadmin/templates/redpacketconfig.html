@@ -1,0 +1,135 @@
+{include file="templates/html_header.html"}
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+			{literal}
+				try{ace.settings.loadState('main-container')}catch(e){}
+			{/literal}
+			</script>
+			<!-- #section:basics/sidebar -->
+			{include file="templates/html_sidebar.html"}
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="main-content-inner">
+					<!-- #section:basics/content.breadcrumbs -->
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="index.php">首页</a>
+							</li>
+							<li class="active">{$title}</li>
+						</ul><!-- /.breadcrumb -->
+						<!-- /section:basics/content.searchbox -->
+					</div>
+
+					<!-- /section:basics/content.breadcrumbs -->
+					<div class="page-content">
+					<h3 class="header smaller lighter blue">
+						{$title}
+						<small>可以设置红包活动的一些规则及提示信息</small>
+					</h3>
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="form-horizontal">
+								<div class="form-group">
+									<label class="col-sm-2 control-label no-padding-right" for="form-field-1" style="text-align: right;">红包发送者名称</label>
+									<div class="col-sm-9">
+										<input type="text" id="form-field-1" name="sendname" placeholder="红包发送者名称,默认微信科技" class="col-xs-10 col-sm-5" value="{$redpacket_config['sendname']}" />
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-sm btn-success save-sendname">
+												修改
+											</button>
+										</span>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-2 control-label no-padding-right" for="form-field-1" style="text-align: right;">祝福语</label>
+									<div class="col-sm-9">
+										<input type="text" id="form-field-1" name="wishing" placeholder="祝福语，默认恭喜发财" class="col-xs-10 col-sm-5" value="{$redpacket_config['wishing']}" />
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-sm btn-success save-wishing">
+												修改
+											</button>
+										</span>
+									</div>
+								</div>
+									<div class="form-group">
+									<textarea class="form-control" rows="8" placeholder="活动规则" name="rule">{$redpacket_config['rule']}</textarea>
+									<button type="button" class="btn btn-sm btn-success save-rule">
+										修改
+									</button>
+									</div>
+									<div class="form-group">
+									<textarea class="form-control" rows="8" placeholder="活动提示信息" name="tips">{$redpacket_config['tips']}</textarea>
+									<button type="button" class="btn btn-sm btn-success save-tips">
+										修改
+									</button>
+									</div>
+									</div>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+{include file="templates/html_footercontent.html"}
+<!-- 写每个页面自定的js -->
+<script type="text/javascript">
+{literal}
+jQuery(function($){
+	$('.save-rule').bind('click',function(){
+		var rule=$('textarea[name=rule]').val();
+		$.ajax({
+			"url":'doredpacketconfig.php?action=save_rule',
+			"data":{"rule":rule},
+			"type":'post',
+			"dataType":"json",
+			"success":function(json){
+				alert(json.message);
+			}
+		});
+	});
+	$('.save-tips').bind('click',function(){
+		var tips=$('textarea[name=tips]').val();
+		$.ajax({
+			"url":'doredpacketconfig.php?action=save_tips',
+			"data":{"tips":tips},
+			"type":'post',
+			"dataType":"json",
+			"success":function(json){
+				alert(json.message);
+			}
+		});
+	});
+	$('.save-sendname').bind('click',function(){
+		var sendname=$('input[name=sendname]').val();
+		$.ajax({
+			"url":'doredpacketconfig.php?action=save_sendname',
+			"data":{"sendname":sendname},
+			"type":'post',
+			"dataType":"json",
+			"success":function(json){
+				alert(json.message);
+			}
+		});
+	});
+	$('.save-wishing').bind('click',function(){
+		var wishing=$('input[name=wishing]').val();
+		$.ajax({
+			"url":'doredpacketconfig.php?action=save_wishing',
+			"data":{"wishing":wishing},
+			"type":'post',
+			"dataType":"json",
+			"success":function(json){
+				alert(json.message);
+			}
+		});
+	});
+	
+});
+{/literal}
+</script>
+{include file="templates/html_footer.html"}

@@ -1,0 +1,314 @@
+
+<style type="text/css">
+{literal}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+   margin:0;
+   padding:0;
+   border: 0;
+   vertical-align: baseline;
+   outline: none;
+}
+body { font-family: Microsoft YaHei,Helvitica,Verdana,Tohoma,Arial,san-serif; -webkit-text-size-adjust: none;}
+ 
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+ol, ul { list-style: none; }
+ 
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
+strong { font-weight: bold; } 
+ 
+a,button,input{-webkit-tap-highlight-color:rgba(255,0,0,0);}
+input, textarea, select { -webkit-border-radius:0;-webkit-appearance:none;outline: none; }
+input[type="button"], input[type="submit"], input[type="reset"] {-webkit-appearance: none;}
+ 
+table { border-collapse: collapse; border-spacing: 0; }
+img { border: 0;}
+ 
+a { text-decoration: none; }
+a:hover { text-decoration: none; }
+
+.clearfix:before, .container:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+html,body{width: 100%;height:100%;}
+/**/
+body{ background-color:#f0f0f0}
+.vgy_user {
+display: block;
+margin:0;
+padding: 0;
+text-align: center;
+overflow: hidden;
+}
+.vgy_user_bg{ width:100%; opacity:0.15;}
+
+.vgy_user .info2 {
+display: block; 
+margin:20px auto 0 auto;width:180px;
+}
+.vgy_user .info2 .touxiang {
+width: 120px;
+height: 120px;
+border-radius: 100%;
+background-color: #FFF;
+box-shadow: 0 0 0 3px rgba(255, 255, 255, 1), 0 0 10px 2px rgba(0, 0, 0, 0.3);
+}
+.infotext {
+text-align:center;
+overflow: hidden;
+display: block;
+font-size: 16px;
+margin:10px auto;
+padding:5px 10px;border-radius: 6px;
+line-height:30px;
+width: 80%;
+font-size: 1.5em;
+color: #fff;
+}
+.infotext p.qdnum,.name,.time{
+  text-shadow: 1px 1px 3px rgba(0,0,0,.5);
+}
+.infotext .red{
+  font-size: 2em;vertical-align: baseline;font-style: italic;font-weight: bolder;margin: 0 5px;
+}
+.name {
+font-size: 1.5em; 
+margin: 0 0 20px 0;
+color: #fff;
+font-weight: bold;
+}
+.info2 a {
+color: #fff;
+}
+.red{ color:#F30}
+.tx{display:block; font-size:18px; color:#FFF; margin: 0 auto; width:80%;/*background-color:#36c77a;*/position: relative;}
+.tx img{display: block;width: 100%;height: auto}
+.tx span{display:block;text-align: center;position: absolute;top: 50%;left: 0;transform:translateY(-66%);width: 100%;font-size: 1.5em;}
+.bgs{width: 100%;height: 100%;background: rgba(0,0,0,.3); position: absolute;top: 0; left:0;}
+.bgt{ width:100%; opacity:1;height: 100%;
+
+            }
+.time{ font-size:14px; color:#fff}
+
+
+.pwpage {
+background-color: rgba(66, 66, 78, 0.75);
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+z-index: 9999998;
+}
+.denglu {
+position: fixed;
+z-index: 9999999;
+top: 50%;
+left: 50%;
+margin-top: -95px;
+margin-left: -141px;
+}
+.denglu .pwinfo {
+margin: 10px auto 15px auto;
+color: #888;
+font-size: 12px;
+width: 90%
+}
+.pwd {
+display: block;
+width: 260px;
+padding: 10px;
+margin: 0 auto;
+background-color: #fff;
+border-radius: 10px;
+font-size: 14px;
+border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.pwd form {
+padding: 0;
+margin: 0;
+}
+.pwd p {
+display: block;
+padding: 5px; margin:0;
+}
+.pwd .err {
+color: #F00;
+padding: 5px;
+}
+.pwd .pwdinput {
+border: 1px solid rgba(153, 153, 153, 0.44);
+border-radius: 5px;
+padding: 10px;
+}
+.pwd .pwdinput {
+width: 100%;
+box-sizing: border-box;
+}
+.pwd .px {
+display: block;
+height: 35px;
+line-height: 35px;
+color: #fff;
+font-size: 14px;
+border-radius: 5px;
+background-color: #C70000;
+text-decoration: none;
+border: 0;
+background: -webkit-linear-gradient(top, #F00303, #C70000);
+border-radius: 5px;
+color: #ffffff;
+text-align: center;
+text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+}
+.pwd .px:active {
+background: -webkit-linear-gradient(top, #C70000, #F00303);
+}
+.pwd .px[type="submit"] {
+width: 100%;
+box-sizing: border-box;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+}
+.weui_grids.nbd:before,.weui_grids.nbd .weui_grid:before {
+  border: none;  
+}
+.weui_grids.nbd .weui_grid{padding: 10px;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-tap-highlight-color: transparent;}
+.weui_grids.nbd .weui_grid:active{background: none;}
+.weui_grid_icon,.weui_grid_icon img{border-radius: 50%;}
+.weui_grid_icon{width: 48px;height: 48px;}
+.weui_grid_label{color:{/literal}{$menucolor}{literal}}
+{/literal}
+
+</style>
+<script src="template/app/js/jquery-2.1.4.js"></script>
+</head>
+<body>
+
+<!--pop end-->
+<img src="{$user['avatar']}" width="0" height="0"   >
+<div class="vgy_user">
+  <div class="info2">
+    <img class="touxiang" src="{$user['avatar']}">
+    <p class="name">{$user['nickname']}</p>
+  </div>
+</div>
+<p class="tx">
+  <span>恭喜你签到成功</span>
+  <img src="/mobile/template/app/images/level-tit-bg.png">
+</p>
+<div class="infotext">
+  <!-- {if $user['status']==1}<p class="qdnum">你是第<span class="red">{$user['signorder']}</span>位签到</p>{/if} -->
+
+  {if $user['info'] neq ''}<p>{$user['info']}</p>{/if}
+  <p class="time">{$user['datetime']}</p>
+  {if $user['status']==2}<p>待审核</p>{/if}
+</div>
+{if $user['status']==1}
+<div class="weui_grids nbd">
+      <a href="/mobile/qiandao.php?rentopenid={$openid}" class="weui_grid js_grid">
+             <div class="weui_grid_icon">
+               <img src="template/app/images/icon/ico005.png" alt="" style="background-color: #3399cc;">
+             </div>
+             <p class="weui_grid_label">
+               签到
+             </p>
+           </a>
+           {foreach $plugs $item}
+           {if $item['name']=='wall'}
+            <a href="/mobile/index.php?rentopenid={$openid}" class="weui_grid js_grid">
+              <div class="weui_grid_icon">
+                <img src="template/app/images/icon/ico009.png" alt="" style="    background-color: #72C700;">
+              </div>
+              <p class="weui_grid_label">
+                上墙
+              </p>
+            </a>
+           {/if}
+        
+           {if $item['name']=='vote'}
+           <a href="/mobile/vote.php?rentopenid={$openid}" class="weui_grid js_grid">
+              <div class="weui_grid_icon">
+                <img src="template/app/images/icon/ico004.png" alt="" style="      background-color: #ff9900;  ">
+              </div>
+              <p class="weui_grid_label">
+                投票
+              </p>
+            </a>
+           {/if}
+           
+           {if $item['name']=='redpacket'}
+           <a href="/mobile/redpacket.php?rentopenid={$openid}" class="weui_grid js_grid">
+              <div class="weui_grid_icon">
+                <img src="template/app/images/icon/redpack3.png" alt="" style=" background-color:red;">
+              </div>
+              <p class="weui_grid_label">
+                红包雨
+              </p>
+            </a>
+           {/if}
+           {if $item['name']=='ydj'}
+           <a href="{$item['mobile']['menu']['link']}&rentopenid={$openid}&vcode={$wall_config['verifycode']}" class="weui_grid js_grid">
+              <div class="weui_grid_icon">
+                <img src="template/app/images/icon/redpack3.png" alt="" style=" background-color:red;">
+              </div>
+              <p class="weui_grid_label">
+                摇大奖
+              </p>
+            </a>
+           {/if}
+           {if $item['name']=='game'}
+           <a href="{$item['mobile']['menu']['link']}&rentopenid={$openid}&vcode={$wall_config['verifycode']}" class="weui_grid js_grid">
+              <div class="weui_grid_icon">
+                <img src="/wall/themes/meepo/assets/images/icon/game.png" alt="">
+              </div>
+              <p class="weui_grid_label">
+                游戏
+              </p>
+            </a>
+           {/if}
+           
+           {/foreach}
+      {foreach $plugs $item}
+		  {if $item['choujiang']==1}
+		  <a href="/mobile/cjresult.php?rentopenid={$openid}" class="weui_grid js_grid">
+        <div class="weui_grid_icon">
+          <img src="template/app/images/icon/ico001.png" alt="" style=" background-color:red;">
+        </div>
+        <p class="weui_grid_label">
+         中奖信息
+        </p>
+      </a>
+        {break}
+      {/if}
+      {/foreach}
+      {foreach $custommenu $item}
+      <a href="{$item['url']}" class="weui_grid js_grid">
+        <div class="weui_grid_icon">
+          <img src="{$item['iconpath']}" alt="">
+        </div>
+        <p class="weui_grid_label">
+          {$item['title']}
+        </p>
+      </a>
+      {/foreach}
+</div>
+{/if}
+{if $mobileqiandaobg==''}
+<div style="position:fixed; z-index:-1;top:0; height:100%; width:100%; opacity:0.3;">
+  <img class="bgt" src="{$user['avatar']}"  style="-webkit-filter: blur(8px); -moz-filter: blur(8px); -ms-filter: blur(8px);    filter: blur(8px);">
+  <div class="bgs" ></div>
+</div>
+{else}
+<div style="position:fixed; z-index:-1;top:0; height:100%; width:100%; ">
+  <img class="bgt" src="{$mobileqiandaobg}" >
+  <div class="bgs" ></div>
+</div>
+{/if}
+
+<script type="text/javascript">
+$(document).on("WeixinJSBridgeReady", function () {
+    WeixinJSBridge.call('hideOptionMenu');
+});
+</script>
+</body>
+</html>

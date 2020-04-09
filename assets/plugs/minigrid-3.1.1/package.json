@@ -1,0 +1,46 @@
+{
+  "name": "minigrid",
+  "version": "3.1.1",
+  "description": "Minimal 2kb zero dependency cascading grid layout",
+  "main": "src/index.js",
+  "files": [
+    "src/index.js",
+    "dist/minigrid.min.js"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist/minigrid.min.js",
+    "build": "npm run clean && npm run lint && npm run test && npm run uglify",
+    "lint": "./node_modules/.bin/eslint --config=.eslintrc src",
+    "test": "browserify tests/index.js | tape-run",
+    "uglify": "uglifyjs --comments -m -c -o dist/minigrid.min.js src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/henriquea/minigrid.git"
+  },
+  "keywords": [
+    "min",
+    "mini",
+    "grid",
+    "minigrid",
+    "cascading",
+    "layout",
+    "javascript",
+    "minimal",
+    "responsive",
+    "masonry"
+  ],
+  "author": "Henrique Alves <henriquea@gmail.com> (http://alves.im)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/henriquea/minigrid/issues"
+  },
+  "homepage": "http://alves.im/minigrid",
+  "devDependencies": {
+    "browserify": "^11.0.1",
+    "eslint": "^1.4.3",
+    "phantomjs": "1.9.2-6",
+    "tape": "^4.0.2",
+    "tape-run": "^1.1.0"
+  }
+}

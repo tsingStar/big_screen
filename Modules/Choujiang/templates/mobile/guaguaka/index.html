@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<title>刮刮卡</title>
+		<link href="{$module_mobile_path}/{$themepath}/assets/css/activity-style.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="/mobile/template/app/css/weui.min.css">
+		<link rel="stylesheet" href="/mobile/template/app/css/jquery-weui.min.css">
+		<style>
+		{literal}
+		.toolbar .toolbar-inner{height: auto;}
+		.toolbar .title{top: 10px;right: 10px;font-size: .875em;font-weight: normal;}
+		.weui-popup-modal .toolbar .title{top: 0; right: 0;background: #04BE02;color: #fff;font-size: .85rem}
+		.title a,.toolbar .picker-button{
+		color:#fff;
+		}
+		.title a {
+			position: relative;
+			display: inline-block;
+			padding: 5px 10px;
+			line-height: 1em;background: rgba(0,0,0,.5);
+			border-radius: 1000px;
+			text-decoration: none;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-tap-highlight-color:transparent; 
+		}
+		.title a::after {
+			position: relative;
+			display: inline-block;
+			width: 16px;
+			height: 10px;
+			margin-left: 5px;
+			background: url(/mobile/template/app/images/w-icon-dropdown.png) center center no-repeat;
+			background-size: 16px;
+			content: "";
+		}
+		.dropdown-menu::after{
+			-webkit-animation: twinkling 1s infinite ease-in-out; 
+		}
+		.toolbar{background: none;z-index: 1000;}
+		.toolbar:before{display: none;}
+		.collect{
+	padding:20px;
+}
+.collect aside {
+    float: left;
+    border: 1px solid #ff7101;
+    background: #fff;
+    padding: 4px;
+    line-height: 0;
+    margin-left: 10px;
+    border-radius: 5px;
+	margin-bottom:20px;
+}
+.collect aside img {
+    width: 80px;
+    height: 80px;
+	border: 0;
+}
+.collect .p1 {
+    padding-top: 9px;
+    line-height: 25px;
+	font-size: 14px;
+    margin-left: 115px;
+}
+		{/literal}
+		</style>
+	</head>
+	<body data-role="page" class="activity-scratch-card-winning">
+		
+		<div class="main">
+			<div class="cover">
+				<img src="{$module_mobile_path}/{$themepath}/assets/images/activity-scratch-card-bannerbg.png">
+				<div id="prize"></div>
+				<div id="scratchpad">
+				</div>
+			</div>
+			<div class="content">
+				<div class="boxcontent boxwhite">
+					<div class="box">
+						<div class="title-brown">
+							<span>
+								奖项设置：
+							</span>
+							<span class="pull-right" id="lottery-again">
+								再来一次
+							</span>
+						</div>
+						<div class="Detail">
+							{foreach $prizes as $item}
+							<p>
+								奖品： {$item['prizename']} * 1。{if $config['showleftnum']==1}剩余：{$item['freezenum']+$item['leftnum']}{/if}
+							</p>
+							{/foreach}
+						</div>
+					</div>
+				</div>
+				<div class="boxcontent boxwhite">
+					<div class="box">
+						<div class="title-brown">
+							活动说明：
+						</div>
+						<div class="Detail">
+							<p class="red" >
+								本次活动总共可以刮<span id="cjtimes">0</span>次,你已经刮了<span id="usedtimes">0</span>次。<a href="###" id="gocjresult">点此进入中奖信息查询界面</a>
+							</p>
+							<p id="description">
+								
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="clear:both;">
+			</div>
+		</div>
+		<script type="text/javascript" >
+		var JOININFO={$joininfo};
+		// var PRIZES={};
+		var USERINFO={$userinfo};
+		var CONFIG={$config|json_encode};
+		</script>
+		<script src="/assets/js/require.min.js" type="text/javascript" data-main="{$module_mobile_path}/{$themepath}/assets/js/main.js"></script>
+		<div class="toolbar" style="position:absolute;top:0;left:0;">
+			<div class="toolbar-inner">
+				<h1 class="title">
+					<a href="javascript:void(0);" class="dropdown-menu has-msg" style="float: right;">更多</a>
+				</h1>
+			</div>
+		</div>
+		<div id="pop_nav" class="weui-popup-container popup-bottom" style="display: none;">
+			<div class="weui-popup-overlay"></div>
+			<div class="weui-popup-modal">
+				<div class="toolbar">
+					<div class="toolbar-inner">
+						<a href="javascript:;" class="picker-button close-popup">关闭</a>
+						<h1 class="title">功能列表</h1>
+					</div>
+				</div>
+				<div class="modal-content">
+					<div class="weui_grids">
+						<a href="../mobile/qiandao.php?rentopenid={$openid}" class="weui_grid js_grid">
+							<div class="weui_grid_icon">
+								<img src="{$assets}/images/icon/ico005.png" alt="" style="background-color: #3399cc;">
+							</div>
+							<p class="weui_grid_label">
+								签到
+							</p>
+						</a>
+						{foreach $plugs $item} {if $item['name']=='wall'}
+						<a href="../mobile/index.php?rentopenid={$openid}" class="weui_grid js_grid">
+							<div class="weui_grid_icon">
+								<img src="{$assets}/images/icon/ico009.png" alt="" style="    background-color: #72C700;">
+							</div>
+							<p class="weui_grid_label">
+								上墙
+							</p>
+						</a>
+						{/if}
+						 {if $item['name']=='vote'}
+						<a href="../mobile/vote.php?rentopenid={$openid}" class="weui_grid js_grid">
+							<div class="weui_grid_icon">
+								<img src="{$assets}/images/icon/ico004.png" alt="" style="      background-color: #ff9900;  ">
+							</div>
+							<p class="weui_grid_label">
+								投票
+							</p>
+						</a>
+						{/if} 
+						{if $item['name']=='redpacket'}
+						<a href="../mobile/redpacket.php?rentopenid={$openid}" class="weui_grid js_grid">
+							<div class="weui_grid_icon">
+								<img src="{$assets}/images/icon/redpack3.png" alt="" style=" background-color:red;">
+							</div>
+							<p class="weui_grid_label">
+								红包雨
+							</p>
+						</a>
+						{/if}
+						{if $item['name']=='ydj'}
+						<a href="{$item['mobile']['menu']['link']}&rentopenid={$openid}" class="weui_grid js_grid">
+						<div class="weui_grid_icon">
+							<img src="{$item['name']|strtolower}/templates/assets/images/redpack3.png" alt="" style="background-color: #761d1d;  ">
+						</div>
+						<p class="weui_grid_label">
+							摇大奖
+						</p>
+						</a>
+						{/if}
+						{if $item['name']=='game'}
+						<a href="{$item['mobile']['menu']['link']}&rentopenid={$openid}" class="weui_grid js_grid">
+						<div class="weui_grid_icon">
+							<img src="/wall/themes/meepo/assets/images/icon/game.png" alt="" style="background-color: #761d1d;  ">
+						</div>
+						<p class="weui_grid_label">
+							游戏
+						</p>
+						</a>
+						{/if}
+						 {/foreach} {foreach $plugs $item} {if $item['choujiang']==1}
+						<a href="../mobile/cjresult.php?rentopenid={$openid}" class="weui_grid js_grid">
+							<div class="weui_grid_icon">
+								<img src="{$assets}/images/icon/ico001.png" alt="" style=" background-color:red;">
+							</div>
+							<p class="weui_grid_label">
+								中奖信息
+							</p>
+						</a>
+		
+						{break} {/if} {/foreach}
+						{foreach $custommenu $item}
+						<a href="{$item['url']}" class="weui_grid js_grid">
+							<div class="weui_grid_icon">
+							<img src="{$item['iconpath']}" alt="">
+							</div>
+							<p class="weui_grid_label">
+							{$item['title']}
+							</p>
+						</a>
+						{/foreach}
+					</div>
+					<div class="collect">
+						<aside>
+							<img src="{if $erweima==''}../wall/defaultqrcode.php{else}{$erweima}{/if}" alt="请检查二维码是否上传成功">
+						</aside>
+						<p class="p1">
+							为便于您退出后二次进入强烈建议您长按左侧二维码进行保存
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="toast"></div>
+	</body>
+</html>

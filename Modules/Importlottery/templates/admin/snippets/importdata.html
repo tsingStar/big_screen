@@ -1,0 +1,127 @@
+<div class="row">
+        <div class="col-sm-12">
+            <div class="widget-box widget-color-blue" id="widget-box-importdata">
+                <div class="widget-header">
+                    <h5 class="widget-title bigger lighter">
+                        <i class="ace-icon fa fa-gift"></i>
+                        导入的数据
+                    </h5>
+                    <div class="widget-toolbar no-border">
+                        <label>
+                            <button class="btn btn-xs btn-warning btn-add" >添加数据</button>
+                        </label>
+                        <label>
+                            <button class="btn btn-xs btn-warning btn-clear" >清空数据</button>
+                        </label>
+                        <label>
+                            <button class="btn btn-xs btn-warning btn-importexcel" >导入名单</button>
+                        </label>
+                        <label>
+                            <button class="btn btn-xs btn-warning btn-download" onclick="window.open('{$module_assets}/others/template.xlsx')" >下载Excel模版</button>
+                        </label>
+                    </div>
+                </div>
+                <div class="widget-body">
+                    <div class="widget-main no-padding" id="datalist">
+                       
+                    </div>
+                </div>
+            </div>
+            <div id="importdatamodal" class="modal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="module.php?m=importlottery&c=admin&a=ajaxImportExcel" method="POST" id="importform" enctype="multipart/form-data">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="blue bigger">导入信息</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right">上传Excel：</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" multiple="" name="fileexcel" type="file" value="" />
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input name="activityid" type="hidden" value=""/>
+                                <input name="plugname" type="hidden" value="importlottery"/>
+                                <button class="btn btn-sm" data-dismiss="modal" >
+                                    <i class="ace-icon fa fa-times"></i>
+                                    取消
+                                </button>
+                                <button class="btn btn-sm btn-primary btn-save">
+                                    <i class="ace-icon fa fa-check"></i>
+                                    保存
+                                </button>
+                            </div>	
+                        </form>	
+                    </div>
+                </div>
+            </div>
+            <div id="detailmodal" class="modal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="module.php?m=importlottery&c=admin&a=ajaxSaveImportData" method="POST" id="saveitemform"
+                            enctype="multipart/form-data">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="blue bigger">导入信息</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right">字段1：</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" name="col[]" type="text" value="" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right">字段2：</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" name="col[]" type="text" value="" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right">字段3：</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" name="col[]" type="text" value="" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right">图片：</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control imageuploader" multiple=""  name="img" type="file" value="" />
+                                            <input name="imgid" type="hidden" value="" />
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <input name="activityid" type="hidden" value="0" />
+                                <input name="plugname" type="hidden" value="importlottery" />
+                                <input name="id" type="hidden" value="0" />
+                                <button class="btn btn-sm" data-dismiss="modal">
+                                    <i class="ace-icon fa fa-times"></i>
+                                    取消
+                                </button>
+                                <button class="btn btn-sm btn-primary btn-save-item">
+                                    <i class="ace-icon fa fa-check"></i>
+                                    保存
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

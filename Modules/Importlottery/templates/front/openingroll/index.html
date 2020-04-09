@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>导入抽奖</title>
+    <link rel="stylesheet" href="/Modules/Importlottery/templates/front/openingroll/assets/css/index.css" type="text/css" />
+    <link rel="stylesheet" href="/assets/plugs/animate.css-3.7.1/animate.min.css" type="text/css" />
+</head>
+<body>
+    <div class="container">
+        <div class="page-1" >
+            <div class="mdtt">
+                <span class="dyl">第一轮</span>
+                <span class="wz2">奖品名称奖品名称奖品名称</span>
+                <img class="hdjp" src="/Modules/Importlottery/templates/front/openingroll/assets/images/jp.png">
+            </div>
+        </div>
+        <div class="page-2" style="display: none">
+            <div class="title-yj">
+                <span class="yj">房地产开盘摇号界面</span>
+            </div>
+            <div class="content_jz">
+                <div class="main_tb" id="gundong">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="page-3" style="display: none">
+            <!--<div class="bg">-->
+            <div class="nr">
+                <div class="zjmd"></div>
+                <div class="bk">
+                    <div class="table-wrap">
+                        <div class="table-head">
+                            <div class="table-head-wrap">
+                                <table class="grid ">
+                                    
+                                    <thead style="background-color:#dd1818;color: #fff;">
+                                        
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="table-content">
+                            <table class="grid">
+                                
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="zz"></div>
+    </div>
+    <script type="text/javascript">
+        var prizesdata = {$prizesjson};
+        var lotteryconfigs={$configs};
+        var lotteryconfig={$config|json_encode};
+        var configid={$config['id']};
+    </script>
+    <script type="text/javascript" src="/assets/js/require.min.js" data-main="/Modules/Importlottery/templates/front/openingroll/assets/js/front_index.js"></script>
+</body>
+</html>

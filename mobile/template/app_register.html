@@ -1,0 +1,157 @@
+<style>
+{literal}
+body{
+font:normal 14px/1.5 Microsoft YaHei,Helvitica,Verdana,Tohoma,Arial,san-serif;color:#000;
+	background: url({/literal}{$mobileqiandaobg}{literal});
+	background-size:100% auto;
+-webkit-user-select:none;margin:0 auto;padding:0;list-style:none;vertical-align:middle;}
+}
+.pay_list_c1 {
+	width: 100%;
+	height: 24px;
+	cursor: pointer;
+	padding-left: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.radioclass {
+	opacity: 0;
+	cursor: pointer;
+}
+
+.refresh_vote {
+	background-color: rgba(0, 0, 0, 0.4);
+	bottom: 200px;
+	position: fixed;
+	right: 14px;
+	text-align: center;
+	z-index: 11;
+	height: 50px;
+	width: 50px;
+	border-radius: 100%;
+}
+
+.refresh_vote img {
+	padding: 5px;
+	display: block;
+	height: 40px;
+	width: 40px;
+}
+
+.vote_disabled {
+	display: none
+}
+.info2 {
+display: block; 
+margin:65px auto 40px auto;width:180px;
+color: #fff;
+text-align: center;
+}
+.info2 .touxiang {
+width: 120px;
+height: 120px;
+border-radius: 100%;
+box-shadow: 0 0 0 3px rgba(255, 255, 255, 1), 0 0 10px 2px rgba(0, 0, 0, 0.3);
+margin: auto;
+display: block;
+margin-bottom: 20px;
+}
+.weui_cells{
+	background: none;
+	margin: 0;
+}
+.weui_cells:before,.weui_cell:before,.weui_cells:after{
+	border: none
+}
+.weui_cell{
+	background: #fff;border-radius: 5px;margin: 10px 15px;
+}
+.weui_label{
+	width: 60px;
+}
+
+{/literal}
+</style>
+<script src="template/app/js/jquery-2.1.4.js"></script>
+<script src="../myadmin/assets/js/jquery.form.js"></script>
+
+</head>
+<body>
+	<div class="weui_cells weui_cells_form">
+		<form action="mobile.do.php?action=user_register" method="post" id="registerform">
+		<div class="info2">
+        	<img class="touxiang" src="{$user['avatar']}">
+    	</div>
+		{if $qiandaosignname==1}
+		<div class="weui_cell">
+			<div class="weui_cell_hd">
+				<label class="weui_label">姓名</label>
+			</div>
+			<div class="weui_cell_bd weui_cell_primary">
+				<input class="weui_input" name="realname" type="text" placeholder="请输入您的姓名" />
+			</div>
+		</div>
+		{/if}
+		{if $qiandaophone==1}
+		<div class="weui_cell">
+			<div class="weui_cell_hd">
+				<label class="weui_label">手机</label>
+			</div>
+			<div class="weui_cell_bd weui_cell_primary">
+				<input class="weui_input" name="mobile" type="text" placeholder="请输入您的手机号" />
+			</div>
+		</div>
+		{/if}
+		{foreach $diycolumns as $item}
+		<div class="weui_cell">
+			<div class="weui_cell_hd">
+				<label class="weui_label">{$item['title']}</label>
+			</div>
+			<div class="weui_cell_bd weui_cell_primary">
+				{if $item['coltype']=='text'}
+				<input class="weui_input" name="column_{$item['id']}" type="text" placeholder="{$item['placeholder']}" value="{$item['defaultvalue']}" />
+				{/if}
+				{if $item['coltype']=='select'}
+				<select class="weui_select" name="column_{$item['id']}">
+					{foreach $item['options_arr'] as $op}
+	                <option {if $op==$item['defaultvalue']}selected{/if} value="{$op}">{$op}</option>
+	                {/foreach}
+	            </select>
+	            {/if}
+			</div>
+		</div>
+		{/foreach}
+		<input type="hidden" name="openid" value="{$user['openid']}"/>
+		<input type="hidden" name="redirecturl" value="{$redirecturl}"/>
+		</form>
+	</div>
+	<div class="weui_btn_area">
+		<a class="weui_btn weui_btn_primary btn_register" >确定签到</a>
+	</div>
+<!-- </div> -->
+	<script>
+{literal}
+$(function(){
+	$('.btn_register').bind('click',function(){
+		$('#registerform').ajaxSubmit({
+			'type':'post',
+			dataType: 'json',
+			success:function(r){
+				if(r.errno==0){
+					_loading_toast._show(r.message);
+					setTimeout(function(){  
+						window.location.reload();
+					},2000);
+				}else{
+					_loading_toast._show(r.message);
+				}
+			}
+		});
+		return false;
+	});
+})
+
+{/literal}
+</script>

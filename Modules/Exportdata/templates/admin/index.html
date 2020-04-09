@@ -1,0 +1,77 @@
+{$html_header}
+<!--轮次设置-->
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+			{literal}
+				try{ace.settings.loadState('main-container')}catch(e){}
+			{/literal}
+			</script>
+			<!-- #section:basics/sidebar -->
+            {$html_sidebar}
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="main-content-inner">
+					<!-- #section:basics/content.breadcrumbs -->
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="/myadmin/index.php">首页</a>
+							</li>
+							<li class="active">{$title}</li>
+						</ul><!-- /.breadcrumb -->
+						<!-- /section:basics/content.searchbox -->
+					</div>
+
+					<!-- /section:basics/content.breadcrumbs -->
+					<div class="page-content">
+					<h3 class="header smaller lighter blue">
+						{$title}
+						<small>{$description}</small>
+					</h3>
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="row">
+									<div class="col-xs-6 col-md-3 col-lg-2" style="margin-bottom:10px;">
+										<a href="/myadmin/exportqd.php" target="_blank">
+										<span class="btn btn-info" style="width:100%;">签到数据</span>
+										</a>
+									</div>
+									<div class="col-xs-6 col-md-3 col-lg-2" style="margin-bottom:10px;">
+										<a href="/Modules/module.php?m=prize&c=admin&a=exportdata&plugname=lottery" target="_blank">
+										<span class="btn btn-info" style="width:100%;">所有抽奖数据</span>
+										</a>
+									</div>
+								
+									<div class="col-xs-6 col-md-3 col-lg-2" style="margin-bottom:10px;">
+										<a href="/Modules/module.php?m=prize&c=admin&a=exportdata&plugname=ydj" target="_blank">
+										<button class="btn btn-info" style="width:100%;">摇大奖数据</button>
+										</a>
+									</div>
+									<div class="col-xs-6 col-md-3 col-lg-2" style="margin-bottom:10px;">
+										<a href="/Modules/module.php?m=game&c=admin&a=exportData" target="_blank">
+										<button class="btn btn-info" style="width:100%;">所有游戏数据</button>
+										</a>
+									</div>
+									<div class="col-xs-6 col-md-3 col-lg-2" style="margin-bottom:10px;">
+										<a href="/Modules/module.php?m=prize&c=admin&a=exportdata&plugname=choujiang" target="_blank">
+										<button class="btn btn-info" style="width:100%;">手机端抽奖设置</button>
+										</a>
+									</div>
+									<div class="col-xs-6 col-md-3 col-lg-2" style="margin-bottom:10px;">
+										<a href="/Modules/module.php?m=importlottery&c=admin&a=exportdata" target="_blank">
+										<button class="btn btn-info" style="width:100%;">导入信息抽奖中奖数据</button>
+										</a>
+									</div>
+								</div>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+{$html_footercontent}
+<!-- 写每个页面自定的js -->
+{$html_footer}

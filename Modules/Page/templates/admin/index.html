@@ -1,0 +1,183 @@
+{$html_header}
+<style>
+.pointer{
+	cursor: pointer;
+}
+.float-right{
+	float: right;
+}
+.prize-img img{
+	width: 70px;
+	height:70px;
+}
+</style>
+<!--轮次设置-->
+<!-- /section:basics/navbar.layout -->
+<div class="main-container ace-save-state" id="main-container">
+	<script type="text/javascript">
+		{literal}
+		try {
+			ace.settings.loadState('main-container')
+		} catch (e) {} 
+		{/literal}
+	</script>
+	<!-- #section:basics/sidebar -->
+	{$html_sidebar}
+	<!-- /section:basics/sidebar -->
+	<div class="main-content">
+		<div class="main-content-inner">
+			<!-- #section:basics/content.breadcrumbs -->
+			<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+				<ul class="breadcrumb">
+					<li>
+						<i class="ace-icon fa fa-home home-icon"></i>
+						<a href="/myadmin/index.php">首页</a>
+					</li>
+					<li class="active">{$title}</li>
+				</ul><!-- /.breadcrumb -->
+				<!-- /section:basics/content.searchbox -->
+			</div>
+
+			<!-- /section:basics/content.breadcrumbs -->
+			<div class="page-content">
+				<h3 class="header smaller lighter blue">
+					{$title}
+					<small>{$description}</small>
+				</h3>
+				<div class="row">
+					<div class="col-xs-12">
+						<!-- PAGE CONTENT BEGINS -->
+                        <div class="row">
+							<div class="col-xs-2 roundlist">
+								{foreach from=$configs item=$val name=config}
+								<div class="well {if $currentdata['id'] eq $val['id']}green{/if}">
+									<span class="pointer btn-page" data-id="{$val['id']}">{$val['title']}</span><span  class="pointer float-right btn-delpage" data-id="{$val['id']}"><i class="fa fa-times"></i></span>
+								</div>
+								<hr/>
+								{/foreach}
+								<button class="btn btn-info" style="width:100%" id="btn-openaddpagemodal">添加</button>
+							</div>
+							{if $currentdata != null}
+							<div class="col-xs-10">
+								<div class="tabbable">
+									<ul class="nav nav-tabs" id="myTab">
+										<li class="active">
+											<a data-toggle="tab" href="#lotteryconfig">
+												<i class="green ace-icon fa fa-gear bigger-120"></i>
+												基本配置
+											</a>
+										</li>
+										<li>
+											<a data-toggle="tab" href="#lotterytheme"  id="btn-themesettings" data-id="{$currentdata['id']}">
+												<i class="red ace-icon fa fa-tachometer bigger-120"></i>	
+												内容设置
+											</a>
+										</li>
+									</ul>
+
+									<div class="tab-content">
+										<div id="lotteryconfig" class="tab-pane fade in active">
+											<div class="row">
+												<div class="col-sm-12">
+													<form class="form-horizontal" role="form">
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">标题：</label>
+															<div class="col-sm-9">
+																<div style="padding-top:8px;">
+																	<input type="text" name="title" value="{$currentdata['title']}">
+																</div>
+															</div>
+														</div>
+														<div class="form-group">
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-1">选择主题：</label>
+																<div class="col-sm-9">
+																		<select name="type" class="col-xs-10 col-sm-5">
+                                                                            <option value='1' {if $currentdata['type']==1}selected{/if}>PC端页面</option>
+																			<option value='2' {if $currentdata['type']==2}selected{/if}>手机端页面</option>
+																			<option value='3' {if $currentdata['type']==3}selected{/if}>签约</option>
+																		</select>
+																</div>
+														</div>
+														<div class="space-4"></div>
+														<div class="clearfix form-actions">
+															<div class="col-md-offset-3 col-md-9">
+																<input type="hidden" name="id" value="{$currentdata['id']}"/>
+																<button class="btn btn-info btn-savepage" type="button">
+																	<i class="ace-icon fa fa-check bigger-110"></i>
+																	保存
+																</button>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+										
+										<div id="lotterytheme" class="tab-pane fade">
+                                            {$snippet}
+										</div>
+										
+									</div>
+								</div>
+
+							</div>
+							{/if}
+						</div>
+						<div class="modal fade" id="addpagemodal" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+											<h4 class="blue bigger">添加单页</h4>
+										</div>
+										<div class="modal-body">
+											<div class="row">
+												<div class="col-sm-12">
+													<form class="form-horizontal" id="addlotteryconfig" role="form" >
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right">名称:</label>
+															<div class="col-sm-9">
+																<input type="text" name="title" value=""/>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right">类型:</label>
+															<div class="col-sm-9">
+																<select name="type">
+                                                                        <option value='1'>PC端页面</option>
+																		<option value='2'>手机端页面</option>
+																		<option value='3'>签约</option>
+																</select>
+															</div>
+														</div>
+								
+													</form>
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button class="btn btn-sm btn-primary btn-addpage">
+												<i class="ace-icon fa fa-check"></i>
+												保存
+											</button>
+											<button class="btn btn-sm " data-dismiss="modal" type="button">关闭</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						<!-- PAGE CONTENT ENDS -->
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.page-content -->
+		</div>
+	</div><!-- /.main-content -->
+	{$html_footercontent}
+	<!-- 写每个页面自定的js -->
+	<script type="text/javascript" src="/myadmin/assets/js/jquery.form.js"></script>
+	<!--引入CSS-->
+	<link rel="stylesheet" type="text/css" href="/assets/plugs/webuploader-0.1.5/webuploader.css">
+	<!--引入JS-->
+	<script type="text/javascript" src="/assets/plugs/webuploader-0.1.5/webuploader.min.js"></script>
+	<script type="text/javascript" src="{$module_assets}/js/admin_index.js"></script>
+	
+	{$html_footer}

@@ -1,0 +1,34 @@
+<table class="table table-striped table-bordered table-hover">
+        <thead class="thin-border-bottom">
+            <tr>
+                <th>
+                    数据信息
+                </th>
+                <th>图片</th>
+                <th >操作</th>
+            </tr>
+        </thead>
+        <tbody >
+                {foreach $rows $item}
+                <tr id="item_{$item['id']}">
+                    <tr >
+                        <td >
+                            {$item['datarow']}
+                        </td>
+                        <td>
+                            {if $item['imagepath']!=''}
+                            <img src="{$item['imagepath']}" style="height: 80px;width:80px;">
+                            {/if}
+                        </td>
+                        <td >
+                            <button class="btn btn-warning btn-xs btn-edit" data-id="{$item['id']}">修改</button>
+                            <button class="btn btn-danger btn-xs btn-delete" data-id="{$item['id']}">删除</button>
+                        </td>
+                    </tr>
+                </tr>
+                {/foreach}
+        </tbody>
+    </table>
+    {$pagehtml}
+
+

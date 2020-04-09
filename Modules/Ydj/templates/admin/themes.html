@@ -1,0 +1,85 @@
+{$html_header}
+<!--轮次设置-->
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+			{literal}
+				try{ace.settings.loadState('main-container')}catch(e){}
+			{/literal}
+			</script>
+			<!-- #section:basics/sidebar -->
+            {$html_sidebar}
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="main-content-inner">
+					<!-- #section:basics/content.breadcrumbs -->
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="/myadmin/index.php">首页</a>
+							</li>
+							<li class="active">{$title}</li>
+						</ul><!-- /.breadcrumb -->
+						<!-- /section:basics/content.searchbox -->
+					</div>
+
+					<!-- /section:basics/content.breadcrumbs -->
+					<div class="page-content">
+					<h3 class="header smaller lighter blue">
+						{$title}
+						<small>{$description}</small>
+					</h3>
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="widget-box widget-color-blue" >
+									<div class="widget-header">
+										<h5 class="widget-title bigger lighter">
+											<i class="ace-icon fa fa-users"></i>
+											摇大奖主题
+										</h5>
+										<div class="widget-toolbar no-border">
+											<label>
+											<button class="btn btn-xs btn-warning btn_add">添加</button>
+											</label>
+										</div>
+									</div>
+									<div class="widget-body">
+										<div class="widget-main no-padding">
+											<table class="table table-striped table-bordered table-hover">
+												<thead class="thin-border-bottom">
+													<tr>
+														<th>序号</th>
+														<th>
+															主题
+														</th>
+														<th >操作</th>
+													</tr>
+												</thead>
+												<tbody>
+												{foreach $themes as $item}
+													<tr >
+														<td >{$item['id']}</td>
+														<td >{$item['themename']}</td>
+														<td >
+															<button class="btn btn-primary btn-xs btn_edit" data="{$item['id']}">修改</button>
+															<a href="###" onclick="del({$item['id']})"><span class="label label-danger">删除</span></a>
+														</td>
+													</tr>
+												{/foreach}
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+{$html_footercontent}
+<!-- 写每个页面自定的js -->
+<script type="text/javascript" src="{$module_assets}/js/page_themes.js"></script>
+{$html_footer}

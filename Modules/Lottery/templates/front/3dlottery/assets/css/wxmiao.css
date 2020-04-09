@@ -1,0 +1,50 @@
+.control-item {
+    height: 50px;
+    line-height: 50px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 25px 25px 25px 25px;
+    position: relative;
+    margin-top: 10px;
+    font-size: 16px;
+    color: #fff;
+    padding: 0 0 0 5px;
+    box-sizing: border-box;
+}
+
+.control-item em {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffde00;
+    vertical-align: middle;
+    font-style: normal;
+}
+
+.icon-lb {
+    display: inline-block;
+    padding-left: 25px;
+}
+
+.icon-ctrol {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.icon-minus {
+    background-image: url('../app/images/icon-minus.png');
+    vertical-align: -12px;
+}
+
+.icon-plus {
+    background-image: url('../app/images/icon-plus.png');
+    vertical-align: -12px;
+}
+
+.lottery-num {
+    display: inline-block;
+    width: 46px;
+    text-align: center;
+}

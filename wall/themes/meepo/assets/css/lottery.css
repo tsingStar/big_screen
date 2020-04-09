@@ -1,0 +1,455 @@
+body,ul,ol,dl,dd,h1,h2,h3,h4,h5,h6,pre,form,fieldset,legend,input,button,textarea,p,blockquote,table,th,td,menu{margin:0;padding:0}table{table-layout:fixed;border-spacing:0;border-collapse:collapse}ul,ol,menu{list-style:none}fieldset,img{border:none}img,object,select,input,textarea,button{vertical-align:middle}input,textarea,select,address,caption,cite,code,dfn,em,i,b,strong,small,th,var,abbr{font-size:100%;font-style:normal}caption,th{text-align:left}article,aside,footer,header,hgroup,nav,section,figure,figcaption{display:block}code,kbd,pre,samp,tt{font-family:Consolas, 'Courier New', Courier, monospace}address,cite,dfn,em,var,i{font-style:normal}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}a{cursor:pointer;text-decoration:none;color:#333;-webkit-transition:all .2s;transition:all .2s}a:hover{text-decoration:none;color:#ffba00;outline:none}a span,a em,a u,a strong,a b,a p,a img,a ul,a li,a div,a dd,a dt,a dl,a ol,a table,a th,a td,a h1,a h2,a h3,a h4,a h5,a h6,a input,a textarea,a button,a small,a select{cursor:pointer;-webkit-transition:none;transition:none}abbr[title],acronym[title]{cursor:help;border-bottom:1px dotted}body,button,input,select,textarea{font:14px/1.5 'Microsoft Yahei', 'Hiragino Sans GB', 'STHeiti', 'Helvetica Neue', 'Helvetica', 'SimSun', 'Tahoma', 'Arial', sans-serif}.fl,.col1{float:left}.fr,.col2{float:right}.tl{text-align:left}.tr{text-align:right}.tc{text-align:center}.cf:before,.cf:after{display:table;content:''}.cf:after{clear:both}.cf{zoom:1}
+#container{
+	position: absolute;
+	width:100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+#lottery_main{
+	position: fixed;
+	top:0px;
+	width:100%;
+	height: 100%;
+}
+
+/* .wallCont{
+	position: absolute;
+    top: 17%;
+    height: 72%;
+    width: 80%;
+    left: 50%;
+    margin-left: -40%;
+} */
+
+.lottery-side{
+	
+	border-radius: 5px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.btn-start{
+	background-image: url('../images/3dlottery/lottery-start.png');
+}
+.btn-stop{
+	background-image: url('../images/3dlottery/lottery-stop.png');
+}
+
+.lottery-middle {
+    background-color: rgba(30, 3, 64, .5);
+   
+}
+
+#lottery-panel{
+	position: absolute;
+	width: 90%;
+	left: 50%;
+    margin-left: -45%;
+	height: calc(100% - 200px);
+	bottom:100px;
+}
+.lottery-left{
+	background-color: rgba(30, 3, 64, .5);
+	height: 100%;
+	width: 260px;
+	position: absolute;
+	overflow: hidden;
+	/* float:left; */
+}
+
+.lottery-right{
+	background-color: rgba(30, 3, 64, .5);
+	width:260px;
+	right: 0px;
+	height: 100%;
+	position: absolute;
+	
+	/* overflow: hidden; */
+}
+.lottery-middle{
+	width:calc(100% - 540px);
+	position: absolute;
+	left:270px;
+	height: 100%;
+}
+
+.prizename{
+	display: block;
+    width: 100%;
+	font-weight: bold;
+	color: #fff;
+	text-align: center;
+	line-height: 1.5;
+	background: url('../images/3dlottery/line.png') no-repeat 50% 100%;
+	padding: 10px 0;
+	font-size: 1.5em;
+}
+
+.winnernum{
+	position: absolute;
+    top: 0;
+    left: 0;
+	display: block;
+    width: 100%;
+	font-weight: bold;
+	color: #fff;
+	text-align: center;
+	line-height: 1.5;
+	background: url('../images/3dlottery/line.png') no-repeat 50% 100%;
+	padding: 10px 0;
+	font-size: 1.5em;
+}
+
+.lottery-img{
+	width:60%;
+    height:0px;
+	padding-bottom:60%;
+	margin-left:20%;
+	margin-top:5%;
+	position:relative;
+	/* padding:0px 10px; */
+}
+
+.lottery-img img{
+	position:absolute;
+	display: inline-block;
+	
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	border-radius: 5px;
+}
+
+.lottery-control{
+	position: absolute;
+	width: 100%;
+}
+
+
+.control-item{
+	height: 50px;
+	line-height: 50px;
+	width: 100%;
+	background-color: rgba(0, 0, 0, .5);
+	border-radius: 25px 25px 25px 25px;
+	position: relative;
+	margin-top: 20px;
+	font-size: 16px;
+	color: #fff;
+	padding: 0 0 0 10px;
+	box-sizing: border-box;
+}
+.control-item em{
+	font-size: 20px;
+	font-weight: bold;
+	color: #ffde00;
+	vertical-align: middle;
+	font-style: normal;
+}
+
+/* .control-item{
+	height: 10%;
+	width: 90%;
+	background-color: rgba(0, 0, 0, .5);
+	border-radius: 25px 25px 25px 25px;
+	position: relative;
+	margin-top: 2%;
+	margin-left: 5%;
+	color: #fff;
+	box-sizing: border-box;
+} */
+
+.icon-lb{
+	display: inline-block;
+	padding-left: 25px;
+}
+/* .control-item em{
+	font-weight: bold;
+	color: #ffde00;
+	vertical-align: middle;
+	font-style: normal;
+} */
+.icon-ctrol{
+	display: inline-block;
+	width: 36px;
+	height: 36px;
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+.icon-minus{
+	background-image: url('../images/3dlottery/icon-minus.png');
+	vertical-align: -12px;
+}
+.icon-plus{
+	background-image: url('../images/3dlottery/icon-plus.png');
+	vertical-align: -12px;
+}
+.lottery-num{
+	display: inline-block;
+	width: 46px;
+	text-align: center;
+}
+
+.control-item-btn{
+	margin-top: 20px;
+	height: 46px;
+	width: 90%;
+	/* background-color: rgba(0, 0, 0, .5); */
+	border-radius: 25px 25px 25px 25px;
+	position: absolute;
+	/* margin-top: 2%; */
+	/* margin-left: 5%; */
+	color: #fff;
+	box-sizing: border-box;
+}
+.lottery-btn{
+	display: inline-block;
+	width: 60%;
+	height: 100%;
+	position: absolute;
+	margin-left:25%;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	background-size:auto 100%;
+}
+
+.lottery-middle .control-item-btn{
+	margin-left:50%;
+	width: 100%;
+	position: absolute;
+	bottom: 30px;
+	 
+}
+.lottery-middle .control-item-btn .lottery-btn{
+	margin-left: -70px;
+	width:140px;
+}
+.lottery-scroll{
+	width: 70%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content:center;
+	-webkit-transform: translate(-50%,-50%);
+	   -moz-transform: translate(-50%,-50%);
+	    -ms-transform: translate(-50%,-50%);
+	     -o-transform: translate(-50%,-50%);
+	        transform: translate(-50%,-50%);
+}
+.lottery-scroll li{
+	width: 29.333%;
+	padding: 29.333% 0 0 0;
+	margin: 2%;
+	height: 0;
+	/* border-radius: 50%; */
+	overflow: hidden;
+	position: relative;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.lottery-scroll li img{
+	width: 100%;
+	height: 100%;
+	/* border-radius: 50%; */
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.lottery-win-list .lottery-winner ul{
+	width: 100%;
+	height: 100%;
+	
+}
+.lottery-win-list .lottery-winner ul li{
+	padding: 0;
+	height: 100%;
+	border-radius: 10px;
+	background-color: rgba(30, 3, 64, .5);
+	overflow: hidden;
+	position: relative;
+	margin-right: 15px;
+	float: left
+}
+.lottery-right .lottery-win-list{
+	padding: 10px 0;
+}
+.lottery-right .lottery-win-list .lottery-winner ul li{
+	width: 110px;
+	height: 0;
+	padding-top: 110px;
+	margin: 15px 10px;
+}
+.lottery-right .lottery-win-list.lottery-horizontal .lottery-winner ul li{
+	width: 100%;
+	position: relative;
+	height: 84px;
+	margin: 0;
+	padding: 10px 10px 10px 84px;
+	background-color:transparent;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.lottery-right .lottery-win-list.lottery-horizontal .lottery-winner .lottery-avatar-bd{
+	position: absolute;
+	top: 50%;
+	left: 10px;
+	transform: translateY(-50%);
+}
+.lottery-right .lottery-win-list.lottery-horizontal .winner-name{
+	width: 100%;
+}
+.lottery-right .lottery-win-list .lottery-winner ul li img{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	top: 0;
+	left: 0;
+	z-index: 1;
+}
+.lottery-win-list .lottery-winner{padding: 0 0 15px 0;overflow: hidden;}
+.lottery-item{
+	position: absolute;
+	top: 50%;
+	width: 96%;
+	left: 2%;
+	overflow: hidden;
+	white-space: nowrap;
+	-ms-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+	font-size: 16px;
+	color: #fff;
+	line-height: 1.5;
+	text-align: center;
+	z-index: 2;
+	text-shadow: 0 0 2px rgba(0, 0, 0, 1.0);
+	-webkit-transform: translateY(-50%);
+	   -moz-transform: translateY(-50%);
+	    -ms-transform: translateY(-50%);
+	     -o-transform: translateY(-50%);
+	        transform: translateY(-50%);
+}
+.lottery-win-list{
+	width: 100%;
+	height: 100%;
+	padding: 20px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	border-radius: 5px;
+	background-color: rgba(30, 3, 64, .5);
+}
+.lottery-select-contain{
+	width: 20%;
+	padding-top: 20%;
+	border-radius: 50%;
+	background-color: rgba(30, 3, 64, .5);
+	position: absolute;
+	top: 10%;
+	left: 50%;
+	transform: translateX(-50%);
+	overflow: hidden;
+}
+.lottery-select-content{
+	width: 100%;
+	position: absolute;
+	top: 50%;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	-ms-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+	left: 0;
+	transform: translateY(-50%);
+	font-size: 20px;
+	color: #fff;
+	line-height: 1.5;
+}
+
+
+.lottery-left{
+	left: 0;
+	top: 0;
+}
+.lottery-right{
+	right: 0;
+	top: 0;
+	padding: 42px 0 10px 0;
+	box-sizing: border-box;
+}
+.lottery-right .prizename{
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.lottery-right .lottery-win-list{
+	background-color: transparent;
+}
+.lottery-side.lottery-right h2{
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.lottery-mainbox{
+	width: 100%;
+	height: 100%;
+	background-color: rgba(30, 3, 64, .5);
+	border-radius: 5px;
+	padding-bottom: 92px;
+	box-sizing: border-box;
+	position: relative;
+}
+
+
+.lottery-avatar-bd{
+	padding: 2px;
+	background-image: url('../images/bg-primary.png');
+	background-repeat: no-repeat;
+	-webkit-background-size: contain;
+	background-size: contain;
+  	border-radius: 50%;
+  	overflow: hidden;
+}
+.lottery-avatar-bg{
+	background-color: #000;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	overflow: hidden;
+}
+.lottery-avatar-bg img{width: 100%;height: 100%;}
+.lottery-winner .lottery-avatar-bd{
+	width: 64px;
+	height: 64px;
+	position: absolute;
+	left: 0;
+	top: 10px;
+}
+.lottery-winner ul li{
+	padding: 10px 0 10px 73px;
+	position: relative;
+	height: 68px;
+}
+.winner-name{
+	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 16px;
+	color: #fff;
+	line-height: 68px;
+}
+.lottery-winner{
+	padding: 10px;
+	height: 100%;
+	overflow: hidden;
+	box-sizing: border-box;
+} 

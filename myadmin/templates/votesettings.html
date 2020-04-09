@@ -1,0 +1,153 @@
+{include file="templates/html_header.html"}
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+			{literal}
+				try{ace.settings.loadState('main-container')}catch(e){}
+			{/literal}
+			</script>
+			<!-- #section:basics/sidebar -->
+			{include file="templates/html_sidebar.html"}
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="main-content-inner">
+					<!-- #section:basics/content.breadcrumbs -->
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="index.php">首页</a>
+							</li>
+							<li class="active">{$title}</li>
+						</ul><!-- /.breadcrumb -->
+						<!-- /section:basics/content.searchbox -->
+					</div>
+
+					<!-- /section:basics/content.breadcrumbs -->
+					<div class="page-content">
+					<h3 class="header smaller lighter blue">
+						{$title}
+						<small>设置投票的参数</small>
+					</h3>
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+									<form class="form-horizontal" role="form">
+									<!-- #section:elements.form -->
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">投票标题</label>
+										<div class="col-sm-9">
+											<input type="text" id="form-field-1" name="votetitle" placeholder="大屏幕投票标题" class="col-xs-10 col-sm-5" value="{$wall_config['votetitle']}" />
+											<span class="input-group-btn">
+												<button type="button" class="btn btn-purple btn-sm " onclick="setvotetitle()">
+													修改
+												</button>
+											</span>
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">刷新频率</label>
+										<div class="col-sm-9">
+											<input type="text" id="form-field-1" name="votefresht" placeholder="刷新频率，单位秒" class="col-xs-10 col-sm-5" value="{$wall_config['votefresht']}" />
+											<span class="input-group-btn">
+												<button type="button" class="btn btn-purple btn-sm " onclick="setvotefresht()">
+													修改
+												</button>
+											</span>
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">每个用户投票数</label>
+										<div class="col-sm-9">
+										
+											<input type="text" id="form-field-1" name="votecannum" placeholder="每个用户投票数" class="col-xs-10 col-sm-5" value="{$wall_config['votecannum']}" />
+											<span class="input-group-btn">
+												<button type="button" class="btn btn-purple btn-sm " onclick="setvotecannum()">
+													修改
+												</button>
+											</span>
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">显示方式</label>
+										<div class="col-sm-9">
+											<div class="radio">
+												<label>
+													<input name="voteshowway" type="radio" class="ace input-lg" value="1" {if $wall_config['voteshowway']==1}checked{/if} onclick="setvoteshowway();"/>
+													<span class="lbl bigger-120">横排</span>
+												</label>
+											</div>
+											<div class="radio">
+												<label>
+													<input name="voteshowway" type="radio" class="ace input-lg" value="2" {if $wall_config['voteshowway']==2}checked{/if} onclick="setvoteshowway();"/>
+													<span class="lbl bigger-120">竖排</span>
+												</label>
+											</div>
+										</div>
+									</div>
+								</form>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+{include file="templates/html_footercontent.html"}
+<!-- 写每个页面自定的js -->
+<script type="text/javascript">
+{literal}
+function setvotetitle(){
+	var votetitle=$('input[name=votetitle]').val();
+	$.ajax({
+		'url':'dovotesettings.php?action=setvotetitle',
+		'type':'post',
+		'data':{'votetitle':votetitle},
+		'dataType':'json',
+		'success':function(json){
+			alert(json.message);
+		}
+	});
+}
+function setvotefresht(){
+	var votefresht=$('input[name=votefresht]').val();
+	$.ajax({
+		'url':'dovotesettings.php?action=setvotefresht',
+		'type':'post',
+		'data':{'votefresht':votefresht},
+		'dataType':'json',
+		'success':function(json){
+			alert(json.message);
+		}
+	});
+}
+function setvotecannum(){
+	var votecannum=$('input[name=votecannum]').val();
+	$.ajax({
+		'url':'dovotesettings.php?action=setvotecannum',
+		'type':'post',
+		'data':{'votecannum':votecannum},
+		'dataType':'json',
+		'success':function(json){
+			alert(json.message);
+		}
+	});
+}
+function setvoteshowway(){
+	var voteshowway=$('input[name=voteshowway]:checked').val();
+	$.ajax({
+		'url':'dovotesettings.php?action=setvoteshowway',
+		'type':'post',
+		'data':{'voteshowway':voteshowway},
+		'dataType':'json',
+		'success':function(json){
+			if(json.code<0)
+				alert(json.message);
+		}
+	});
+}
+{/literal}
+</script>
+{include file="templates/html_footer.html"}

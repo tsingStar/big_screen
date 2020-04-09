@@ -1,0 +1,332 @@
+{include file="templates/html_header.html"}
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+			{literal}
+				try{ace.settings.loadState('main-container')}catch(e){}
+			{/literal}
+			</script>
+			<!-- #section:basics/sidebar -->
+			{include file="templates/html_sidebar.html"}
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="main-content-inner">
+					<!-- #section:basics/content.breadcrumbs -->
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="index.php">首页</a>
+							</li>
+							<li class="active">{$title}</li>
+						</ul><!-- /.breadcrumb -->
+						<!-- /section:basics/content.searchbox -->
+					</div>
+
+					<!-- /section:basics/content.breadcrumbs -->
+					<div class="page-content">
+					<h3 class="header smaller lighter blue">
+						{$title}
+						<small>此处对接公众号系统</small>
+					</h3>
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="tabbable">
+									<ul class="nav nav-tabs padding-12 tab-color-blue background-blue"
+										id="messagelisttab">
+										<li class="active"><a data-toggle="tab" href="#intergrate"  ret="0">对接设置</a>
+										</li>
+										<li><a data-toggle="tab" href="#wxpay"  ret="1">微信支付设置</a></li>
+										{if $wall_config['rentweixin']== 2}
+										<li><a data-toggle="tab" href="#deeja-api" ret="1">迪加网络科技红包接口</a></li>
+										{/if}
+									</ul>
+
+									<div class="tab-content">
+										<div id="intergrate" class="tab-pane in active">
+										<!-- 对接设置 -->
+											<form class="form-horizontal" role="form">
+												<!-- #section:elements.form -->
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right" >使用默认公众号授权</label>
+													<div class="col-sm-9">
+														<label style="padding-top:9px">
+															<input name="rentweixin" class="ace ace-switch ace-switch-3" type="checkbox" {if $wall_config['rentweixin']== 2}checked{/if} />
+															<span class="lbl" onclick="switchrentweixin()"></span>
+														</label>
+													</div>
+												</div>
+												<div class="space-4"></div>
+												<div id="intergratesettings" {if $wall_config['rentweixin']== 2}style="display:none;"{/if}>
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right" >您公众号的APPID</label>
+													<div class="col-sm-9">
+														<input type="text"  name="appid" placeholder="公众号的APPID" class="col-xs-10 col-sm-5" value="{$weixin_config['appid']}" />
+														<span class="input-group-btn">
+															<button type="button" class="btn btn-purple btn-sm " onclick="setappid()">
+																修改
+															</button>
+														</span>
+													</div>
+												</div>
+												<div class="space-4"></div>
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right" >您公众号的APPSECRET</label>
+													<div class="col-sm-9">
+														<input type="text"  name="appsecret" placeholder="公众号的APPSECRET" class="col-xs-10 col-sm-5" value="{$weixin_config['appsecret']}" />
+														<span class="input-group-btn">
+															<button type="button" class="btn btn-purple btn-sm " onclick="setappsecret()">
+																修改
+															</button>
+														</span>
+													</div>
+												</div>
+												<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right"></label>
+												<div class="col-sm-9">
+												<div class="well">
+														<h4 class="red smaller lighter">注意</h4>
+														请在公众号后台=》公众号设置=》功能设置=》网页授权域名处 填写<span style="font-weight: bolder; color:blue;">{$domain}</span>，并下载txt文件上传到服务器网站根目录，如果是租用我们的系统，请把txt文件发给客服。
+														<div class="space-4"></div>
+														<h6 class="black smaller bolder">参考图片：</h6>
+														<img src="assets/images/help.jpg" style=" width: 90%;"/>
+														</div>
+												</div>
+												</div>
+												</div>
+											</form>
+										</div>
+										<div id="wxpay" class="tab-pane">
+										<!-- 微信支付设置 -->
+											<form class="form-horizontal" role="form">
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right" >商户号：</label>
+													<div class="col-sm-9">
+														<input type="text"  name="mchid" placeholder="商户ID" class="col-xs-10 col-sm-5" value="{$weixin_config['mch_id']}" />
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right" >API密钥：</label>
+													<div class="col-sm-9">
+														<input type="text"  name="mchsecret" placeholder="商户密钥" class="col-xs-10 col-sm-5" value="{$weixin_config['mchsecret']}" />
+														
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right" >API证书(apiclient_cert.pem)：</label>
+													<div class="col-sm-9">
+														<textarea class="form-control" name="apiclient_cert"   rows="5" cols="" placeholder="用记事本打开apiclient_cert.pem，全选内容复制粘贴到此处，保存后不会显示是正常的。"></textarea>
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right" >API证书密钥(apiclient_key.pem)：</label>
+													<div class="col-sm-9">
+														<textarea class="form-control" name="apiclient_key"   rows="5" cols="" placeholder="用记事本打开apiclient_key.pem，全选内容复制粘贴到此处，保存后不会显示是正常的。"></textarea>
+													</div>
+												</div>
+												<div class="clearfix form-actions">
+													<div class="col-md-offset-3 col-md-9">
+														<button class="btn btn-info btn-save-wxpay" type="button">
+															<i class="ace-icon fa fa-check bigger-110"></i>
+															保存
+														</button>
+														&nbsp; &nbsp; &nbsp;
+														<button class="btn" type="reset">
+															<i class="ace-icon fa fa-undo bigger-110"></i>
+															重置
+														</button>
+													</div>
+												</div>
+											</form>
+										</div>
+										{if $wall_config['rentweixin']== 2}
+										<div id="deeja-api" class="tab-pane">
+											<!-- <span>具体咨询迪加互动客服微信，微信号：13040761836</span> -->
+											<form class="form-horizontal" role="form">
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right" >迪加互动AppId：</label>
+													<div class="col-sm-9">
+														<input type="text"  name="deeja_appid" placeholder="16位字符串" class="col-xs-10 col-sm-5" value="{$deeja_appid}" />
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right" >迪加互动AppSecret：</label>
+													<div class="col-sm-9">
+														<input type="text"  name="deeja_appsecret" placeholder="32位字符串，填写保存后不会显示" class="col-xs-10 col-sm-5" value="" />
+													</div>
+												</div>
+												<div class="clearfix form-actions">
+													<div class="col-md-offset-3 col-md-9">
+														<button class="btn btn-info btn-save-deeja-api" type="button">
+															<i class="ace-icon fa fa-check bigger-110"></i>
+															保存
+														</button>
+														&nbsp; &nbsp; &nbsp;
+														<button class="btn" type="reset">
+															<i class="ace-icon fa fa-undo bigger-110"></i>
+															重置
+														</button>
+													</div>
+												</div>
+											</form>
+											{if $deeja_appid!=''}
+											<form class="form-horizontal" role="form">
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right" ></label>
+													<div class="col-sm-6 input-group">
+														<input type="text"  name="balance" placeholder="点击查看按钮获取余额信息" class=" form-control" readonly="true"/>
+														<div class="input-group-addon">
+															<span class="input-group-text btn-get-balance" >查看</span>
+														</div>
+													</div>
+												</div>
+											</form>
+											<div id="qrcodeimage">
+												
+											</div>
+											{/if}
+										</div>
+										{/if}
+									</div>
+								</div>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+{include file="templates/html_footercontent.html"}
+<!-- 写每个页面自定的js -->
+<script type="text/javascript">
+{literal}
+jQuery(function($){
+	$('.btn-save-wxpay').bind('click',function(){
+		var mchid=$('input[name=mchid]').val();
+		var mchsecret=$('input[name=mchsecret]').val();
+		var apiclient_cert=$('textarea[name=apiclient_cert]').val();
+		var apiclient_key=$('textarea[name=apiclient_key]').val();
+		var rootca=$('textarea[name=rootca]').val();
+		$.ajax({
+			"url":"dointergrate.php?action=savewxpay",
+			"data":{"mchid":mchid,"mchsecret":mchsecret,"apiclient_cert":apiclient_cert,"apiclient_key":apiclient_key,"rootca":rootca},
+			"dataType":"json",
+			"type":"post",
+			"success":function(json){
+				alert(json.message);
+			}
+		})
+	});
+	$('.btn-save-deeja-api').bind('click',function(){
+		var appid=$('input[name=deeja_appid]').val();
+		var appsecret=$('input[name=deeja_appsecret]').val();
+		if(appid=='' || appsecret==''){
+			alert('请把2项信息都填写完整哦。')
+			return false;
+		}
+		$.ajax({
+			"url":"dointergrate.php?action=savedeejaapi",
+			"data":{"deeja_appid":appid,"deeja_appsecret":appsecret},
+			"dataType":"json",
+			"type":"post",
+			"success":function(json){
+				alert(json.message);
+				if(json.code>0){
+					window.location.reload();
+				}
+			}
+		})
+	});
+	// $('.btn-save-deposit').bind('click',function(){
+	// 	var money=$('input[name=money]').val();
+	// 	$.ajax({
+	// 		"url":"dointergrate.php?action=ajaxgetpayqrcode",
+	// 		"data":{'money':money},
+	// 		'dataType':"json",
+	// 		"type":'post',
+	// 		'success':function(json){
+	// 			if(json.code>0){
+	// 				var html='<br>扫描二维码进行充值';
+	// 				$('#qrcodeimage').html(json.data+html);//.attr('src',json.data);
+	// 			}else{
+	// 				alert(json.message);
+	// 			}
+	// 		}
+	// 	})
+	// });
+	$('.btn-get-balance').on('click',function(){
+		var balance_input=$('input[name=balance]');
+		balance_input.attr('placeholder','获取中，请耐心等待...');
+		$.ajax({
+			"url":"dointergrate.php?action=ajaxgetbalance",
+			// "data":{'money':money},
+			'dataType':"json",
+			"type":'post',
+			'success':function(json){
+				if(json.code>0){
+					balance_input.val('余额：'+(parseInt(json.data.amount)/100)+'元，其中冻结：'+(parseInt(json.data.freeze)/100)+'元');
+				}else{
+					alert(json.message);
+				}
+			}
+		})
+	})
+});
+function switchrentweixin(){
+	var rentweixin=$('input[name=rentweixin]:checked').val()=='on'?'1':'2';
+	$.ajax({
+		'url':'dointergrate.php?action=switchrentweixin',
+		'data':{'rentweixin':rentweixin},
+		'type':'post',
+		'dataType':'json',
+		'success':function(json){
+			window.location.reload();
+			/*if(json.code>0){
+				if(rentweixin==2){
+					$('#intergratesettings').slideUp();
+				}else{
+					$('#intergratesettings').slideDown();
+				}
+			}*/
+			
+		}
+	});
+	
+	//console.log('1');
+}
+
+function setappid(){
+	var appid=$('input[name=appid]').val();
+	$.ajax({
+		'url':'dointergrate.php?action=setappid',
+		'data':{'appid':appid},
+		'type':'post',
+		'dataType':'json',
+		'success':function(json){
+			alert(json.message);
+			
+		}
+	});
+}
+
+function setappsecret(){
+	var appsecret=$('input[name=appsecret]').val();
+	$.ajax({
+		'url':'dointergrate.php?action=setappsecret',
+		'data':{'appsecret':appsecret},
+		'type':'post',
+		'dataType':'json',
+		'success':function(json){
+			alert(json.message);
+		}
+	});
+}
+// function setDeejaAppId(){
+
+// }
+// function setDeejaAppSecret(){
+
+// }
+{/literal}
+</script>
+{include file="templates/html_footer.html"}

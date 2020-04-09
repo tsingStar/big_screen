@@ -1,0 +1,69 @@
+
+<!DOCTYPE html></body>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>签约</title>
+    <style>
+        .container {
+            width: 85%;
+            height: 85%;
+            position: absolute;
+            background-color: #000;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    
+        .box {
+            background-color: aliceblue;
+            opacity: 0.6;
+            width: 60px;
+            cursor: move;
+            top:30px;
+            right:30px;
+            position: absolute;
+            color: #000;
+            text-align: center;
+            z-index: 999;
+        }
+        .coor {
+            width: 7px;
+            height: 7px;
+            overflow: hidden;
+            cursor: se-resize;
+            position: absolute;
+            right: -4px;
+            bottom: -4px;
+            background-color: #09C;
+            border-radius: 50%;
+            display: none;
+        }
+        .coor-bottom {
+            bottom: -4px;
+            right: 50%;
+            cursor: n-resize;
+        }
+    
+        .coor-right {
+            right: -4px;
+            bottom: 50%;
+            cursor: e-resize;
+        }
+        #displaysign img{
+            width:100%;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <canvas id="contract"></canvas>
+</div>
+<div id="displaysign" style="display: none; background:transparent;width: 60%; margin: 100px auto 0 auto;"></div>
+<script type="text/javascript">
+var pageinfo={$currentdata|json_encode};
+var pages={$configs};
+</script>
+<script type="text/javascript" src="/assets/js/require.min.js" data-main="/Modules/Page/templates/front/sign/assets/js/front_index.js"></script>
+</body>
+</html>

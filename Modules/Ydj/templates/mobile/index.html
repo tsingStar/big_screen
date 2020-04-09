@@ -1,0 +1,26 @@
+{$html_header}
+<link href="{$module_assets}/css/mobile_ydj.css?T=1" type="text/css" rel="stylesheet">
+</head>
+<body class="shakeing1">
+    <audio id="ShakeAudio" src="{$assets}/images/shake/v4.mp3" preload="preload"></audio>
+    <audio id="WinAudio" src="{$module_assets}/sound/win.mp3" preload="preload"></audio>
+    <div class="memo">听从现场指挥摇动手机</div>
+    <div class="shake-icon"></div>
+    <div id="award" style="z-index: 9999; display: none;">
+        <div class="award-main">
+            <img src="{$module_assets}/images/noaward.jpg"/><p>恭喜你获得<em>sss</em></p>
+        </div>
+    </div>
+    <script src="{$assets}/js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{$assets}/js/shake.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{$assets}/js/bubbly-bg.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+    var THEMEDATA = {$themejson};
+    var YDJ_CONFIG={$ydj_config};
+    var USERINFO={$userinfo};
+    var CANJOIN={$canjoin};
+    var PRIZES={$prizes|json_encode};
+    </script>
+    
+    <script src="{$module_assets}/js/mobile_ydj.js" type="text/javascript"  charset="utf-8"></script>
+{$html_footer}

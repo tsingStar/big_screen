@@ -1,0 +1,1 @@
+!function(o,t){o.WBActivity.resize=function(){t(".Panel.Top").css({top:0}),t(".Panel.Bottom").css({bottom:0})}}(window,jQuery);

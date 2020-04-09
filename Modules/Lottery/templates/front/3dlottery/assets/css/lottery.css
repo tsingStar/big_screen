@@ -1,0 +1,154 @@
+ /**layer**/
+ .layui-layer-btn {
+    text-align: center;
+}
+
+/**layer**/
+.lottory-left-box {
+    background-image: url("http://wq.imlehu.com/addons/meepo_xianchang/template/mobile/app/images/3dlottory/images/left_box_bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.lottory-right-box {
+    background-image: url("http://wq.imlehu.com/addons/meepo_xianchang/template/mobile/app/images/3dlottory/images/right_box_bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.lottory_award_box {
+    background-image: url("http://wq.imlehu.com/addons/meepo_xianchang/template/mobile/app/images/3dlottory/images/prize_bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.lottory-prev-btn {
+    background-image: url("http://wq.imlehu.com/addons/meepo_xianchang/template/mobile/app/images/3dlottory/images/prev_btn.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+.lottory-next-btn {
+    background-image: url("http://wq.imlehu.com/addons/meepo_xianchang/template/mobile/app/images/3dlottory/images/next_btn.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+.lottory-start-btn {
+    background-image: url("http://wq.imlehu.com/addons/meepo_xianchang/template/mobile/app/images/3dlottory/images/start_btn.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.lottory-stop-btn {
+    background-image: url("http://wq.imlehu.com/addons/meepo_xianchang/template/mobile/app/images/3dlottory/images/stop_btn.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.lottory-right-box .lottory-reward-box .lottory-reward-people .lottory-r-div {
+    background: url("http://wq.imlehu.com/addons/meepo_xianchang/template/mobile/app/images/3dlottory/images/luckuser_bg.png") center 0 no-repeat;
+    background-size: cover;
+}
+
+.pop_3d .light {
+    background-image: url("http://wq.imlehu.com/addons/meepo_xianchang/template/mobile/app/images/3dlottory/images/pop_user_lightbg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+.pop_3d .fireworks {
+    background: url("http://wq.imlehu.com/addons/meepo_xianchang/template/mobile/app/images/3dlottory/images/pop_user_firebg.png") no-repeat;
+}
+
+.pop_box .pop_userInfo em {
+
+    background: url("http://wq.imlehu.com/addons/meepo_xianchang/template/mobile/app/images/3dlottory/images/pop_user_topbg.png") no-repeat;
+}
+
+.pop_box .pop_userInfo span {
+
+    background: url("http://wq.imlehu.com/addons/meepo_xianchang/template/mobile/app/images/3dlottory/images/pop_user_bottombg.png") no-repeat;
+}
+
+.lottory_selected {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap
+}
+
+.lottory_selected ul {
+    width:
+        height:100%;
+    width: 960px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow: hidden;
+    overflow-y: auto;
+    height: 600px;
+}
+
+.lottory_selected .total_userone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    float: left;
+    width: 160px;
+    flex-direction: column;
+    margin-top: 20px;
+
+}
+
+.lottory_selected .total_userone .userone_avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+
+.lottory_selected .total_userone .userone_name {
+    width: 100px;
+    color: #fff;
+    text-align: Center;
+    font-size: 15px;
+    line-height: 20px;
+    height: 40px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.pop_zoomInDown {
+    -webkit-animation-name: zoomInDown;
+    animation-name: zoomInDown;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both
+}
+
+.lottory-r-name {
+    height: 30px !important
+}
+
+.lottory_award_box .selected {
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.lottory_award_box .lottory-present-name {
+    white-space: nowrap;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

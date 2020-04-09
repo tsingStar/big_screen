@@ -1,0 +1,159 @@
+body{
+    overflow-x: hidden;
+}
+.btn_left {
+    width: 0.45rem;
+    height: 0.45rem;
+    background: url(../images/btn_left.png) no-repeat center center;
+    background-size: cover;
+    display: inline-block;
+    position: relative;
+    top: 0.55rem;
+    left: -0.2rem;
+}
+
+.btn_right {
+    width: 0.45rem;
+    height: 0.45rem;
+    background: url(../images/btn_right.png) no-repeat center center;
+    background-size: cover;
+    display: inline-block;
+    position: relative;
+    top: 0.55rem;
+    left: 0.2rem;
+}
+
+.btn_left:active {
+    width: 0.45rem;
+    height: 0.45rem;
+    background: url(../images/btn_left_active.png) no-repeat center center;
+    background-size: cover;
+}
+
+.btn_right:active {
+    width: 0.45rem;
+    height: 0.45rem;
+    background: url(../images/btn_right_active.png) no-repeat center center;
+    background-size: cover;
+}
+
+.main_menu {
+    width: 6.5rem;
+    height: 2.6rem;
+    background-color: rgba(0, 0, 0, .9);
+    border-radius: 15px;
+    float: left;
+    z-index: 999;
+    margin-left: 0.8rem;
+    margin-top: 4rem
+}
+
+.words_jx {
+    font-size: 0.5rem;
+    display: inline-block;
+    position: relative;
+    top: 0.5rem;
+    color: #ffd017;
+    filter: drop-shadow(0 0 2px #ffde6f);
+    letter-spacing: 1px;
+}
+
+.sj {
+    text-align: center
+}
+
+.words_cqrs {
+    font-size: 0.4rem;
+    display: inline-block;
+    position: relative;
+    top: 0.83rem;
+    color: #fff;
+    left: -3px;
+    filter: drop-shadow(0 0 2px #fff);
+}
+
+.words_rs {
+    font-size: 0.4rem;
+    display: inline-block;
+    position: relative;
+    top: 0.83rem;
+    color: #fff;
+    left: 3px;
+    filter: drop-shadow(0 0 2px #fff);
+}
+
+
+.btn_reduce,.btn_add {
+    width: 0.7rem;
+    height: 0.7rem;
+    top: 0.85rem;
+    display: inline-block;
+    position: relative;
+    background:#2f2f38;
+    border-radius: 5px;
+    margin-left: 0.08rem;
+    text-align: center;
+    color: #fff;
+    font-size: 0.48rem;
+    cursor: pointer;
+    border: 0px;
+}
+.btn_reduce {
+    margin-right: 0.08rem;
+    margin-left: 0.2rem;
+}
+.tz-1 {
+    display: inline-block;
+    position: relative;
+    top: 0.75rem;
+    width: 0.7rem;
+    height: 0.55rem;
+    background: #fff;
+}
+
+#prize {
+    width: 8rem;
+    height: 8rem;
+    float: left;
+    z-index: 1;
+
+}
+
+#players {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: -99;
+}
+
+.element img {
+    width: 90px;
+    height: 90px;
+    border-radius: 8px;
+    border: 1px solid #fff;
+    box-shadow: 0 0 8px #DDD;
+    -moz-box-shadow: 0 0 8px #DDD;
+    -webkit-box-shadow: 0 0 8px #DDD;
+}
+
+.mask {
+    position: absolute;
+    margin-left: -16rem;
+    margin-top: -10rem;
+    width: 32rem;
+    height: 20rem;
+    left: 50%;
+    top: 50%;
+    filter: blur(150px);
+    border-radius: 150px;
+    box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.9);
+    z-index: -1;
+}
+
+
+.bt_1 {
+    background-image: url(../images/bt1.pn);
+    background-repeat: no-repeat;
+    width: 23px;
+    height: 24px;
+}

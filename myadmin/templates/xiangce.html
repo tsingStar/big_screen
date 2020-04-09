@@ -1,0 +1,192 @@
+{include file="templates/html_header.html"}
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+			{literal}
+				try{ace.settings.loadState('main-container')}catch(e){}
+			{/literal}
+			</script>
+			<!-- #section:basics/sidebar -->
+			{include file="templates/html_sidebar.html"}
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="main-content-inner">
+					<!-- #section:basics/content.breadcrumbs -->
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="index.php">首页</a>
+							</li>
+
+							
+							<li class="active">{$title}</li>
+						</ul><!-- /.breadcrumb -->
+						<!-- /section:basics/content.searchbox -->
+					</div>
+
+					<!-- /section:basics/content.breadcrumbs -->
+					<div class="page-content">
+					<h3 class="header smaller lighter blue">
+						{$title}
+						<small>相册图片列表</small>
+						<div class="nav-search pull-right" id="nav-search" style="position:relative;">
+							<button class="btn btn-xs btn-primary btn-add-item"><i class="fa fa-plus"></i> 添加照片</button>
+						</div>
+					</h3>
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+									<div class="row">
+									{foreach $xiangce $item}
+									<div class="grid-item col-sm-3" id="item{$item['id']}">
+										<div class="widget-box widget-color-pink"  data="{$item['id']}">
+											<div class="widget-header">
+												<h5 class="widget-title">
+													
+												</h5>
+											</div>
+											<div class="widget-body">
+												<div class="widget-main" style="height:310px;"><img src="{$item['imagepath']}" style="height:auto;width:auto;max-width:100%;max-height:300px;" /></div>
+												<div class="widget-toolbox padding-8 clearfix">
+												<span class="pull-right btn btn-sx btn-danger" onclick="deleteitem({$item['id']})">删除</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									
+									
+									{/foreach}
+									</div>
+									<div>
+									{$pagehtml}
+									</div>
+									<div id="addphoto-form" class="modal" tabindex="-1">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+												<h4 class="blue bigger">添加一张照片</h4>
+											</div>
+
+											<div class="modal-body">
+											<div class="row">
+											<!-- #section:elements.tab -->
+												
+											<form id="savepicform" action="doxiangce.php?action=addphoto" method="post" enctype="multipart/form-data" >
+												<input type="file" class="imageuploader" name="photo"/>
+											</form>
+											
+										
+											
+											<!-- /section:elements.tab -->
+											</div>
+												
+											</div>
+
+											<div class="modal-footer">
+												<input type="hidden" name="index" value="-1" />
+												<button class="btn btn-sm" data-dismiss="modal">
+													<i class="ace-icon fa fa-times"></i>
+													取消
+												</button>
+
+												<button class="btn btn-sm btn-primary btn-save-item">
+													<i class="ace-icon fa fa-check"></i>
+													保存
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+{include file="templates/html_footercontent.html"}
+
+<script type="text/javascript" src="assets/js/jquery.form.js"></script>
+<!-- 写每个页面自定的js -->
+<script type="text/javascript">
+{literal}
+jQuery(function($){
+	//$('.'+$(this).attr('data')).masonry({});
+	$('.btn-add-item').bind('click',function(){
+		$('#addphoto-form').modal('show');
+	});
+	
+	$('.imageuploader').ace_file_input({
+		style: 'well',
+		btn_choose: '点击此处选择图片',
+		btn_change: null,
+		no_icon: 'ace-icon fa fa-cloud-upload',
+		droppable: true,
+		maxSize: 550000,
+		//previewHeight:200,
+		allowExt: ["jpeg", "jpg", "png", "gif"],
+		allowMime: ["image/jpg", "image/jpeg", "image/png", "image/gif"],
+		thumbnail: 'large'//large | fit
+		//,icon_remove:null//set null, to hide remove/reset button
+		/**,before_change:function(files, dropped) {
+			//Check an example below
+			//or examples/file-upload.html
+			return true;
+		}*/
+		/**,before_remove : function() {
+			return true;
+		}*/
+		,
+		//previewSize:400,
+		previewHeight:200,
+		preview_error : function(filename, error_code) {
+			//name of the file that failed
+			//error_code values
+			//1 = 'FILE_LOAD_FAILED',
+			//2 = 'IMAGE_LOAD_FAILED',
+			//3 = 'THUMBNAIL_FAILED'
+			//alert(error_code);
+		}
+
+	}).on('change', function(){
+		//console.log($(this));
+		//console.log($(this).data('ace_input_files'));
+		//console.log($(this).data('ace_input_method'));
+	});
+	
+	$('.btn-save-item').bind('click',function(){
+		$('#savepicform').ajaxSubmit({
+			dataType: 'json',
+			success:function(json){
+				$('input[name=pjlogopath]').val(json.filepath);
+				alert(json.message);
+				if(json.code>0){
+					window.location.reload();
+				}
+			}
+		});
+		return false;
+		
+	});
+});
+
+//删除一个照片
+function deleteitem(id){
+	if(!confirm('确认要删除吗？'))return false;
+	jQuery.ajax({
+		"url":"doxiangce.php?action=deleteitem",
+		"data":{'id':id},
+		"type":"post",
+		"dataType":"json",
+		"success":function(json){
+			if(json.code>0){
+				jQuery('#item'+id).remove();
+			}
+		}
+	});
+}
+{/literal}
+</script>
+{include file="templates/html_footer.html"}

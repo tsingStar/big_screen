@@ -1,0 +1,270 @@
+{$html_header}
+<style>
+.pointer{
+	cursor: pointer;
+}
+.float-right{
+	float: right;
+}
+.prize-img img{
+	width: 70px;
+	height:70px;
+}
+</style>
+<!--轮次设置-->
+<!-- /section:basics/navbar.layout -->
+<div class="main-container ace-save-state" id="main-container">
+	<script type="text/javascript">
+		{literal}
+		try {
+			ace.settings.loadState('main-container')
+		} catch (e) {} 
+		{/literal}
+	</script>
+	<!-- #section:basics/sidebar -->
+	{$html_sidebar}
+	<!-- /section:basics/sidebar -->
+	<div class="main-content">
+		<div class="main-content-inner">
+			<!-- #section:basics/content.breadcrumbs -->
+			<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+				<ul class="breadcrumb">
+					<li>
+						<i class="ace-icon fa fa-home home-icon"></i>
+						<a href="/myadmin/index.php">首页</a>
+					</li>
+					<li class="active">{$title}</li>
+				</ul><!-- /.breadcrumb -->
+				<!-- /section:basics/content.searchbox -->
+			</div>
+
+			<!-- /section:basics/content.breadcrumbs -->
+			<div class="page-content">
+				<h3 class="header smaller lighter blue">
+					{$title}
+					<small>{$description}</small>
+				</h3>
+				<div class="row">
+					<div class="col-xs-12">
+						<!-- PAGE CONTENT BEGINS -->
+                        <div class="row">
+							<div class="col-xs-3 roundlist">
+								{foreach from=$configs item=$val name=config}
+								<div class="well">
+									<span class="btn btn-minier btn-white {if $currentconfig['id'] eq $val['id']}btn-success{/if} btn-gameconfig" data-id="{$val['id']}">第{$smarty.foreach.config.iteration}轮游戏{if $val['status']==2}（进行中）{/if}{if $val['status']==3}（结束）{/if}</span><span  class="pointer float-right btn-delgameconfig" data-id="{$val['id']}"><i class="fa fa-times"></i></span>
+								</div>
+								<hr/>
+								{/foreach}
+								<button class="btn btn-info" style="width:100%" id="btn-openmodaladdgameconfig">添加</button>
+							</div>
+							<div class="col-xs-9">
+								{if $currentconfig }
+								<div class="tabbable">
+									<ul class="nav nav-tabs" id="myTab">
+										<li class="active">
+											<a data-toggle="tab" href="#gameconfig">
+												<i class="green ace-icon fa fa-gear bigger-120"></i>
+												配置
+											</a>
+										</li>
+										{if $currentconfig['themeconfig'] neq ''}
+										<li>
+											<a data-toggle="tab" href="#gametheme"  id="btn-themeconfig" data-id="{$currentconfig['id']}">
+												<i class="red ace-icon fa fa-tachometer bigger-120"></i>	
+												主题设置
+											</a>
+										</li>
+										{/if}
+										{if $currentconfig['status']==3}
+										<li >
+											<a data-toggle="tab" href="#winners" id="btn-showwinners" data-id="{$currentconfig['id']}">
+												<i class="red ace-icon fa fa-list bigger-120"></i>	
+												中奖名单
+											</a>
+										</li>
+										{/if}
+									</ul>
+
+									<div class="tab-content">
+										<div id="gameconfig" class="tab-pane fade in active">
+											<div class="row">
+												<div class="col-sm-12">
+													<form class="form-horizontal" role="form" class="gameconfigform" >
+														{if $currentconfig['status']!=1}
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">游戏状态：</label>
+															<div class="col-sm-9">
+																<div style="padding-top:8px;">
+																{if $currentconfig['status']==2}<span class="label label-primary label-white middle">进行中</span>{/if}{if $currentconfig['status']==3}<span class="label label-danger label-white middle">结束</span>{/if} {if $currentconfig['status']!=1}<span class="btn btn-minier  btn-danger btn-reset" data-id="{$currentconfig['id']}"><i class="fa fa-repeat"></i>点此重置游戏状态</span>{/if}
+																</div>
+															</div>
+														</div>
+														{/if}
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">前n名中奖：</label>
+															<div class="col-sm-9">
+																<div style="padding-top:8px;">
+																	<input type="number" name="toprank" value="{$currentconfig['toprank']}" min="1" max="200">
+																</div>
+															</div>
+														</div>
+														<div class="form-group">
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-1">选择主题：</label>
+																<div class="col-sm-9">
+																		<select name="themeid" class="col-xs-10 col-sm-5">
+																			{foreach $themes $item}
+																			<option value='{$item['id']}' {if $currentconfig['themeid']==$item['id']}selected{/if}>{$item['themename']}</option>
+																			{/foreach}
+																		</select>
+																</div>
+														</div>
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">可重复参与：</label>
+															<div class="col-sm-9">
+																<div style="padding-top:8px;">
+																	<label>
+																		<input name="winagain" class="ace ace-switch" type="checkbox" value="2" {if $currentconfig['winagain']==2}checked{/if}/>
+																		<span class="lbl"></span>
+																	</label>
+																</div>
+															</div>
+														</div>
+														<!-- /section:elements.form -->
+														<div class="space-4"></div>
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right" for="form-field-2">结果显示：</label>
+															<div class="col-sm-9">
+																	<div class="radio">
+																		<label>
+																			<input name="showtype" type="radio" class="ace" {if $currentconfig['showtype']=='nickname'}checked{/if} value="nickname"/>
+																			<span class="lbl">昵称</span>
+																		</label>
+																		<label>
+																			<input name="showtype" type="radio" class="ace"  {if $currentconfig['showtype']=='signname'}checked{/if} value="signname"/>
+																			<span class="lbl">姓名</span>
+																		</label>
+																		<label>
+																			<input name="showtype" type="radio" class="ace"  {if $currentconfig['showtype']=='phone'}checked{/if} value="phone"/>
+																			<span class="lbl">手机号</span>
+																		</label>
+																	</div>
+															</div>
+														</div>
+														<div class="clearfix form-actions">
+															<div class="col-md-offset-3 col-md-9">
+																<input type="hidden" name="id" value="{$currentconfig['id']}"/>
+																<button class="btn btn-info btn-savegameconfig" type="button">
+																	<i class="ace-icon fa fa-check bigger-110"></i>
+																	保存
+																</button>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+										{if $currentconfig['themeconfig'] neq ''}
+										<div id="gametheme" class="tab-pane fade">
+											<p>网速不是很好，没有加载成功哦，请刷新页面后再试试</p>
+										</div>
+										{/if}
+										{if $currentconfig['status']==3}
+										<div id="winners" class="tab-pane fade">
+											<p>网速不是很好，没有加载成功哦，请刷新页面后再试试</p>
+										</div>
+										{/if}
+									</div>
+								</div>
+								{/if}
+							</div>
+						</div>
+						<div class="modal fade" id="addgameconfigmodal" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+											<h4 class="blue bigger">添加游戏</h4>
+										</div>
+										<div class="modal-body">
+											<div class="row">
+												<div class="col-sm-12">
+													<form class="form-horizontal" id="addgameconfig" role="form" >
+																												
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">前n名中奖：</label>
+															<div class="col-sm-9">
+																<div style="padding-top:8px;">
+																	<input type="number" name="toprank" value="3">
+																</div>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right">选择主题:</label>
+															<div class="col-sm-9">
+																<select name="themeid">
+																	{foreach $themes $item}
+																	<option value='{$item['id']}'>{$item['themename']}</option>
+																	{/foreach}
+																</select>
+															</div>
+														</div>
+														
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right">可重复参与:</label>
+															<div class="col-sm-9">
+																<div style="padding-top:8px;">
+																<label>
+																	<input name="winagain" class="ace ace-switch" type="checkbox" value="2"/>
+																	<span class="lbl"></span>
+																</label>
+																</div>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right">中奖结果:</label>
+															<div class="col-sm-9">
+																	<div class="radio">
+																		<label>
+																			<input name="showtype" type="radio" class="ace" checked value="nickname"/>
+																			<span class="lbl">昵称</span>
+																		</label>
+																		<label>
+																			<input name="showtype" type="radio" class="ace" value="signname"/>
+																			<span class="lbl">姓名</span>
+																		</label>
+																		<label>
+																			<input name="showtype" type="radio" class="ace" value="phone"/>
+																			<span class="lbl">手机号</span>
+																		</label>
+																	</div>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button class="btn btn-sm btn-primary btn-addgameconfig">
+												<i class="ace-icon fa fa-check"></i>
+												保存
+											</button>
+											<button class="btn btn-sm " data-dismiss="modal" type="button">关闭</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						<!-- PAGE CONTENT ENDS -->
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.page-content -->
+		</div>
+	</div><!-- /.main-content -->
+	{$html_footercontent}
+	<!-- 写每个页面自定的js -->
+	<script type="text/javascript" src="/myadmin/assets/js/jquery.form.js"></script>
+	<!--引入CSS-->
+	<link rel="stylesheet" type="text/css" href="/assets/plugs/webuploader-0.1.5/webuploader.css">
+	<!--引入JS-->
+	<script type="text/javascript" src="/assets/plugs/webuploader-0.1.5/webuploader.min.js"></script>
+	<script type="text/javascript" src="{$module_assets}/js/admin_index.js"></script>
+	{$html_footer}

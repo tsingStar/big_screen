@@ -1,0 +1,261 @@
+html, body, h1, h2, h3, h4, h5, h6, div, dl, dt, dd, ul, ol, li, p, blockquote, pre, hr, figure, table, caption, th, td, form, fieldset, legend, input, button, textarea, menu { margin: 0; padding: 0; }
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+html {
+    font-size: 20px;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+    font-size: 1.4rem;
+}
+
+.money_count{
+    width: 100%;
+    height: 100%;
+    background: url("../images/shuqian/images/money_bg.jpg") no-repeat center;
+    background-size: 100% auto;
+    position: relative;
+    overflow: hidden;
+}
+.money_count #touchBox{
+    width: 100%;
+    height:100%;
+    position: absolute;
+    top:0;
+    z-index: 1;
+}
+
+.money_count .money_box{
+    width: 60%;
+    height:100%;
+    position: relative;
+    margin: 0 auto;
+}
+
+.opt{
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 100;
+    font-size: 1.4rem;
+}
+.opt .rank_ico{
+    width: 50px;
+    background: url("../images/shuqian/images/rank_ico.png") no-repeat center;
+    background-size: contain;
+    padding-top: 41px;
+    display: inline-block;
+    font-weight: bold;
+    color: #FDBE22;
+}
+.wait_tips{
+    position: absolute;
+    top: 50%;
+    margin-top: -50px;
+    color: #FDBE22;
+    font-size: 2.5rem;
+    width: 100%;
+    font-weight: bold;
+    background: rgba(17,17,17,0.6);
+    padding: 20px 0;
+    text-align: center;
+}
+.time{
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-weight: bold;
+    font-size: 2rem;
+    color: #fff;
+}
+.time div{
+    display: inline-block;
+    position: relative;
+    top: -3px;
+}
+.time span{
+    font-size: 3.6rem;
+    color: #FDBE23;
+    font-weight: bold;
+    padding: 0 5px;
+}
+
+
+.num{
+    position: absolute;
+    top: 0;
+    color: #000;
+    font-size: 4rem;
+}
+
+.play_tips {
+    position: absolute;
+    background-color: rgba(0,0,0,.5);
+    z-index: 200;
+    top:0;
+    width: 100%;
+    height: 100%;
+}
+.rank_mask{
+    position: absolute;
+    background-color: rgba(0,0,0,.5);
+    z-index: 100;
+    top:0;
+    width: 100%;
+    height: 100%;
+}
+.rank_mask .rank_dec{
+    width: 100%;
+    background: url("../images/shuqian/images/rank_dec.png") no-repeat center;
+    height: 35%;
+    background-size: contain;
+    position: absolute;
+    top: 3em;
+}
+.rank_mask .close{
+    width: 32px;
+    height:32px;
+    background: url("../images/shuqian/images/rank_close.png") no-repeat center;
+    position: absolute;
+    top:30px;
+    right: 20px;
+    background-size: contain;
+}
+.rank_mask .rank_box{
+    width: 294px;
+    height: 157px;
+    margin: 0 auto 0;
+    background: url("../images/shuqian/images/rank_bg.png") no-repeat center top;
+    background-size: cover;
+}
+.rank_mask .head_img{
+    width: 120px;
+    height: 120px;
+    background: url("../images/shuqian/images/headimg_bg.png") no-repeat center;
+    background-size: contain;
+    position: absolute;
+    top: -85px;
+    left: 50%;
+    margin-left: -60px;
+    text-align: center;
+}
+.rank_mask .head_img img{
+    margin-top: 9px;
+    border: 2px solid #660000;
+    width: 100px;
+    height:100px;
+    border-radius: 50%;
+}
+.rank_mask .my_rank,.rank_mask .my_money{
+    font-size: 2rem;
+    color: #fff48c;
+    font-weight: bold;
+    text-shadow: #824100 1px 2px 0;
+    text-align: center;
+}
+.rank_mask .my_rank {
+    padding-top: 40px;
+}
+.rank_mask .my_money {
+    font-size: 2rem;
+    padding-top: 5px;
+}
+.rank_mask .my_rank span,.rank_mask .my_money span{
+    padding: 0 10px;
+    color: #FFBD32;
+    text-shadow: #731700 1px 2px 0;
+}
+.rank_mask .rank{
+    background-color: #B20000;
+    width: 90%;
+    margin: 10px auto 0;
+    height: 200px;
+    overflow-y: auto;
+    padding: 5px 3px;
+}
+.rank_mask .logo{
+    width: 122px;
+    height: 40px;
+    background: url("../images/shuqian/images/rank_logo.png") no-repeat center;
+    background-size: contain;
+    margin: 5px auto;
+}
+.rank_mask .rank-row{
+    margin-top: 5px;
+    color: #fff;
+}
+.rank_mask .rank-row span{
+    display: inline-block;
+}
+.rank_mask .rank-num{
+    width: 22px;
+    height: 28px;
+    float: left;
+    line-height: 28px;
+}
+.rank_mask .rank-num.num1{
+    background: url("../images/shuqian/images/rank_num1.png") no-repeat center;
+    background-size: contain;
+}
+.rank_mask .rank-num.num2{
+    background: url("../images/shuqian/images/rank_num2.png") no-repeat center;
+    background-size: contain;
+}
+.rank_mask .rank-num.num3{
+    background: url("../images/shuqian/images/rank_num3.png") no-repeat center;
+    background-size: contain;
+}
+.rank_mask .rank-row img{
+    width: 28px;
+    height: 28px;
+    vertical-align: middle;
+    border-radius: 50%;
+    position: relative;
+    top: -3px;
+}
+.rank_mask .rank-name{
+    width: 115px;
+    text-align: left;
+    padding-left: 7px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    top: 3px;
+}
+.rank_mask .rank-score{
+    padding-left: 3px;
+    width: 58px;
+    text-align: right;
+    padding-right: 3px;
+}
+.rank_mask .rank_list_box {
+    background: #DF0D0C;
+    width: 294px;
+    margin: 0 auto;
+    position: relative;
+    border-bottom-left-radius: 2em;
+    border-bottom-right-radius: 2em;
+}
+
+@-webkit-keyframes handSwipe {
+    0% { top: 350px;opacity: 1;}
+    70% { top: 200px;opacity: 1; }
+    100% { top: 200px;opacity: 0;}
+}
+
+@-moz-keyframes handSwipe {
+    0% { top: 350px;opacity: 1;}
+    70% { top: 200px;opacity: 1; }
+    100% { top: 200px;opacity: 0;}
+}
+
+@keyframes handSwipe {
+    0% { top: 350px;opacity: 1;}
+    70% { top: 200px;opacity: 1; }
+    100% { top: 200px;opacity: 0;}
+}

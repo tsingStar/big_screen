@@ -1,0 +1,149 @@
+{include file="templates/html_header.html"}
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+			{literal}
+				try{ace.settings.loadState('main-container')}catch(e){}
+			{/literal}
+			</script>
+			<!-- #section:basics/sidebar -->
+			{include file="templates/html_sidebar.html"}
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="main-content-inner">
+					<!-- #section:basics/content.breadcrumbs -->
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="index.php">首页</a>
+							</li>
+
+							<li class="active">{$title}</li>
+						</ul><!-- /.breadcrumb -->
+						<!-- /section:basics/content.searchbox -->
+					</div>
+
+					<!-- /section:basics/content.breadcrumbs -->
+					<div class="page-content">
+					<h3 class="header smaller lighter blue">
+						{$title}
+						<small>开幕墙设置，上传开幕墙图片</small>
+					</h3>
+						<div class="row">
+								{$diyad}
+							<div class="col-sm-12 col-md-6">
+								<!-- PAGE CONTENT BEGINS -->
+									<form class="form-horizontal" method="post" action="dokaimu.php?action=setimage" role="form" enctype="multipart/form-data">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">显示方式</label>
+										<div class="col-sm-9">
+											<div class="radio-inline">
+					 								<label>
+														<input name="fullscreen" type="radio" class="ace" value="1" {if $kaimu_config['fullscreen']== 1}checked{/if} />
+														<span class="lbl">居中</span>
+													</label>
+												</div>
+
+												<div class="radio-inline">
+													<label>
+														<input name="fullscreen" type="radio" class="ace" value="2" {if $kaimu_config['fullscreen']== 2}checked{/if} />
+														<span class="lbl">全屏</span>
+													</label>
+												</div>
+											
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" >开幕图：</label>
+										<div class="col-sm-9">
+											<input type="file" class="imageuploader"   name="imagepath"/>
+											<div class="hr hr-12 dotted"></div>
+											<button type="submit" class="btn btn-sm btn-primary">保存</button>
+											<div class="space-4"></div>
+											<div class="row">
+										<span class="col-sm-12 alert-info well">大屏幕长宽比一致即可(宽度最大不超过1200px，高度最大不超过1000px)，不要超过500kb<br/>
+											<a href="/wall/themes/meepo/assets/images/kaimu.png" target="_blank">点此去下载原图</a></span>
+											</div>
+										</div>
+										
+									</div>
+									</form>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+{include file="templates/html_footercontent.html"}
+<!-- 写每个页面自定的js -->
+<script type="text/javascript">
+{literal}
+jQuery(function($){
+	$('input[name=fullscreen]').bind('click',function(){
+		var fullscreen=$(this).val();
+		$.ajax({
+			"url":"dokaimu.php?action=setfullscreen",
+			"data":{"fullscreen":fullscreen},
+			"dataType":"json",
+			"type":"post",
+			"success":function(json){
+				if(json.code>0){
+					alert(json.message);
+				}
+			}
+		});
+	});
+
+	$('.imageuploader').ace_file_input({
+		style: 'well',
+		btn_choose: '点击此处选择图片',
+		btn_change: null,
+		no_icon: 'ace-icon fa fa-cloud-upload',
+		droppable: true,
+		maxSize: 550000,
+		//previewHeight:200,
+		allowExt: ["jpeg", "jpg", "png", "gif"],
+		allowMime: ["image/jpg", "image/jpeg", "image/png", "image/gif"],
+		thumbnail: 'large'//large | fit
+		//,icon_remove:null//set null, to hide remove/reset button
+		/**,before_change:function(files, dropped) {
+			//Check an example below
+			//or examples/file-upload.html
+			return true;
+		}*/
+		/**,before_remove : function() {
+			return true;
+		}*/
+		,
+		//previewSize:400,
+		previewHeight:200,
+		preview_error : function(filename, error_code) {
+			//name of the file that failed
+			//error_code values
+			//1 = 'FILE_LOAD_FAILED',
+			//2 = 'IMAGE_LOAD_FAILED',
+			//3 = 'THUMBNAIL_FAILED'
+			//alert(error_code);
+		}
+
+	}).on('change', function(){
+		//console.log($(this).data('ace_input_files'));
+		//console.log($(this).data('ace_input_method'));
+	});
+	
+
+	{/literal}
+	{if $kaimu_config['image']!=''}
+	{literal}
+	$('input[name=imagepath]')
+	.ace_file_input('show_file_list', [
+		{type: 'image', name: '背景图', path: '{/literal}{$kaimu_config['image']}{literal}'},
+	]);
+	{/literal}
+	{/if}
+	{literal}
+})
+{/literal}
+</script>
+{include file="templates/html_footer.html"}

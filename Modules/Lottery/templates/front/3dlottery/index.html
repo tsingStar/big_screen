@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=0, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="copyright" content="乐乎现场">
+    <title>3D抽奖</title>
+    <link rel="stylesheet" type="text/css"
+          href="{$module_front_path}/{$config['themepath']|strtolower}/assets/css/basic.css">
+    <link rel="stylesheet" type="text/css"
+          href="{$module_front_path}/{$config['themepath']|strtolower}/assets/css/footer.css?T=1">
+    <link href="{$module_front_path}/{$config['themepath']|strtolower}/assets/css/app_common.css" rel="stylesheet">
+    <link rel="stylesheet" href="{$module_front_path}/{$config['themepath']|strtolower}/assets/css/style.css"
+          media="screen" type="text/css">
+    <link rel="stylesheet" href="{$module_front_path}/{$config['themepath']|strtolower}/assets/css/lottery.css"
+          media="screen" type="text/css">
+    <link rel="stylesheet" href="{$module_front_path}/{$config['themepath']|strtolower}/assets/css/wxmiao.css"
+          media="screen" type="text/css">
+    <script type="text/javascript">
+        var need_login = "1";
+        var SCENE_INFO = {
+            "title": "乐乎现场-商业活动版-体验平台",
+            "top_title": ["\u6b22\u8fce\u6765\u5230\u4e50\u4e4e\u73b0\u573a\u5546\u4e1a\u6d3b\u52a8\u7248\uff01"],
+            "top_font_size": "40",
+            "memo": "",
+            "top_img": "",
+            "bg_img": "",
+            "bottom_img": "",
+            "diy_css": "",
+            "keyword": "",
+            "mp_username": "乐乎现场",
+            "func": {
+                "wall": "1",
+                "lottery": "1",
+                "shake": "1"
+            },
+            "navbar": {
+                "wall": "1",
+                "lottery": "1",
+                "lottery_free": "1",
+                "shake": "1",
+                "shake_free": "1"
+            }
+        };
+        var WALL_INFO = {
+            "id": "15",
+            "scene_id": 15,
+            "title": "", //网页顶部标题
+            "show_style": "", //滚动 或者 翻转
+            "show_type": "", //最新不循环或者随机循环
+            "re_time": "",
+            "chistory": "",
+            "show_big": "",
+            "show_big_time": ""
+        };
+        var PATH_URL = "http://wq.imlehu.com/addons/meepo_xianchang/template/mobile/app/images/piao/";
+        var $socket_url = "ws://47.100.8.230:7272";
+        var show_msg_2 = null;
+        var check_msg = null;
+        var bd_show = 0;
+        var configid = "{$config['id']}";
+    </script>
+    <script src="{$module_front_path}/{$config['themepath']|strtolower}/assets/app/js/tool.js" type="text/javascript"
+            charset="utf-8"></script>
+    <script src="{$module_front_path}/{$config['themepath']|strtolower}/assets/app/js/jquery-2.1.4.js"></script>
+    <script src="{$module_front_path}/{$config['themepath']|strtolower}/assets/app/js/jquery.hotkeys.min.js"></script>
+    <script src="{$module_front_path}/{$config['themepath']|strtolower}/assets/app/js/layer/layer.js?t=1"></script>
+    <script src="{$module_front_path}/{$config['themepath']|strtolower}/assets/app/js/3dlottory_base.js?t=1"></script>
+    <script src="{$module_front_path}/{$config['themepath']|strtolower}/assets/app/js/screen_3dlottory.js"></script>
+    <script src="{$assets}/plugs/hotkeys-master/dist/hotkeys.min.js"></script>
+    <script src="{$assets}/js/bindhotkeys.js"></script>
+</head>
+
+<body style="background: url({$config['themeconfig']['bg_path']}) #000 no-repeat;background-size:100% 100%">
+<audio id="Audio_Running"
+       src="{$module_front_path}/{$config['themepath']|strtolower}/assets/music/music.mp3" loop
+       preload="preload" style="display:none"></audio>
+<audio id="Audio_Gameover"
+       src="{$module_front_path}/{$config['themepath']|strtolower}/assets/music/shake_gameover.wav"
+       preload="preload" style="display:none"></audio>
+
+<audio id="bg_audio"
+       src="{$config['themeconfig']['bgmusic_path']}"
+       preload="preload" style="display:none"></audio>
+
+<input type="hidden" id="tagNum" value="0">
+<input type="hidden" id="tagId" value="0">
+<div class="my-tooltips"></div>
+<div id="container" style="display:none;"></div>
+<div class="win-box" style="display: block;">
+    <img class="win"
+         src="http://wq.imlehu.com/addons/meepo_xianchang/template/mobile/app/images/3dlottory/images/win.png">
+</div>
+
+<div class="container" style="position:absolute;width:100%;top: 101px;bottom: 73px; height: auto;display:none">
+    <!--stop button-->
+    <div style="position: absolute;width: 100%;z-index: 1;">
+        <div style="position: fixed; right: 10px; bottom: 70px;">
+            <div class="lottory-stop-btn" id="close-draw"></div>
+        </div>
+    </div>
+    <!--lottory-container start--->
+    <div class="lottory-container" id="lottery-panel">
+        <!--抽奖左边区-->
+        <div class="lottory-left-box">
+            <div class="lottory-title">参加抽奖人数：<span id="lottory_join_total">0</span></div>
+
+            <div class="lottory_award_box">
+                <ul id="core_lottery_award_box">
+
+                </ul>
+            </div>
+
+            <div class="lottory-btn-bar">
+                <div class="lottory-prev-btn lottory-btn-disabled"></div>
+                <div class="lottory-level">一等奖</div>
+                <div class="lottory-next-btn"></div>
+            </div>
+
+            <div class="lottory-main-nickname">
+                <div class="control-item">
+                    抽取人数：<span class="icon-ctrol icon-minus"></span><em class="lottery-num">1</em><span
+                        class="icon-ctrol icon-plus"></span>
+                </div>
+            </div>
+            <div class="lottory-start-btn" id="start-draw"></div>
+        </div>
+        <!--抽奖右边区-->
+        <div class="lottory-right-box">
+            <div class="lottory-title"><span id="lottory_winner_name">一等奖</span> - 获奖人数：<span
+                    id="lottory_winner_total">0</span></div>
+            <div class="lottory-reward-box">
+
+            </div>
+        </div>
+    </div>
+    <!--lottory-container end-->
+</div>
+<!--container end-->
+<script type="text/javascript">
+    var placeholder_imgs = [];
+    var placeholder_image_cnt = 0;
+    var placeholder_image_index = 0;
+    var send_mess = "0";
+    var cj_showtype = "2";
+    var personArray = new Array;
+    var luckshowtime = parseInt("3000");
+    var table = new Array;
+    for (var i = 0; i < 126; i++) {
+        table[i] = new Object();
+        if (i < personArray.length) {
+            table[i] = personArray[i];
+            table[i].src = personArray[i].image;
+        } else {
+            if (placeholder_image_cnt > 0) {
+                if (placeholder_image_index >= placeholder_image_cnt) {
+                    placeholder_image_index = 0;
+                }
+                placeholder_image = placeholder_imgs[placeholder_image_index];
+                placeholder_image_index++;
+                table[i].src = placeholder_image;
+            } else {
+                table[i].src =
+                    "http://lehu01.oss-cn-shanghai.aliyuncs.com/images/11/2017/06/UTD3EDy3FF23YY3FH3Ly25DdTYff5f.png";
+            }
+
+        }
+        table[i].p_x = i % 20 + 1;
+        table[i].p_y = Math.floor(i / 20) + 1;
+    }
+
+    //打乱数组顺序
+    table = table.sort(function () {
+        return Math.random()
+    });
+    var return_array = new Array();
+
+    function getArrayItems(arr, num) {
+        var temp_array = new Array();
+        for (var index in arr) {
+            temp_array.push(arr[index]);
+        }
+        for (var i = 0; i < num; i++) {
+            if (temp_array.length > 0) {
+                var arrIndex = Math.floor(Math.random() * temp_array.length);
+                return_array[i] = temp_array[arrIndex];
+                temp_array.splice(arrIndex, 1);
+            } else {
+                return false;
+            }
+        }
+        return return_array;
+    }
+
+    getArrayItems(personArray, 50);
+    var newPic = new Array();
+    setInterval(function () {
+        if (newPic.length > 0) {
+            var temp_fans = newPic.shift();
+            personArray.push(temp_fans);
+            $('.element').eq(personArray.length - 1).find('img').attr('src', temp_fans.image);
+        }
+        getArrayItems(personArray, 50);
+    }, 8000);
+</script>
+<script src="{$module_front_path}/{$config['themepath']|strtolower}/assets/app/images/3dlottory/js/three.min.js"></script>
+<script src="{$module_front_path}/{$config['themepath']|strtolower}/assets/app/images/3dlottory/js/tween.min.js"></script>
+<script src="{$module_front_path}/{$config['themepath']|strtolower}/assets/app/images/3dlottory/js/css3drenderer.js"></script>
+<script src="{$module_front_path}/{$config['themepath']|strtolower}/assets/app/js/lottory_3d.js"></script>
+<script type="text/javascript">
+    init();
+    animate();
+</script>
+<script type="text/javascript">
+    var press_pre = 0;
+    var press_next = 0;
+    var rootDomain = '//dev.wxmiao.com';
+    var stop = false;
+    var startGame = false;
+    var overGame = false;
+    var luckUsers = [];
+    var showGame;
+    var assetsPath = "{$module_front_path}/{$config['themepath']|strtolower}/assets";
+</script>
+<script src="{$module_front_path}/{$config['themepath']|strtolower}/assets/app/js/wxmiao.js"></script>
+<script type="text/javascript">
+    function get_new_sign_list() {
+        if (stop) return;
+        stop = true;
+        $.ajax({
+            url: "./index.php?i=11&c=entry&rid=15&do=3d_lottory_newfans&m=meepo_xianchang",
+            dataType: "JSON",
+            type: "GET",
+            data: {
+                max_id: $('#max_id').val()
+            },
+            success: function (json) {
+                if (json.max_id != '') {
+                    $('#max_id').val(json.max_id);
+                }
+                if (json.data.length > 0) {
+                    $("#lottory_join_total").text(parseInt($("#lottory_join_total").text()) + json.data
+                        .length);
+                    $.each(json.data, function (key, row) {
+                        var tmp = {
+                            id: row.id,
+                            image: row.avatar,
+                            name: row.nick_name,
+                        };
+                        var person_info = eval(tmp);
+                        newPic.push(person_info);
+                    });
+
+                }
+
+                stop = false;
+            }
+        });
+    }
+</script>
+<div class="loader" style="display: block;">
+    <div class="icon"></div>
+</div>
+<div id="leafContainer"></div>
+<div id="effect"></div>
+</body>
+<!--星星效果-->
+<script>
+    $(document).ready(function () {
+        if ($(".bg_video").length > 0) {
+            $(".bg_video").css({
+                width: $("body").width() + 2,
+                height: "auto",
+                opacity: 1
+            })
+        }
+        $("#bg_music").click(function (e) {
+            e.preventDefault();
+            if ($(this).attr('data-status') != 1) {
+                $("#audio")[0].play();
+                $(this).attr('data-status', '1');
+                $(this).find('img').attr('src',
+                    'http://wq.imlehu.com/addons/meepo_xianchang/template/mobile/app/images/icon/icon_music.png'
+                );
+            } else {
+                $("#audio")[0].pause();
+                $(this).attr('data-status', '0');
+                $(this).find('img').attr('src',
+                    'http://wq.imlehu.com/addons/meepo_xianchang/template/mobile/app/no_music.png');
+            }
+        });
+    });
+</script>
+<input type="hidden" id="panel_status" value="1"/>
+</html>

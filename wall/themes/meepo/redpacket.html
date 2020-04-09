@@ -1,0 +1,819 @@
+<link href="themes/meepo/assets/css/grab_redenvelop.css" type="text/css" rel="stylesheet">
+<link href="themes/meepo/assets/css/repack_shake.css" type="text/css" rel="stylesheet">
+<script src="themes/meepo/assets/js/base3.js" type="text/javascript" charset="utf-8"></script>
+<script src="themes/meepo/assets/js/screen_repack.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="themes/meepo/assets/js/jquery.nicescroll.min.js"></script>
+<style>
+	{literal}
+	.pop_winninglist dl dd.list li.b_money {
+		background-color: #3a80ff;
+	}
+	.sendingredpacket h1{
+	    text-align: center;
+		padding: 13px;
+	} 
+	{/literal}
+	</style>
+</head>
+<body class="FUN WALL">
+{include file="themes/meepo/top_panel.html"}
+    <div class="grab_redenvelop screen_show" style="opacity:0">
+      <div class="loading" style="dispaly:none"></div>
+      <div class="main">
+        <!-- 背景动画 -->
+        <div class="bg_rotate animate_rotate"></div>
+        <!-- 钱袋 -->
+        <div class="top_package">
+          <div class="top_package_in"></div>
+          <div class="top_package_out"></div>
+          <p class="countNum">倒计时
+            <b class="sec">{$currentredpacket_round['lefttime']}</b>
+            <b>:</b>
+            <b class="hm">00</b></p>
+        </div>
+        <div class="redenvelop_box" style="display:none;">
+          <ul class="redenvelop_list" style="margin:0px;padding:0px"></ul>
+        </div>
+        <div class="title"></div>
+        <a href="javascript:;" class="start" id="start"></a>
+        <!-- 页面底部元素 -->
+        <div class="bottom_sphere" style="bottom:0px"></div>
+        <div class="bottom_money" style="bottom:0px"></div>
+        <div class="bottom_phone" style="bottom:0px"></div>
+        <!-- 参与用户列表 -->
+        <div class="left_userlist">
+          <div class="list_img">
+            <ul class="clearfix">
+            	{foreach from=$flags  item=user name=user}
+            	<li data-id="{$user['signorder']}" style="bottom: {$smarty.foreach.user.iteration*64}px;"><img src="{$user['avatar']}" alt="Yv"></li>
+            	{/foreach}
+              
+            </ul>
+          </div>
+          <div class="user_total">
+            <b>{$flag_count}</b>
+            <p>参与人数</p>
+          </div>
+        </div>
+        <!-- 中奖名单列表 -->
+        <div class="right_winninglist">
+          <dl>
+            <dt>★
+              <h4>中奖名单</h4>★</dt>
+            <dd class="list pop_winninglist_a">
+              <ul>
+                
+              </ul>
+            </dd>
+            <dd style="height:10px; background-color:#fff;"></dd>
+            <dd class="bottom_arrowBox">
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+              <span class="arrow_left"></span>
+              <span class="arrow_right"></span>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <!-- 弹窗 -->
+      <div class="pop_mask"></div>
+      <!-- 单个中奖弹窗 -->
+      <div class="pop_winning clearfix">
+        <img src="" class="user_photo">
+        <div class="user_info">
+          <p>实物奖品</p>
+          <span>恭喜ad司法获得</span>
+         </div>
+        <img src="" class="prize_img"></div>
+      <!-- 中奖名单列表弹窗 -->
+      <div class="pop_winninglist">
+        <dl>
+          <dt>★
+            <h4>中奖名单</h4>★
+            {if $count_redpack>1}
+			<a href="javascript:;" class="btn_replay" id="btn_replay">
+              <p>进入下一轮</p>
+            </a>
+			{/if}
+            <a href="javascript:;" class="btn_close" {if $count_redpack==1}style="display:block"{/if}>
+              <p>关闭</p>
+            </a>
+          </dt>
+          <dd style="background-color:#fff;" class="sendingredpacket"></dd>
+          <dd class="list">
+            <ul class="clearfix"></ul>
+          </dd>
+          <dd style="height:10px; background-color:#fff;"></dd>
+          <dd class="bottom_arrowBox">
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+            <span class="arrow_left"></span>
+            <span class="arrow_right"></span>
+          </dd>
+        </dl>
+      </div>
+    </div>
+	<div id='ddd' style="display:none"></div>
+    <script type="text/javascript">
+
+    {literal}
+    var currentredpackconfig={/literal}{$currentredpacket_round}{literal};
+		function senddh(){
+			$('.screen_show').css('opacity','1');
+		}
+	$(function() {
+    if(!currentredpackconfig){
+      alert('没有可以进行的活动，请先去后台添加一轮活动。');
+      window.location.reload();
+      return;
+    }
+		var roundid=currentredpackconfig.id;
+		if(roundid==''){
+			if(!confirm('红包雨活动已经全部结束了，如果需要继续活动，请到后台添加一轮新的活动。现在去添加吗？')){
+				return false;
+			}else{
+				window.location.href='/myadmin';
+			}
+			//alert();
+			//window.location.reload();
+		}
+        // js生成红包个数
+        for (var i = 1; i <= 7; i++) {
+          if (i == 1) {
+            for (var j = 1; j <= 1; j++) {
+              $('.redenvelop_box .redenvelop_list').append('<li class="redenvelop' + i + '" id="redenvelop' + i + '_' + j + '"></li>');
+            }
+          }
+          if (i == 2) {
+            for (var j = 1; j <= 1; j++) {
+              $('.redenvelop_box .redenvelop_list').append('<li class="redenvelop' + i + '" id="redenvelop' + i + '_' + j + '"></li>');
+            }
+          }
+          if (i == 3) {
+            for (var j = 1; j <= 2; j++) {
+              $('.redenvelop_box .redenvelop_list').append('<li class="redenvelop' + i + '" id="redenvelop' + i + '_' + j + '"></li>');
+            }
+          }
+          if (i == 4) {
+            for (var j = 1; j <= 2; j++) {
+              $('.redenvelop_box .redenvelop_list').append('<li class="redenvelop' + i + '" id="redenvelop' + i + '_' + j + '"></li>');
+            }
+          }
+          if (i == 5) {
+            for (var j = 1; j <= 3; j++) {
+              $('.redenvelop_box .redenvelop_list').append('<li class="redenvelop' + i + '" id="redenvelop' + i + '_' + j + '"></li>');
+            }
+          }
+          if (i == 6) {
+            for (var j = 1; j <= 3; j++) {
+              $('.redenvelop_box .redenvelop_list').append('<li class="redenvelop' + i + '" id="redenvelop' + i + '_' + j + '"></li>');
+            }
+          }
+          if (i == 7) {
+            for (var j = 1; j <= 4; j++) {
+              $('.redenvelop_box .redenvelop_list').append('<li class="redenvelop' + i + '" id="redenvelop' + i + '_' + j + '"></li>');
+            }
+          }
+        }
+
+        $('#start').on('click',
+        function() {
+          //清空当前中奖数据
+          $(".pop_winninglist_a ul li").remove();
+          var data = {
+            'roundid': currentredpackconfig.id,
+          };
+
+          $.post("ajax_act_redpacket.php?action=start", data,
+          function(e) {
+        	if(e.errno==-1){
+        		alert(e.message);
+        		return;
+        	}
+            if (e.errno == -2) {
+              alert('本轮抢红包活动已结束');
+              return '';
+            }
+
+            $('.countNum b.sec').text(e.lefttime);
+            game_start();
+          },
+        'json');
+        });
+
+        // 按键判断
+        document.onkeydown = function(event) {
+          var e = event || window.event || arguments.callee.caller.arguments[0];
+			  if (e && e.keyCode == 13) {
+				// 回车，开始游戏
+				if ($('.countNum').is(':hidden')) {
+				  $('#start').click();
+				}
+			  } else if (e && e.keyCode == 32) {
+				// 空格，缩放二维码
+				$('.pop_weixin_ecode').toggle();
+			  } else if (e && e.keyCode == 80) {
+				// p键，显示、隐藏结果页
+				if ($('.pop_winninglist .btn_close').is(':hidden')) {
+				  $('.right_winninglist .pop_winninglist_a').click();
+				} else {
+				  $('.pop_winninglist .btn_close').click();
+				}
+			  } else if (e && e.keyCode == 37) {
+				/* 左切换 */
+				parent.leftRightSwitch('prev');
+			  } else if (e && e.keyCode == 39) {
+				/* 右切换 */
+				parent.leftRightSwitch('next');
+			  }
+        }
+
+        // 再玩一次，重新开始红包雨效果
+        $('#btn_replay').click(function() {
+			window.location.reload();
+        });
+
+        // 显示,隐藏微信二维码
+        $('.weixin_ecode .ecode_img').click(function() {
+          $('.pop_weixin_ecode').toggle();
+        });
+        $('.pop_weixin_ecode').click(function() {
+          $(this).hide();
+        });
+
+        // 点击右侧中奖名单弹出中奖弹框
+        $('.right_winninglist .pop_winninglist_a').on('click',
+        function() {
+          record_all();
+
+          $('.pop_winninglist .btn_replay').hide();
+          $('.pop_winninglist .btn_close').show();
+
+        });
+
+        // 点击关闭中奖弹框
+        $('.pop_winninglist .btn_close').on('click',
+        function() {
+          $('.pop_winninglist').hide(500,
+          function() {
+            $('.pop_winninglist .btn_replay').show();
+            $('.pop_winninglist .btn_close').hide();
+          });
+          $('.pop_mask').hide();
+
+        });
+        senddh();
+      });
+
+      // 点击go开始红包雨效果
+      function game_start() {
+        $('#start').fadeOut('fast');
+        $('.title').fadeOut('slow');
+        $('.tips').fadeOut('slow');
+        $('.redenvelop_box').show();
+        $('.countNum').show();
+        $('.right_winninglist .pop_winninglist_a').removeClass('pop_winninglist_a');
+
+        $('.top_package').children('div').removeClass('shake-one').addClass('redpacketshake shake-rotate');
+
+        for (var i = 1; i <= 7; i++) {
+          if (i == 1) {
+            for (var j = 1; j <= 1; j++) {
+              ani_redenvelop('#redenvelop' + i + '_' + j + '', 1500);
+            }
+          }
+          if (i == 2) {
+            for (var j = 1; j <= 1; j++) {
+              ani_redenvelop('#redenvelop' + i + '_' + j + '', 1200);
+            }
+          }
+          if (i == 3) {
+            for (var j = 1; j <= 2; j++) {
+              ani_redenvelop('#redenvelop' + i + '_' + j + '', 900 + (j - 1) * 400);
+            }
+          }
+          if (i == 4) {
+            for (var j = 1; j <= 2; j++) {
+              ani_redenvelop('#redenvelop' + i + '_' + j + '', 1050 + (j - 1) * 300);
+            }
+          }
+          if (i == 5) {
+            for (var j = 1; j <= 3; j++) {
+              ani_redenvelop('#redenvelop' + i + '_' + j + '', 1000 + (j - 1) * 200);
+            }
+          }
+          if (i == 6) {
+            for (var j = 1; j <= 3; j++) {
+              ani_redenvelop('#redenvelop' + i + '_' + j + '', 800 + (j - 1) * 200);
+            }
+          }
+          if (i == 7) {
+            for (var j = 1; j <= 4; j++) {
+              var ani_time = 750 + (j - 1) * 100;
+              setTimeout("ani_redenvelop('#redenvelop" + i + "_" + j + "'," + ani_time + ")", (j - 1) * 200);
+            }
+          }
+
+        }
+
+        // 有用户中奖弹窗显示信息效果
+        activity_screen_record();
+
+        // 判断倒计时是否结束
+        var countNum = parseInt($('.countNum b.sec').text());
+        var duration = countNum * 1000;
+        var endTime = new Date().getTime() + duration;
+        var countNum_timer = setInterval(function() {
+
+          var ssNum_n = (endTime - new Date().getTime()) / 1000;
+          var ssNum_sec = parseInt(ssNum_n) > 0 ? parseInt(ssNum_n) : 0;
+          var ssNum_hm = ssNum_n.toFixed(2).substr( - 2, 2);
+
+          $('.countNum b.sec').text(ssNum_sec);
+          $('.countNum b.hm').text(ssNum_hm);
+
+          //if( ssNum_sec<=0 && ssNum_hm<=0){
+          if (ssNum_n <= 0) {
+            clearInterval(countNum_timer);
+			activity_is_end(); 
+            setTimeout(function() {
+              $('.countNum').html('游戏已结束<b class="sec" style="display:none">0</b>');
+            },
+            500);
+			
+            $('.right_winninglist .list').addClass('pop_winninglist_a');
+
+            //清除红包抖动动画
+            $('.top_package').children('div').removeClass('shake-rotate').addClass('shake-one');
+            setTimeout(function() {
+              $('.top_package').children('div').removeClass('redpacketshake shake-one');
+            },
+            800);
+
+            // 清除中奖名单显示动画	
+            clearTimeout(ani_winning_timer);
+            clearTimeout(record_timer);
+            $('.pop_winning').hide();
+
+            //所有中奖记录
+            record_all();
+          }
+        },
+        10);
+
+      };
+
+      //活动是否能结束
+      function activity_is_end() {
+    	var data={"roundid":currentredpackconfig.id};
+        $.post('ajax_act_redpacket.php?action=end',data);
+      }
+
+      //所有中奖记录
+      function record_all() {
+        var data = {
+          "roundid":currentredpackconfig.id
+        };
+
+        $.post("ajax_act_redpacket.php?action=redpacke_zjlist", data,
+        function(e) {
+        	var list=[];
+        	if(e.errno>0){
+        		list = e.data;
+        	}
+        	
+          //var list = e.data;//e.list;
+          var html = '';
+          if (list.length > 0) {
+            for (var i in list) {
+                html += '<li class="b_money">\
+						<img src="' + list[i].avatar + '" class="user_photo">\
+						<div class="user_name">' + list[i].nick_name + '</div>\
+						<div class="prize_info">\
+						<p>' + list[i].money + '元</p>\
+						<span>红包</span>\
+						</div>\
+						</li>';
+            }
+          }
+          $('.pop_winninglist dl dd ul').html(html);
+          $('.sendingredpacket').html('<h1>红包发放中，请勿关闭此页面。。。</h1>');
+          $.ajax({
+       	  	"url":"ajax_act_redpacket.php?action=sendingredpacket",
+       	  	"type":"post",
+       	  	"dataType":'json',
+       	  	"data":{'roundid':currentredpackconfig.id},
+       	  	"success":function(json){
+       	  		if(json.errno>0){
+       	  			$('.sendingredpacket').html('<h1>红包发放完成</h1>');
+       	  		}else{
+       	  			$('.sendingredpacket').html('<h1>'+json.message+'</h1>');
+       	  		}
+       	  	}
+          })
+          $('.pop_winninglist').show(500);
+          
+          $('.pop_mask').show();
+          // 设置中间弹框滚动条样式
+          $(".pop_winninglist .list").niceScroll(".pop_winninglist .list ul", {
+            cursorcolor: "#0c52d2",
+            cursoropacitymin: '1',
+            cursorborder: '0',
+            cursorborderradius: '0'
+          });
+        },
+        'json');
+      }
+      var newUser = [];
+      var maxuserid="undefined" != typeof $('.left_userlist .list_img ul li').eq(0).attr('data-id') ? $('.left_userlist .list_img ul li').eq(0).attr('data-id') : '0';
+      maxuserid=parseInt(maxuserid);
+      function activity_screen_member() {
+    	  //console.log('test');
+      	
+        var data = {
+          'maxuserid':maxuserid,// "undefined" != typeof $('.left_userlist .list_img ul li').eq(0).attr('data-id') ? $('.left_userlist .list_img ul li').eq(0).attr('data-id') : '0',
+        };
+        $.post("ajax_act_redpacket.php?action=redpacket_users", data,
+        function(e) {
+          console.log(e);
+        	newUser=[];
+        	if(e.errno>0){
+        		newUser =e.data;
+        		for(var i=0,l=e.data.length;i<l;i++){
+          		  maxuserid=maxuserid>e.data[i].id?maxuserid:e.data[i].id;
+          	  }
+        	}
+        
+          // console.log(newUser);
+          left_userlist_Roll();
+        },
+        'json');
+      }
+      left_userlist_Roll();
+      left_userlist_Rank();
+      function left_userlist_Rank() {
+        var s = $('.left_userlist .list_img li').length - 1;
+        $('.left_userlist .list_img li').each(function() {
+          var i = $(this).index();
+          $(this).css('bottom', (s - i) * 64);
+        });
+      }
+      var ii = 0;
+      function left_userlist_Roll() {
+        if (newUser.length > 0 && ii < newUser.length && !$.isEmptyObject(newUser)) {
+
+          $('.left_userlist .list_img ul').css({
+            marginTop: '-64px'
+          });
+          $('.left_userlist .list_img ul').prepend('<li data-id="' + newUser[ii].id + '"><img src="' + newUser[ii].avatar + '" alt="' + newUser[ii].nick_name + '"></li>');
+          $('.left_userlist .list_img ul').animate({
+            marginTop: '0px'
+          },
+          500,
+          function() {
+            var userNum = parseInt($('.user_total b').text()) + 1;
+            $('.user_total b').text(userNum);
+            ii += 1;
+            $('.left_userlist .list_img ul li:gt(5)').remove(); //如果超过6个参与用户头像，就进行移除
+            setTimeout(left_userlist_Roll, 200);
+            left_userlist_Rank();
+          });
+        } else {
+          ii = 0;
+          newUser = [];
+          setTimeout(activity_screen_member, 5000);
+        }
+      }
+      var record_timer;
+      var newWinning = [];
+      //var max_record_id="undefined" != typeof $('.right_winninglist dl dd.list ul li').eq(0).attr('data-id') ? $('.right_winninglist dl dd.list ul li').eq(0).attr('data-id') : '0';
+      //max_record_id=parseInt(max_record_id);
+      function activity_screen_record(ttt) {
+        newWinning = [];
+        clearTimeout(record_timer);
+        var data = {
+          'max_record_id': "undefined" != typeof $('.right_winninglist dl dd.list ul li').eq(0).attr('data-id') ? $('.right_winninglist dl dd.list ul li').eq(0).attr('data-id') : '0',
+        	'roundid':currentredpackconfig.id
+        };
+        $.post("ajax_act_redpacket.php?action=redpacket_activity_screen_record", data,
+        function(e) {
+          newWinning=[];
+          if(e.errno>0){
+        	  newWinning = e.data;
+        	  
+          }
+          //console.log(ttt);
+          if (ttt) {
+        	 // console.log('winning_list')
+          
+            winning_list();
+          } else {
+        	  //console.log('ani_winning')
+            ani_winning();
+          }
+        },
+        'json');
+      }
+      function winning_list() {
+        if ($.isEmptyObject(newWinning)) {
+          return;
+        }
+        for (var i = 0; i <= newWinning.length; i++) {
+          console.log(newWinning.length + '-----' + i);
+          console.log(newWinning);
+            prize_html = '<li class="money" data-id="' + newWinning[i].id + '">\
+			<img src="' + newWinning[i].avatar + '" class="user_photo">\
+			<div class="user_info">\
+			<p>' + newWinning[i].nick_name + '</p>\
+			<span>恭喜获得' + newWinning[i].money + '红包！</span>\
+			</div>\
+			<div class="money_bg"><b>' + newWinning[i].money + '</b></div>\
+			</li>';
+          
+          $('.right_winninglist dl dd.list ul').prepend(prize_html);
+        }
+      }
+      var jj = 0;
+      var ani_winning_timer;
+      function ani_winning() {
+    	  
+      	//console.log(newWinning);
+      	//console.log('ani_winning run');
+        if (newWinning.length > 0 && jj < newWinning.length && !$.isEmptyObject(newWinning)) {
+          console.log(newWinning.length + '--' + jj);
+          console.log(newWinning);
+		  //newWinning[jj].zzs = "{$redpack['zzs']}";
+          //newWinning[jj].zzs = newWinning[jj].zzs ? "本奖品由" + newWinning[jj].zzs + "提供": '';
+          newWinning[jj].zzs='获得'+newWinning[jj].money+"元红包";
+          console.log('1--------');
+          //if (newWinning[jj].prize_type == 30 || newWinning[jj].prize_type == 31) {
+            newWinning[jj].prize_pic = 'themes/meepo/assets/images/redpack/money_bg.jpg';
+         // }
+          $('.pop_winning .user_photo').attr({
+            src: newWinning[jj].avatar
+          });
+          $('.pop_winning .prize_img').attr({
+            src: newWinning[jj].prize_pic
+          });
+          $('.pop_winning .user_info p').text(newWinning[jj].nick_name);
+          $('.pop_winning .user_info span').text(newWinning[jj].zzs);
+          console.log('2--------');
+          $('.pop_winning').show();
+          $('.pop_winning').animate({
+            opacity: '1'
+          },
+          700,
+          function() {
+            console.log('3--------');
+            $('.pop_winning').delay(1000).animate({
+              marginLeft: '-140px',
+              marginTop: '-100px',
+              opacity: '0'
+            },
+            500,
+            function() {
+              $('.pop_winning').css({
+                marginLeft: '-310px',
+                marginTop: '0',
+                display: 'none'
+              });
+              console.log('4--------');
+              
+                prize_html = '<li class="money" data-id="' + newWinning[jj].id + '">\
+						<img src="' + newWinning[jj].avatar + '" class="user_photo">\
+						<div class="user_info">\
+						<p>' + newWinning[jj].nick_name + '</p>\
+						<span>恭喜获得' + newWinning[jj].money + '红包！</span>\
+						</div>\
+						<div class="money_bg"><b>' + newWinning[jj].money + '</b></div>\
+						</li>';
+             
+              right_winninglist_Roll();
+              jj += 1;
+              ani_winning_timer = setTimeout(ani_winning, 100);
+            });
+          });
+        } else {
+          jj = 0;
+          record_timer = setTimeout(activity_screen_record, 2000);
+        }
+      }
+
+      // 右侧中奖名单滚动效果
+      function right_winninglist_Roll() {
+        $('.right_winninglist dl dd.list ul').css({
+          marginTop: '-80px'
+        });
+        $('.right_winninglist dl dd.list ul').prepend(prize_html);
+        $('.right_winninglist dl dd.list ul').animate({
+          marginTop: '0px'
+        },
+        500);
+        $('.right_winninglist dl dd.list ul li:gt(4)').remove(); //如果超过5个中奖名单，就进行移除
+      }
+      function ani_redenvelop(elem, time) {
+        $(elem).css({
+          'top': '-160px',
+          '-webkit-transition': 'top 0ms linear'
+        });
+        var mywidth = parseInt($(elem).width());
+        var myleft = Math.random() * (290 - mywidth);
+        var mytime = time * 0.7 + time * 0.3 * Math.random();
+        $(elem).css({
+          'left': myleft + 'px',
+          'top': '100%',
+          '-webkit-transition': 'top ' + mytime + 'ms linear'
+        });
+        redenvelop_timer = setTimeout("ani_redenvelop('" + elem + "','" + time + "')", mytime);
+        if (parseInt($('.countNum b.sec').text()) <= 0) {
+          clearInterval(redenvelop_timer);
+        }
+      }
+      {/literal}
+</script>
+<script src="themes/meepo/assets/js/screenfull.js" type="text/javascript"></script>
+<script src="/assets/plugs/hotkeys-master/dist/hotkeys.min.js"></script>
+    <script src="themes/meepo/assets/js/bindhotkeys.js"></script>
+<script>
+{literal}
+var f=false;
+var idd;
+$(function () {
+  $('.fullscreen').click(function () {
+  if(!f){
+  	screenfull.request($('#container')[0]);
+  	f = true;
+  }else{
+  	f = false;
+  	screenfull.exit();
+  }
+  });
+  $('#exit').click(function () {
+  	screenfull.exit();
+  });
+  $(document).on(screenfull.raw.fullscreenchange, function () { 
+  	if (!screenfull.isFullscreen) {
+  		 f = false;
+  		 $('.bottom_sphere,.bottom_money,.bottom_phone').css({"bottom":"0"});
+  	}else{
+  		 f = true;
+  		 $('.bottom_sphere,.bottom_money,.bottom_phone').css({"bottom":"0"});
+  	}
+  });
+});
+{/literal}
+</script>

@@ -1,0 +1,84 @@
+{include file="templates/html_header.html"}
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+			{literal}
+				try{ace.settings.loadState('main-container')}catch(e){}
+			{/literal}
+			</script>
+			<!-- #section:basics/sidebar -->
+			{include file="templates/html_sidebar.html"}
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="main-content-inner">
+					<!-- #section:basics/content.breadcrumbs -->
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="index.php">首页</a>
+							</li>
+							<li class="active">{$title}</li>
+						</ul><!-- /.breadcrumb -->
+						<!-- /section:basics/content.searchbox -->
+					</div>
+					
+					<!-- /section:basics/content.breadcrumbs -->
+					<div class="page-content">
+					<h3 class="header smaller lighter blue">
+						发布公告
+						<small>发布的公告可以在上墙界面大屏幕上看到</small>
+					</h3>
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+									<form class="form-horizontal" role="form">
+									<!-- #section:elements.form -->
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">系统公告内容</label>
+										<div class="col-sm-9">
+											<textarea  class="form-control "  id="form-field-8" style="height:400px;" name="sysinfo" placeholder="此处填写系统公告内容"></textarea>
+										</div>
+									</div>
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-info btn-sysinfo" type="button">
+												<i class="ace-icon fa fa-check bigger-110"></i>
+												发布公告
+											</button>
+											&nbsp; &nbsp; &nbsp;
+											<button class="btn" type="reset">
+												<i class="ace-icon fa fa-undo bigger-110"></i>
+												重置
+											</button>
+										</div>
+									</div>
+								</form>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+{include file="templates/html_footercontent.html"}
+<!-- 写每个页面自定的js -->
+<script type="text/javascript">
+{literal}
+jQuery(function($){
+	$('.btn-sysinfo').bind('click',function(){
+		$.ajax({
+			'url':'dowallnotice.php?action=addwallnotice',
+			'data':{'message':$('textarea[name=sysinfo]').val()},
+			'type':'post',
+			'dataType':'json',
+			'success':function(json){
+				alert(json.message);
+				return false;
+			}
+		});
+	});
+})
+{/literal}
+</script>
+{include file="templates/html_footer.html"}

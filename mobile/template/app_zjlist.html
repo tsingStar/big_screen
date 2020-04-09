@@ -1,0 +1,204 @@
+
+<style type="text/css">
+{literal}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+   margin:0;
+   padding:0;
+   border: 0;
+   vertical-align: baseline;
+   outline: none;
+}
+body { font-family: Microsoft YaHei,Helvitica,Verdana,Tohoma,Arial,san-serif; -webkit-text-size-adjust: none;}
+ 
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+ol, ul { list-style: none; }
+ 
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
+strong { font-weight: bold; } 
+ 
+a,button,input{-webkit-tap-highlight-color:rgba(255,0,0,0);}
+input, textarea, select { -webkit-border-radius:0;-webkit-appearance:none;outline: none; }
+input[type="button"], input[type="submit"], input[type="reset"] {-webkit-appearance: none;}
+ 
+table { border-collapse: collapse; border-spacing: 0; }
+img { border: 0;}
+ 
+a { text-decoration: none; }
+a:hover { text-decoration: none; }
+
+.clearfix:before, .container:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+
+/**/
+body{ background-color:#efefef}
+.vgy_user {
+display: block;
+margin:0;
+padding: 0;
+text-align: center;
+overflow: hidden;
+}
+.vgy_user_bg{ width:100%; opacity:0.15;}
+
+.vgy_user .info2 {
+display: block; 
+margin:65px auto 0 auto;width:180px;
+}
+.vgy_user .info2 .touxiang {
+width: 150px;
+height: 150px;
+border-radius: 100%;
+background-color: #FFF;
+box-shadow: 0 0 0 5px rgba(255, 255, 255, 1), 0 0 10px 2px rgba(0, 0, 0, 0.3);
+}
+.infotext {
+text-align:center;
+overflow: hidden;
+display: block;
+font-size: 16px;
+margin:15px auto;
+padding:10px;border-radius: 6px;
+background-color:#FFF;
+line-height:30px;
+}
+.name {
+font-size: 16px; 
+margin: 20px 0 15px 0;
+}
+.info2 a {
+color: #fff;
+}
+.red{ color:#F30}
+.tx{display:block; font-size:18px; color:#FFF; border-radius:6px;  padding:6px 0; margin: 0 auto; width:180px;/*background-color:#36c77a;*/background-color:#ff7575;}
+.bgs{background:-webkit-gradient(linear, 0% 100%, 0% 45%, from(#f0f0f0), to(rgba(255,255,255,0)))}
+.bgt{ width:100%; opacity:0}
+.time{ font-size:14px; color:#666}
+
+
+.pwpage {
+background-color: rgba(66, 66, 78, 0.75);
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+z-index: 9999998;
+}
+.denglu {
+position: fixed;
+z-index: 9999999;
+top: 50%;
+left: 50%;
+margin-top: -95px;
+margin-left: -141px;
+}
+.denglu .pwinfo {
+margin: 10px auto 15px auto;
+color: #888;
+font-size: 12px;
+width: 90%
+}
+.pwd {
+display: block;
+width: 260px;
+padding: 10px;
+margin: 0 auto;
+background-color: #fff;
+border-radius: 10px;
+font-size: 14px;
+border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.pwd form {
+padding: 0;
+margin: 0;
+}
+.pwd p {
+display: block;
+padding: 5px; margin:0;
+}
+.pwd .err {
+color: #F00;
+padding: 5px;
+}
+.pwd .pwdinput {
+border: 1px solid rgba(153, 153, 153, 0.44);
+border-radius: 5px;
+padding: 10px;
+}
+.pwd .pwdinput {
+width: 100%;
+box-sizing: border-box;
+}
+.pwd .px {
+display: block;
+height: 35px;
+line-height: 35px;
+color: #fff;
+font-size: 14px;
+border-radius: 5px;
+background-color: #C70000;
+text-decoration: none;
+border: 0;
+background: -webkit-linear-gradient(top, #F00303, #C70000);
+border-radius: 5px;
+color: #ffffff;
+text-align: center;
+text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+}
+.pwd .px:active {
+background: -webkit-linear-gradient(top, #C70000, #F00303);
+}
+.pwd .px[type="submit"] {
+width: 100%;
+box-sizing: border-box;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+}
+#container table th,#container table td{
+border: 1px solid #ddd;
+padding: 1px;
+line-height: 1.42857143em;
+vertical-align: top;
+font-size:14px;
+}
+.user-avatar{display: inline-block;width: 100%;vertical-align: middle;position: relative;margin-bottom: 15px;}
+.user-avatar img{display: inline-block;width: 40px;height: 40px;vertical-align: middle;border-radius: 50%;border: 2px solid #fff;margin-right: 10px;}
+.user-avatar span{display: inline-block;vertical-align: middle;}
+.user-avatar h1{font-size: 16px;font-weight: bold;position: absolute;right: 0;top: 50%;transform:translateY(-50%);}
+.lottery-item{border-bottom: 1px solid #ddd;position: relative;padding-bottom: 10px;margin-bottom: 10px;}
+.lottery-item img{width: 40px;height: 40px;border-radius: 50%;margin-right: 10px;float: left;}
+.lottery-item dt{font-size: .875em;}
+.lottery-item dd{font-size: .6em;color: #999}
+.lottery-item .lottery-status{color: #999;position: absolute;right: 0;top: 50%;transform:translateY(-50%);font-size: .875em;}
+.lottery-item .lottery-status.prized{color: #1AAD19}
+.lottery-none{width: 100%;color: #666;text-align: center;line-height: 10em;}
+{/literal}
+</style>
+<script src="template/app/js/jquery-2.1.4.js"></script>
+</head>
+<body>
+
+<!--pop end-->
+<div id="container" style="margin-top: 80px;padding:0px 10px;">
+	<div class="user-avatar">
+	<img src="{$user['avatar']}"><span>{$user['nickname']}</span><h1>中奖记录</h1></div>
+	<div class="lottery">
+	{if $zjlist|@count eq 0 }
+	<div class="lottery-none">抱歉~您没有中奖！</div>
+	{else}
+		{foreach $zjlist as $item}
+		<div class="lottery-item">
+			<img src="{$item['prizeimg']}">
+			<dl>
+				<dt>{$item['fromplug']}-{$item['awardname']}</dt>
+				<dd>{$item['zjdatetime']}</dd>
+			</dl>
+			<span class="lottery-status {if $item['status']=='中奖'}prized{/if}">{$item['status']}</span>
+		</div>
+		{/foreach}
+	{/if}
+	</div>
+</div>
+
+

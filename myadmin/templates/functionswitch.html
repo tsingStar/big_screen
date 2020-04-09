@@ -1,0 +1,115 @@
+{include file="templates/html_header.html"}
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+			{literal}
+				try{ace.settings.loadState('main-container')}catch(e){}
+			{/literal}
+			</script>
+			<!-- #section:basics/sidebar -->
+			{include file="templates/html_sidebar.html"}
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="main-content-inner">
+					<!-- #section:basics/content.breadcrumbs -->
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="index.php">首页</a>
+							</li>
+
+							<li>
+								<a href="#">系统设置</a>
+							</li>
+							<li class="active">{$title}</li>
+						</ul><!-- /.breadcrumb -->
+						<!-- /section:basics/content.searchbox -->
+					</div>
+
+					<!-- /section:basics/content.breadcrumbs -->
+					<div class="page-content">
+					<h3 class="header smaller lighter blue">
+						{$title}
+						<small>功能开关</small>
+					</h3>
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+									{foreach $plugsswitch $item}
+										{if $item['name']!='qdq'}
+										<div class="form-group">
+										<div class="row">
+											<label class="col-sm-3 control-label no-padding-right" for="form-field-1">{$item['title']}</label>
+											<div class="col-sm-3">
+												<label>
+													<input name="{$item['name']}" class="ace ace-switch ace-switch-3" type="checkbox" {if $item['switch']== 1}checked{/if} />
+									<span class="lbl" onclick="switchplug('{$item['name']}')"></span>
+												</label>
+											</div>
+											<div class="col-sm-3" >
+													{if $item['name']!='choujiang'}
+												<div class="input-group" style="width:220px;">
+													<span class="input-group-addon">
+														快捷键：ctrl+
+													</span>
+													<input type="text" name="hotkey_{$item['name']}" class="form-control plugs_hotkey" value="{$item['key']}"/>
+													<span class="input-group-btn">
+														<button type="button" class="btn btn-purple btn-sm btn-set-hotkey">
+															修改
+														</button>
+													</span>
+												</div>
+												{/if}
+											</div>
+											</div>
+										</div>
+										{/if}
+										{/foreach}
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+{include file="templates/html_footercontent.html"}
+<!-- 写每个页面自定的js -->
+<script type="text/javascript">
+{literal}
+$(function(){
+	$('.plugs_hotkey').on('keypress',function(){
+		$(this).val('');
+	});
+	$('.btn-set-hotkey').on('click',function(){
+		var input=$(this).parent().parent().find('input');
+		var name=$(input).attr('name');
+		var hotkey=$(input).val();
+		$.ajax({
+			"url":'dofunctionswitch.php?action=sethotkey',
+			"data":{'plugname':name,'hotkey':hotkey},
+			'type':'post',
+			'dataType':'json',
+			"success":function(json){
+				alert(json.message);
+			}
+		});
+	})
+})
+function switchplug(name){
+	var switchstatus=$('input[name="'+name+'"]').get(0).checked?0:1;
+	jQuery.ajax({
+		'url':'doindex.php?action=switchplugs',
+		'data':{'name':name,'switchstatus':switchstatus},
+		'type':'post',
+		'dataType':'json',
+		'success':function(json){
+			if(json.code<0){
+				alert(json.message);
+				return false;
+			}
+		}
+	});
+}
+{/literal}
+</script>
+{include file="templates/html_footer.html"}

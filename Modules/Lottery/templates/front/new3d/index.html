@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>three.js css3d - periodic table</title>
+    <link rel="stylesheet" type="text/css" href="/Modules/Lottery/templates/front/new3d/assets/css/md.css">
+    <link rel="stylesheet" type="text/css" href="/Modules/Lottery/templates/front/new3d/assets/css/three.css">
+    <link rel="stylesheet" href="/assets/plugs/animate.css-3.7.1/animate.min.css" >
+    <link rel="stylesheet" href="/assets/plugs/emoji/emoji.css" >
+    <meta charset="utf-8">
+</head>
+
+<div id="container">
+    <img class="main_light" src="/Modules/Lottery/templates/front/new3d/assets/images/main_light.png">
+    <div class="main_mask">
+    </div>
+    <div class="cd_xz">
+        <div class="main_menu">
+            <div class="sj">
+                <div class="btn_left"></div>
+                <div class="words_jx">一等奖</div>
+                <div class="btn_right"></div>
+            </div>
+            <div class="sj">
+                <div class="words_cqrs">抽取人数</div>
+                <button class="btn_reduce">-</button>
+                <input type="text" class="tz-1" value='1'/>
+                <button class="btn_add">+</button>
+                <div class="words_rs">人</div>
+            </div>
+        </div>
+        <div id="prize"></div>
+    </div>
+    <div class="mask"></div>
+    <div id="players"></div>
+    <div class="main_bg winnerlist" id="winnerlist">
+        <img class="top_img" src="/Modules/Lottery/templates/front/new3d/assets/images/top_img.png">
+        <div class="top_jp">
+            <span class="jp">奖品：</span><span class="jpmc">洗衣机洗衣机</span>
+        </div>
+        <div class="top_jz">
+            <div class="top_hjmd">
+                <span class="hjmd">- 获奖名单 -</span>
+            </div>
+        </div>
+        <div class="top_hjrs">
+            <span class="hjrs">获奖人数：</span><span class="hjrs_qty">20</span><span class="hjrs">人</span>
+        </div>
+        <div class="main_tb" id="lotterywinners">
+            <ul></ul>
+        </div>
+    </div>
+    <div class="main_bg currentwinnerlist" style="display: none;">
+        <div class="main_tb" id="gd">
+            <div>
+                <ul class="main_top">
+                    <li>
+                        <div class="ur_at"></div>
+                        <span>136-5579-XXXX</span>
+                        <div class="wave solid warning">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="wave2 solid2 warning2">
+                            <div class="circle2"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ur_at"></div>
+                        <span>136-5579-XXXX</span>
+                        <div class="wave solid warning">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="wave2 solid2 warning2">
+                            <div class="circle2"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ur_at"></div>
+                        <span>136-5579-XXXX</span>
+                        <div class="wave solid warning">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="wave2 solid2 warning2">
+                            <div class="circle2"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ur_at"></div>
+                        <span>136-5579-XXXX</span>
+                        <div class="wave solid warning">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="wave2 solid2 warning2">
+                            <div class="circle2"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ur_at"></div>
+                        <span>136-5579-XXXX</span>
+                        <div class="wave solid warning">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="wave2 solid2 warning2">
+                            <div class="circle2"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- <script src="/assets/js/meta-pc.min.js"></script> -->
+    <script src="/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="/assets/js/jquery.animate.min.js"></script>
+    <script src="/assets/js/stats.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="/assets/js/CSS3DRenderer.min.js"></script>
+    <script src="/assets/plugs/hotkeys-master/dist/hotkeys.min.js"></script>
+<script src="{$assets}/js/bindhotkeys.js"></script>
+    <script>
+        var prizesdata={$prizes};
+        var configid={$config['id']};
+        var lotteryconfig={$config|json_encode};
+        var lotteryconfigs={$configs};
+    </script>
+    <script src="/Modules/Lottery/templates/front/new3d/assets/js/front_index.js" ></script>
+    <body>
+    </body>
+
+</html>
